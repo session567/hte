@@ -1,0 +1,12 @@
+# IDE
+.idea/
+
+# Dependencies
+/node_modules/
+.yarn/
+
+# Build output
+/dist
+
+# Misc
+.DS_Store

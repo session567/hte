@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "Hattrick Extended",
+  "version": "0.1.0",
+  "description": "Various enhancements for Hattrick",
+  "icons": {
+    "48": "assets/icons/border-48.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.hattrick.org/*"
+      ],
+      "js": [
+        "dist/bundle.js"
+      ]
+    }
+  ]
+}
