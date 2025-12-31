@@ -1,18 +1,32 @@
 {
-  "name": "hattrick-extended",
+  "name": "hte",
   "version": "0.1.0",
   "description": "Various enhancements for Hattrick",
   "license": "GPL-3.0",
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --outfile=dist/bundle.js --target=firefox115,chrome120",
-    "watch": "esbuild src/index.ts --bundle --outfile=dist/bundle.js --target=firefox115,chrome120 --watch",
-    "clean": "rm -rf dist/"
+    "build": "esbuild src/index.ts --bundle --outfile=dist/bundle.js --target=firefox115,chrome120 --define:__DEV__=false",
+    "watch": "esbuild src/index.ts --bundle --outfile=dist/bundle.js --target=firefox115,chrome120 --watch --define:__DEV__=true",
+    "dev": "web-ext run --source-dir . --start-url https://stage.hattrick.org",
+    "clean": "rm -rf dist/",
+    "lint": "eslint .",
+    "test": "jest"
   },
   "packageManager": "yarn@4.12.0",
   "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/jest": "^30.0.0",
     "esbuild": "^0.27.2",
-    "typescript": "^5.9.3"
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "jest": "^30.2.0",
+    "prettier": "^3.7.4",
+    "ts-jest": "^29.4.6",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.51.0",
+    "web-ext": "^9.2.0"
   }
 }
