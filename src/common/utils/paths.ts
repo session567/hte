@@ -12,3 +12,5 @@ export const paths = {
 }
 
 export const getCurrentPath = () => window.location.pathname
+
+export const isPath = (path: string) => getCurrentPath() === path

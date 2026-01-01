@@ -1,4 +1,4 @@
-import { calcWeekNumber, parseDate } from './utils'
+import { calcWeekNumber, parseDate } from '@modules/week-number/utils'
 
 describe('parseDate', () => {
   it.each([

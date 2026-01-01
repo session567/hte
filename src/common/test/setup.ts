@@ -14,7 +14,11 @@ jest.mock('@common/utils/logger', () => ({
   })),
 }))
 
-jest.mock('@common/utils/paths', () => ({
-  ...jest.requireActual('@common/utils/paths'),
-  getCurrentPath: jest.fn(),
-}))
+jest.mock('@common/utils/paths', () => {
+  const getCurrentPath = jest.fn()
+  return {
+    ...jest.requireActual('@common/utils/paths'),
+    getCurrentPath,
+    isPath: (path: string) => getCurrentPath() === path,
+  }
+})

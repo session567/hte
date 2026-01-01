@@ -5,13 +5,14 @@ import { createLogger, ROOT } from '@common/utils/logger'
 import { getCurrentPath, paths } from '@common/utils/paths'
 import denomination from '@modules/denomination'
 import links from '@modules/links'
+import skillBonus from '@modules/skill-bonus'
 import weekNumber from '@modules/week-number'
 
 const currentPath = getCurrentPath()
 const logger = createLogger(ROOT)
 
 // Modules are executed in the order they appear in this array
-const modules: Module[] = [denomination, weekNumber, links]
+const modules: Module[] = [denomination, weekNumber, links, skillBonus]
 
 logger.debug('Running HTE')
 logger.debug('PATH', currentPath)

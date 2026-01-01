@@ -5,6 +5,6 @@
  * @param substitutions - Optional placeholder substitutions
  * @returns Translated string
  */
-export const t = (key: string, substitutions?: string | string[]): string => {
+export const t = (key: string, substitutions?: string | (string | number)[] | undefined): string => {
   return chrome.i18n.getMessage(key, substitutions) || key
 }
