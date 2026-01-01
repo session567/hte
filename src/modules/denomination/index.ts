@@ -1,16 +1,16 @@
 import '@modules/denomination/index.css'
 
 import type { Module } from '@common/types/module'
-import { routes } from '@common/utils/routes'
+import { paths } from '@common/utils/paths'
 import { MODULE_NAME } from '@modules/denomination/constants'
 
 const PERSONALITY_TYPES = new Set(['gentleness', 'honesty', 'aggressiveness'])
 
 const denomination: Module = {
   name: MODULE_NAME,
-  routes: [routes.all],
+  routes: [paths.all],
   run: () => {
-    const links = document.querySelectorAll<HTMLAnchorElement>(`a.skill[href*="${routes.appDenominations}"]`)
+    const links = document.querySelectorAll<HTMLAnchorElement>(`a.skill[href*="${paths.appDenominations}"]`)
 
     links.forEach((link) => {
       // Check if a denomination number already exists right after the link
