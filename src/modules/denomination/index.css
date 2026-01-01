@@ -1,4 +1,4 @@
-span.he-skill {
+span.hte-skill {
   font-size: 11px;
   border-radius: 2px;
   padding: 0 3px;
@@ -6,44 +6,44 @@ span.he-skill {
   font-weight: 500;
 }
 
-span.he-skill.he-gentleness-0,
-span.he-skill.he-honesty-0,
-span.he-skill.he-aggressiveness-5 {
+span.hte-skill.hte-gentleness-0,
+span.hte-skill.hte-honesty-0,
+span.hte-skill.hte-aggressiveness-5 {
   background-color: var(--hte-color-red-1);
   border: 1px solid var(--hte-color-red-4);
 }
 
-span.he-skill.he-gentleness-1,
-span.he-skill.he-honesty-1,
-span.he-skill.he-aggressiveness-4 {
+span.hte-skill.hte-gentleness-1,
+span.hte-skill.hte-honesty-1,
+span.hte-skill.hte-aggressiveness-4 {
   background-color: var(--hte-color-orange-1);
   border: 1px solid var(--hte-color-orange-4);
 }
 
-span.he-skill.he-gentleness-2,
-span.he-skill.he-honesty-2,
-span.he-skill.he-aggressiveness-3 {
+span.hte-skill.hte-gentleness-2,
+span.hte-skill.hte-honesty-2,
+span.hte-skill.hte-aggressiveness-3 {
   background-color: var(--hte-color-yellow-1);
   border: 1px solid var(--hte-color-yellow-4);
 }
 
-span.he-skill.he-gentleness-3,
-span.he-skill.he-honesty-3,
-span.he-skill.he-aggressiveness-2 {
+span.hte-skill.hte-gentleness-3,
+span.hte-skill.hte-honesty-3,
+span.hte-skill.hte-aggressiveness-2 {
   background-color: var(--hte-color-lime-1);
   border: 1px solid var(--hte-color-lime-4);
 }
 
-span.he-skill.he-gentleness-4,
-span.he-skill.he-honesty-4,
-span.he-skill.he-aggressiveness-1 {
+span.hte-skill.hte-gentleness-4,
+span.hte-skill.hte-honesty-4,
+span.hte-skill.hte-aggressiveness-1 {
   background-color: var(--hte-color-green-1);
   border: 1px solid var(--hte-color-green-4);
 }
 
-span.he-skill.he-gentleness-5,
-span.he-skill.he-honesty-5,
-span.he-skill.he-aggressiveness-0 {
+span.hte-skill.hte-gentleness-5,
+span.hte-skill.hte-honesty-5,
+span.hte-skill.hte-aggressiveness-0 {
   background-color: var(--hte-color-teal-1);
   border: 1px solid var(--hte-color-teal-4);
 }
