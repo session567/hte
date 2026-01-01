@@ -8,7 +8,7 @@ const PERSONALITY_TYPES = new Set(['gentleness', 'honesty', 'aggressiveness'])
 
 const denomination: Module = {
   name: MODULE_NAME,
-  routes: [paths.all],
+  paths: [paths.all],
   run: () => {
     const links = document.querySelectorAll<HTMLAnchorElement>(`a.skill[href*="${paths.appDenominations}"]`)
 

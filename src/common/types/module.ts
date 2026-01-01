@@ -1,5 +1,5 @@
 export interface Module {
   name: string
-  routes: string[]
+  paths: string[]
   run: () => void
 }

@@ -7,7 +7,7 @@ import { calcWeekNumber, parseDate } from '@modules/week-number/utils'
 
 const weekNumber: Module = {
   name: MODULE_NAME,
-  routes: [paths.all],
+  paths: [paths.all],
   run: () => {
     const nodes = document.querySelectorAll('.date')
 

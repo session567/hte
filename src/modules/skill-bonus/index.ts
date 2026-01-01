@@ -10,7 +10,7 @@ const MAX_BAR_LENGTH = 20
 
 const skillBonus: Module = {
   name: MODULE_NAME,
-  routes: [paths.player, paths.players],
+  paths: [paths.player, paths.players],
   run: () => {
     let nodes
 

@@ -7,7 +7,7 @@ import { LINKS, MODULE_NAME } from '@modules/links/constants'
 
 const links: Module = {
   name: MODULE_NAME,
-  routes: Object.keys(LINKS),
+  paths: Object.keys(LINKS),
   run: () => {
     const sidebar = document.querySelector<HTMLDivElement>('#sidebar')
     if (!sidebar) return
