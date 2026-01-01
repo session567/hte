@@ -1,4 +1,3 @@
-import type { Logger } from '@common/utils/logger'
 import denomination from '@modules/denomination'
 
 afterEach(() => {
