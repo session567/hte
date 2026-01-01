@@ -9,6 +9,7 @@ const config: Config = {
     '^@common/(.*)$': '<rootDir>/src/common/$1',
     '^@modules/(.*)$': '<rootDir>/src/modules/$1',
   },
+  setupFilesAfterEnv: ['<rootDir>/src/common/test/setup.ts'],
   testEnvironment: 'jsdom',
   transform: {
     ...createDefaultPreset().transform,
