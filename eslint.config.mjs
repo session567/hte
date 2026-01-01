@@ -6,6 +6,7 @@ import eslint from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import prettierRecommended from 'eslint-plugin-prettier/recommended'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
+import eslintPluginTsdoc from 'eslint-plugin-tsdoc'
 
 export default defineConfig(
   eslint.configs.recommended,
@@ -17,10 +18,12 @@ export default defineConfig(
     files: ['src/**/*.ts'],
     plugins: {
       'simple-import-sort': simpleImportSort,
+      tsdoc: eslintPluginTsdoc,
     },
     rules: {
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
+      'tsdoc/syntax': 'warn',
     },
   },
 )

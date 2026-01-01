@@ -3,6 +3,7 @@
   "name": "HTE",
   "version": "0.1.0",
   "description": "Various enhancements for Hattrick",
+  "default_locale": "en",
   "icons": {
     "48": "assets/icons/border-48.png"
   },
@@ -18,5 +19,8 @@
         "dist/bundle.js"
       ]
     }
+  ],
+  "permissions": [
+    "storage"
   ]
 }

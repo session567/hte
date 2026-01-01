@@ -1,0 +1,14 @@
+{
+  "links": {
+    "message": "Links"
+  },
+  "loyaltyAndHomegrownBonus": {
+    "message": "Loyalty and homegrown bonus: $1"
+  },
+  "salaryPerYear": {
+    "message": "/year"
+  },
+  "htmsLabel": {
+    "message": "HTMS"
+  }
+}
