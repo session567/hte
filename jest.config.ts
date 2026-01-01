@@ -2,14 +2,18 @@ import type { Config } from 'jest'
 import { createDefaultPreset } from 'ts-jest'
 
 const config: Config = {
-  // Automatically clear mock calls, instances, contexts and results before every test
   clearMocks: true,
-  // Indicates whether each individual test should be reported during the run. All errors will also still be shown on
-  // the bottom after execution.
-  verbose: true,
+  moduleNameMapper: {
+    '\\.css$': 'identity-obj-proxy',
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '^@common/(.*)$': '<rootDir>/src/common/$1',
+    '^@modules/(.*)$': '<rootDir>/src/modules/$1',
+  },
+  testEnvironment: 'jsdom',
   transform: {
     ...createDefaultPreset().transform,
   },
+  verbose: true,
 }
 
 export default config
