@@ -46,12 +46,12 @@ test('should add personality number after link for personality types', () => {
   const aggressivenessSpan = links[1].nextElementSibling
   const honestySpan = links[2].nextElementSibling
 
-  expect(gentlenessSpan?.className).toBe('he-skill he-gentleness-2')
+  expect(gentlenessSpan?.className).toBe('hte-skill hte-gentleness-2')
   expect(gentlenessSpan?.textContent).toBe('2')
 
-  expect(aggressivenessSpan?.className).toBe('he-skill he-aggressiveness-4')
+  expect(aggressivenessSpan?.className).toBe('hte-skill hte-aggressiveness-4')
   expect(aggressivenessSpan?.textContent).toBe('4')
 
-  expect(honestySpan?.className).toBe('he-skill he-honesty-1')
+  expect(honestySpan?.className).toBe('hte-skill hte-honesty-1')
   expect(honestySpan?.textContent).toBe('1')
 })

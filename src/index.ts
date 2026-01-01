@@ -1,12 +1,12 @@
 import '@common/styles/global.css'
 
 import type { Module } from '@common/types/module'
-import { createLogger } from '@common/utils/logger'
+import { ROOT, createLogger } from '@common/utils/logger'
 import { routes } from '@common/utils/routes'
 import denomination from '@modules/denomination'
 
 const currentPath = window.location.pathname
-const logger = createLogger()
+const logger = createLogger(ROOT)
 
 // Modules are executed in the order they appear in this array
 const modules: Module[] = [denomination]

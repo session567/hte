@@ -2,11 +2,12 @@ import '@modules/denomination/index.css'
 
 import type { Module } from '@common/types/module'
 import { routes } from '@common/utils/routes'
+import { MODULE_NAME } from '@modules/denomination/constants'
 
 const PERSONALITY_TYPES = new Set(['gentleness', 'honesty', 'aggressiveness'])
 
 const denomination: Module = {
-  name: 'Denomination',
+  name: MODULE_NAME,
   routes: [routes.all],
   run: () => {
     const links = document.querySelectorAll<HTMLAnchorElement>(`a.skill[href*="${routes.appDenominations}"]`)
@@ -24,7 +25,7 @@ const denomination: Module = {
       const span = document.createElement('span')
 
       if (PERSONALITY_TYPES.has(lt)) {
-        span.className = `he-skill he-${lt}-${ll}`
+        span.className = `hte-skill hte-${lt}-${ll}`
         span.textContent = ll
       } else {
         span.className = 'shy denominationNumber'
