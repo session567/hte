@@ -16,4 +16,13 @@ describe('week-number module', () => {
     const span = document.querySelector<HTMLSpanElement>('.date > span.hte-week-number')
     expect(span?.textContent).toBe(expected)
   })
+
+  it('should not add week number for invalid date', () => {
+    document.body.innerHTML = `<div class="date">invalid date</div>`
+    const originalHTML = document.body.innerHTML
+
+    weekNumber.run()
+
+    expect(document.body.innerHTML).toBe(originalHTML)
+  })
 })
