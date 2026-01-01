@@ -14,13 +14,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: '24'
-
-      - name: Enable Corepack
-        run: corepack enable
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -42,9 +43,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: '24'
-
-      - name: Enable Corepack
-        run: corepack enable
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
