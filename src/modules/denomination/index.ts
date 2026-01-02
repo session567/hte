@@ -2,12 +2,11 @@ import '@modules/denomination/index.css'
 
 import type { Module } from '@common/types/module'
 import { paths } from '@common/utils/paths'
-import { MODULE_NAME } from '@modules/denomination/constants'
 
 const PERSONALITY_TYPES = new Set(['gentleness', 'honesty', 'aggressiveness'])
 
 const denomination: Module = {
-  name: MODULE_NAME,
+  name: 'Denomination',
   paths: [paths.all],
   run: () => {
     const links = document.querySelectorAll<HTMLAnchorElement>(`a.skill[href*="${paths.appDenominations}"]`)

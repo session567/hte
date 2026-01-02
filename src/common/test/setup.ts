@@ -7,11 +7,11 @@ globalThis.chrome = {
 
 jest.mock('@common/utils/logger', () => ({
   ...jest.requireActual('@common/utils/logger'),
-  createLogger: jest.fn(() => ({
+  logger: {
     debug: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
-  })),
+  },
 }))
 
 jest.mock('@common/utils/paths', () => {

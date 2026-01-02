@@ -5,8 +5,6 @@ interface Link {
   url: string
 }
 
-export const MODULE_NAME = 'Links'
-
 const ARENA_CALCULATOR: Link = {
   name: 'Arena Calculator',
   url: 'https://ht.alergromania.ro/tools/arena-calculator',

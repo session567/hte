@@ -1,18 +1,10 @@
-// Sentinel value for the root logger (used in src/index.ts)
-export const ROOT = '__ROOT__'
-
 declare const __DEV__: boolean | undefined
 
-const isDevMode = typeof __DEV__ !== 'undefined' && __DEV__
+const IS_DEV_MODE = typeof __DEV__ !== 'undefined' && __DEV__
+const PREFIX = '[HTE]'
 
-export const createLogger = (moduleName: string) => {
-  const prefix = moduleName === ROOT ? '[HTE]' : `[HTE][${moduleName}]`
-
-  return {
-    debug: (...args: unknown[]) => isDevMode && console.log(prefix, ...args),
-    warn: (...args: unknown[]) => console.warn(prefix, ...args),
-    error: (...args: unknown[]) => console.error(prefix, ...args),
-  }
+export const logger = {
+  debug: (...args: unknown[]) => IS_DEV_MODE && console.log(PREFIX, ...args),
+  warn: (...args: unknown[]) => console.warn(PREFIX, ...args),
+  error: (...args: unknown[]) => console.error(PREFIX, ...args),
 }
-
-export type Logger = ReturnType<typeof createLogger>

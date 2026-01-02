@@ -3,10 +3,10 @@ import '@modules/links/index.css'
 import { Module } from '@common/types/module'
 import { t } from '@common/utils/i18n'
 import { getCurrentPath } from '@common/utils/paths'
-import { LINKS, MODULE_NAME } from '@modules/links/constants'
+import { LINKS } from '@modules/links/constants'
 
 const links: Module = {
-  name: MODULE_NAME,
+  name: 'Links',
   paths: Object.keys(LINKS),
   run: () => {
     const sidebar = document.querySelector<HTMLDivElement>('#sidebar')

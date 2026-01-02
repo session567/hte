@@ -3,13 +3,12 @@ import '@modules/skill-bonus/index.css'
 import { Module } from '@common/types/module'
 import { t } from '@common/utils/i18n'
 import { isPath, paths } from '@common/utils/paths'
-import { MODULE_NAME } from '@modules/skill-bonus/constants'
 import { calcBonus } from '@modules/skill-bonus/utils'
 
 const MAX_BAR_LENGTH = 20
 
 const skillBonus: Module = {
-  name: MODULE_NAME,
+  name: 'Skill Bonus',
   paths: [paths.player, paths.players],
   run: () => {
     let nodes

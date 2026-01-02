@@ -2,11 +2,10 @@ import '@modules/week-number/index.css'
 
 import { Module } from '@common/types/module'
 import { paths } from '@common/utils/paths'
-import { MODULE_NAME } from '@modules/week-number/constants'
 import { calcWeekNumber, parseDate } from '@modules/week-number/utils'
 
 const weekNumber: Module = {
-  name: MODULE_NAME,
+  name: 'Week Number',
   paths: [paths.all],
   run: () => {
     const nodes = document.querySelectorAll('.date')

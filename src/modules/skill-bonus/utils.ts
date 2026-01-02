@@ -1,10 +1,7 @@
-import { createLogger } from '@common/utils/logger'
+import { logger } from '@common/utils/logger'
 import { paths } from '@common/utils/paths'
-import { MODULE_NAME } from '@modules/skill-bonus/constants'
 
 const MAX_LOYALTY = 20
-
-const logger = createLogger(MODULE_NAME)
 
 export const calcBonus = (node: ParentNode): number => {
   const loyaltyBonus = getLoyaltyBonus(node)
