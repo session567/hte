@@ -1,9 +1,8 @@
 span.hte-skill {
-  font-size: 11px;
+  font-size: 0.9em;
   border-radius: 2px;
   padding: 0 3px;
   margin-left: 2px;
-  font-weight: 500;
 }
 
 span.hte-skill.hte-gentleness-0,
@@ -44,7 +43,7 @@ span.hte-skill.hte-aggressiveness-1 {
 span.hte-skill.hte-gentleness-5,
 span.hte-skill.hte-honesty-5,
 span.hte-skill.hte-aggressiveness-0 {
-  background-color: var(--hte-color-teal-1);
-  border: 1px solid var(--hte-color-teal-4);
+  background-color: var(--hte-color-blue-1);
+  border: 1px solid var(--hte-color-blue-4);
 }
 
