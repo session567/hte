@@ -1,38 +1,35 @@
+import { createNode } from '@common/test/utils'
 import { calcBonus } from '@modules/skill-bonus/utils'
 
 describe('calcBonus', () => {
   it('should calculate bonus for homegrown player', () => {
-    const container = document.createElement('div')
-    container.innerHTML = `
+    const html = `
       <p>
         Has <a href="/Help/Rules/AppDenominations.aspx?lt=skill&ll=20#skill" class="skill">divine</a> loyalty.
       </p>
       <div class="ownerAndStatusPlayerInfo"><i class="icon-mother-club"></i></div>
     `
+    const node = createNode(html)
 
-    const bonus = calcBonus(container)
+    const bonus = calcBonus(node)
 
     expect(bonus).toBe(1.5)
   })
 
   it('should calculate bonus for non-homegrown player', () => {
-    const container = document.createElement('div')
-    container.innerHTML = `
-      <p>
-        Has <a href="/Help/Rules/AppDenominations.aspx?lt=skill&ll=20#skill" class="skill">divine</a> loyalty.
-      </p>
-    `
+    const html =
+      '<p>Has <a href="/Help/Rules/AppDenominations.aspx?lt=skill&ll=20#skill" class="skill">divine</a> loyalty.</p>'
+    const node = createNode(html)
 
-    const bonus = calcBonus(container)
+    const bonus = calcBonus(node)
 
     expect(bonus).toBe(1.0)
   })
 
   it('should return 0 when no loyalty link exists', () => {
-    const container = document.createElement('div')
-    container.innerHTML = '<p>Some text without loyalty information</p>'
+    const node = createNode('<p>Some text without loyalty information</p>')
 
-    const bonus = calcBonus(container)
+    const bonus = calcBonus(node)
 
     expect(bonus).toBe(0)
   })
