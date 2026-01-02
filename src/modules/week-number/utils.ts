@@ -1,11 +1,16 @@
 import { DAYS_PER_WEEK, DAYS_PER_YEAR } from '@common/utils/constants'
 import { logger } from '@common/utils/logger'
 
-const DATE_REGEX_LONG = /(\d{2})\.(\d{2})\.(\d{4})\s+(\d{2}):(\d{2})/ // Format: DD.MM.YYYY HH:mm
-const DATE_REGEX_SHORT = /(\d{2})\.(\d{2})\.(\d{4})/ // Format: DD.MM.YYYY
 const HATTRICK_START_DATE = new Date(1997, 8, 22)
+// Format: DD.MM.YYYY HH:mm
+const DATE_REGEX_LONG = /(\d{2})\.(\d{2})\.(\d{4})\s+(\d{2}):(\d{2})/
+// Format: DD.MM.YYYY
+const DATE_REGEX_SHORT = /(\d{2})\.(\d{2})\.(\d{4})/
 
-export const parseDate = (value: string): Date | null => {
+export const parseDate = (node: ParentNode): Date | null => {
+  const value = node.textContent?.trim()
+  if (!value) return null
+
   const longMatch = value.match(DATE_REGEX_LONG)
 
   if (longMatch) {

@@ -39,10 +39,10 @@ describe('skill-bonus module', () => {
     skillBonus.run()
 
     const bonusBar = document.querySelector('.hte-skill-bonus-bar')
-    expect(bonusBar).toBeTruthy()
+    expect(bonusBar).not.toBeNull()
     // Skill level: 10, Bonus: 0.55
     expect(bonusBar?.getAttribute('style')).toContain('width: 53%') // (10 + 0.55) / 20 * 100
-    expect(bonusBar?.querySelector('.bar-denomination')).toBeTruthy()
+    expect(bonusBar?.querySelector('.bar-denomination')).not.toBeNull()
   })
 
   it('should add bonus bars to multiple skill bars', () => {
@@ -189,10 +189,10 @@ describe('skill-bonus module', () => {
 
     // Skill level: 7, Bonus: 1.0
     expect(bonusBars[0]?.getAttribute('style')).toContain('width: 40%') // (7 + 1.0) / 20 * 100
-    expect(bonusBars[0]?.querySelector('.bar-denomination')).toBeTruthy()
+    expect(bonusBars[0]?.querySelector('.bar-denomination')).not.toBeNull()
 
     // Skill level: 16, Bonus: 1.4
     expect(bonusBars[1]?.getAttribute('style')).toContain('width: 87') // (16 + 1.4) / 20 * 100
-    expect(bonusBars[1]?.querySelector('.bar-denomination')).toBeTruthy()
+    expect(bonusBars[1]?.querySelector('.bar-denomination')).not.toBeNull()
   })
 })

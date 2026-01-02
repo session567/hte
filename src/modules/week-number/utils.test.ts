@@ -1,16 +1,26 @@
+import { createNode } from '@common/test/utils'
 import { calcWeekNumber, parseDate } from '@modules/week-number/utils'
 
 describe('parseDate', () => {
   it.each([
-    { desc: 'long format', input: '15.03.2024 14:30', expected: new Date(2024, 2, 15, 14, 30) },
-    { desc: 'short format', input: '31.12.2023', expected: new Date(2023, 11, 31) },
-  ])('should parse $desc', ({ input, expected }) => {
-    const result = parseDate(input)
+    { html: '15.03.2024 14:30', expected: new Date(2024, 2, 15, 14, 30) },
+    { html: '31.12.2023', expected: new Date(2023, 11, 31) },
+  ])('should parse date from text: $html', ({ html, expected }) => {
+    const node = createNode(html)
+
+    const result = parseDate(node)
+
     expect(result).toStrictEqual(expected)
   })
 
-  it('should return null for invalid format', () => {
-    const result = parseDate('invalid-format')
+  it.each([
+    { desc: 'empty text', html: '' },
+    { desc: 'invalid format', html: 'invalid-format' },
+  ])('should return null for $desc', ({ html }) => {
+    const node = createNode(html)
+
+    const result = parseDate(node)
+
     expect(result).toBeNull()
   })
 })

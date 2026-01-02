@@ -8,20 +8,17 @@ const weekNumber: Module = {
   name: 'Week Number',
   paths: [paths.all],
   run: () => {
-    const nodes = document.querySelectorAll('.date')
+    const nodes = document.querySelectorAll('#mainBody .date')
 
     nodes.forEach((node) => {
-      const dateText = node.textContent?.trim()
-      if (!dateText) return
-
-      const date = parseDate(dateText)
+      const date = parseDate(node)
       if (!date) return
 
       const weekNumber = calcWeekNumber(date)
 
       const span = document.createElement('span')
       span.className = 'hte-week-number shy'
-      span.textContent = `(W${weekNumber})`
+      span.textContent = ` (W${weekNumber})`
 
       node.appendChild(span)
     })
