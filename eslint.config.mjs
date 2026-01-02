@@ -26,4 +26,21 @@ export default defineConfig(
       'tsdoc/syntax': 'warn',
     },
   },
+  {
+    files: ['src/**/*.ts'],
+    ignores: ['**/*.test.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@common/test/*'],
+              message: 'Test utilities should only be imported in test files',
+            },
+          ],
+        },
+      ],
+    },
+  },
 )

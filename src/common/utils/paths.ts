@@ -7,6 +7,7 @@ export const paths = {
   series: '/World/Series/',
   specialists: '/Club/Specialists/',
   stadium: '/Club/Stadium/',
+  transfersSearchResult: '/World/Transfers/TransfersSearchResult.aspx',
   youthPlayer: '/Club/Players/YouthPlayer.aspx',
   youthPlayers: '/Club/Players/YouthPlayers.aspx',
 }

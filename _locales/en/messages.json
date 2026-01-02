@@ -5,10 +5,10 @@
   "skillBonusTitle": {
     "message": "Loyalty and homegrown bonus: $1"
   },
-  "salaryPerYear": {
-    "message": "/year"
-  },
   "htmsLabel": {
     "message": "HTMS"
+  },
+  "htmsHelp": {
+    "message": "Ability / Potential"
   }
 }

@@ -156,3 +156,7 @@
   --hte-color-black: #000;
   --hte-color-white: #fff;
 }
+
+.hte-help {
+  border-bottom: 1px dashed black;
+}
