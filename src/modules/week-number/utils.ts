@@ -1,4 +1,4 @@
-import { DAYS_PER_WEEK, DAYS_PER_YEAR } from '@common/utils/constants'
+import { DAYS_PER_WEEK, DAYS_PER_SEASON } from '@common/utils/constants'
 import { logger } from '@common/utils/logger'
 
 const HATTRICK_START_DATE = new Date(1997, 8, 22)
@@ -34,7 +34,7 @@ export const parseDate = (node: ParentNode): Date | null => {
 
 export const calcWeekNumber = (date: Date): number => {
   const daysSinceStart = Math.floor((date.getTime() - HATTRICK_START_DATE.getTime()) / (1000 * 60 * 60 * 24))
-  const dayWithinSeason = daysSinceStart % DAYS_PER_YEAR
+  const dayWithinSeason = daysSinceStart % DAYS_PER_SEASON
 
   return Math.floor(dayWithinSeason / DAYS_PER_WEEK) + 1
 }
