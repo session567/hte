@@ -15,7 +15,6 @@ const config: Config = {
   transform: {
     ...createDefaultPreset().transform,
   },
-  verbose: true,
 }
 
 export default config

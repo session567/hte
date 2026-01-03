@@ -10,7 +10,7 @@ describe('week-number module', () => {
     { dateString: '23.12.2025', expected: ' (W3)' },
   ])('should add  number after date: $dateString', ({ dateString, expected }) => {
     document.body.innerHTML = `
-      <div id="mainBox">
+      <div id="mainBody">
         <div class="date">${dateString}</div>
       </div>
     `
@@ -23,7 +23,7 @@ describe('week-number module', () => {
 
   it('should not add week number for invalid date', () => {
     document.body.innerHTML = `
-      <div id="mainBox">
+      <div id="mainBody">
         <div class="date">invalid date</div>
       </div>
     `

@@ -64,9 +64,10 @@ describe('htms-points module', () => {
 
     const htmsRow = document.querySelector('.transferPlayerInformation table tbody tr:last-child')
     const labelCell = htmsRow?.querySelector('td.right')
-    const valueCell = htmsRow?.querySelector('span.help.hte-help')
+    const valueCell = htmsRow?.querySelector<HTMLSpanElement>('span.help.hte-help')
     expect(labelCell?.textContent).toBe('htmsLabel')
     expect(valueCell?.textContent).toBe('1234 / 5678')
+    expect(valueCell?.title).toBe('htmsHelp')
   })
 
   it('should add HTMS points to the player list page', () => {
@@ -172,15 +173,17 @@ describe('htms-points module', () => {
 
     const htmsRow1 = players[0]?.querySelector('.transferPlayerInformation table tr:last-child')
     const labelCell1 = htmsRow1?.querySelector('td.right')
-    const valueCell1 = htmsRow1?.querySelector('span.help.hte-help')
+    const valueCell1 = htmsRow1?.querySelector<HTMLSpanElement>('span.help.hte-help')
     expect(labelCell1?.textContent).toBe('htmsLabel')
     expect(valueCell1?.textContent).toBe('1234 / 5678')
+    expect(valueCell1?.title).toBe('htmsHelp')
 
     const htmsRow2 = players[1]?.querySelector('.transferPlayerInformation table tr:last-child')
     const labelCell2 = htmsRow2?.querySelector('td.right')
-    const valueCell2 = htmsRow2?.querySelector('span.help.hte-help')
+    const valueCell2 = htmsRow2?.querySelector<HTMLSpanElement>('span.help.hte-help')
     expect(labelCell2?.textContent).toBe('htmsLabel')
     expect(valueCell2?.textContent).toBe('2345 / 6789')
+    expect(valueCell2?.title).toBe('htmsHelp')
   })
 
   it('should add HTMS points to the transfers search result page', () => {
@@ -288,14 +291,16 @@ describe('htms-points module', () => {
 
     const htmsRow1 = players[0]?.querySelector('.transferPlayerInformation table tr:last-child')
     const labelCell1 = htmsRow1?.querySelector('td.right')
-    const valueCell1 = htmsRow1?.querySelector('span.help.hte-help')
+    const valueCell1 = htmsRow1?.querySelector<HTMLSpanElement>('span.help.hte-help')
     expect(labelCell1?.textContent).toBe('htmsLabel')
     expect(valueCell1?.textContent).toBe('1234 / 5678')
+    expect(valueCell1?.title).toBe('htmsHelp')
 
     const htmsRow2 = players[1]?.querySelector('.transferPlayerInformation table tr:last-child')
     const labelCell2 = htmsRow2?.querySelector('td.right')
-    const valueCell2 = htmsRow2?.querySelector('span.help.hte-help')
+    const valueCell2 = htmsRow2?.querySelector<HTMLSpanElement>('span.help.hte-help')
     expect(labelCell2?.textContent).toBe('htmsLabel')
     expect(valueCell2?.textContent).toBe('2345 / 6789')
+    expect(valueCell2?.title).toBe('htmsHelp')
   })
 })

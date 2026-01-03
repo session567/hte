@@ -1,4 +1,4 @@
-import { DAYS_PER_WEEK, DAYS_PER_SEASON, WEEKS_PER_SEASON } from '@common/utils/constants'
+import { DAYS_PER_SEASON, DAYS_PER_WEEK, WEEKS_PER_SEASON } from '@common/utils/constants'
 import { PlayerAge, PlayerSkills, Skill } from '@common/utils/player/constants'
 import { HTMS_ABILITY_TABLE, HTMS_POINTS_PER_WEEK, HTMSPoints } from '@modules/htms-points/constants'
 

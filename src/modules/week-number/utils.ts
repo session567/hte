@@ -1,4 +1,4 @@
-import { DAYS_PER_WEEK, DAYS_PER_SEASON } from '@common/utils/constants'
+import { DAYS_PER_SEASON, DAYS_PER_WEEK } from '@common/utils/constants'
 import { logger } from '@common/utils/logger'
 
 const HATTRICK_START_DATE = new Date(1997, 8, 22)
