@@ -7,23 +7,37 @@ import { calcBonus } from '@modules/skill-bonus/utils'
 
 const MAX_BAR_LENGTH = 20
 
+const createBonusBar = (skillBar: HTMLDivElement, bonus: number): HTMLDivElement | null => {
+  const level = parseInt(skillBar.getAttribute('level') || '0', 10)
+  if (!level) return null
+
+  const denominationBar = skillBar.querySelector<HTMLSpanElement>('.bar-max > .bar-denomination')
+  if (!denominationBar) return null
+
+  const bonusBar = document.createElement('div')
+  bonusBar.className = 'hte-skill-bonus-bar'
+  bonusBar.style.width = `${Math.round(((level + bonus) / MAX_BAR_LENGTH) * 100)}%`
+  bonusBar.title = t('skillBonusTitle', [bonus.toFixed(2)])
+  bonusBar.appendChild(denominationBar.cloneNode(true))
+
+  return bonusBar
+}
+
 const skillBonus: Module = {
   name: 'Skill Bonus',
   paths: [paths.player, paths.players],
   run: () => {
-    let nodes
+    const nodes: ParentNode[] = []
 
     if (isPath(paths.player)) {
-      const node = document.querySelector<HTMLDivElement>('#mainBody .playerInfo')
+      const node = document.querySelector('#mainBody .playerInfo')
 
-      if (node) {
-        nodes = [node]
-      }
+      if (node) nodes.push(node)
     } else if (isPath(paths.players)) {
-      nodes = document.querySelectorAll<HTMLDivElement>('#mainBody > .playerList > .teamphoto-player')
+      nodes.push(...Array.from(document.querySelectorAll('#mainBody > .playerList > .teamphoto-player')))
     }
 
-    if (!nodes || nodes.length === 0) return
+    if (nodes.length === 0) return
 
     nodes.forEach((node) => {
       const bonus = calcBonus(node)
@@ -31,20 +45,11 @@ const skillBonus: Module = {
 
       const skillBars = node.querySelectorAll<HTMLDivElement>('.transferPlayerSkills .ht-bar')
       skillBars.forEach((skillBar) => {
-        const level = parseInt(skillBar.getAttribute('level') || '0', 10)
         const levelBar = skillBar.querySelector<HTMLDivElement>('.bar-level')
-        if (!level || !levelBar) return
+        if (!levelBar) return
 
-        const bonusBar = document.createElement('div')
-        bonusBar.className = 'hte-skill-bonus-bar'
-        bonusBar.style.width = `${Math.round(((level + bonus) / MAX_BAR_LENGTH) * 100)}%`
-        bonusBar.title = t('skillBonusTitle', [bonus.toFixed(2)])
-
-        const denominationBar = skillBar.querySelector<HTMLSpanElement>('.bar-max > .bar-denomination')
-        if (!denominationBar) return
-
-        bonusBar.appendChild(denominationBar.cloneNode(true))
-        skillBar.insertBefore(bonusBar, levelBar)
+        const bonusBar = createBonusBar(skillBar, bonus)
+        if (bonusBar) skillBar.insertBefore(bonusBar, levelBar)
       })
     })
   },
