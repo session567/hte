@@ -7,13 +7,14 @@ import denomination from '@modules/denomination'
 import hteVersion from '@modules/hte-version'
 import htmsPoints from '@modules/htms-points'
 import links from '@modules/links'
+import salary from '@modules/salary'
 import skillBonus from '@modules/skill-bonus'
 import weekNumber from '@modules/week-number'
 
 const currentPath = getCurrentPath()
 
 // Modules are executed in the order they appear in this array
-const modules: Module[] = [denomination, weekNumber, links, skillBonus, htmsPoints, hteVersion]
+const modules: Module[] = [denomination, weekNumber, links, skillBonus, htmsPoints, salary, hteVersion]
 
 logger.debug('Running HTE')
 logger.debug('PATH', currentPath)

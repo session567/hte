@@ -10,5 +10,8 @@
   },
   "htmsHelp": {
     "message": "Ability / Potential"
+  },
+  "salaryPerSeason": {
+    "message": "year"
   }
 }
