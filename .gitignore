@@ -1,12 +1,15 @@
-# IDE
+# IDE & Editors
 .idea/
+.vscode/
 
 # Dependencies
-/node_modules/
-.yarn/
+node_modules/
 
-# Build output
-/dist
+# Build Output
+dist/
 
-# Misc
+# Testing
+coverage/
+
+# OS Files
 .DS_Store
