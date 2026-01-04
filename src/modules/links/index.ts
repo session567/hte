@@ -21,7 +21,7 @@ import {
   TS_ORGANIZER,
 } from '@modules/links/constants'
 import { Link } from '@modules/links/types'
-import { replacePlaceholders } from '@modules/links/utilts'
+import { replacePlaceholders } from '@modules/links/utils'
 
 const linkMap = new Map<Page, Link[]>([
   [pages.club, [HATTID_TEAM]],

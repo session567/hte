@@ -42,6 +42,10 @@ export default defineConfig(
               group: ['@common/test/*'],
               message: 'Test utilities should only be imported in test files.',
             },
+            {
+              group: ['./*', '../*'],
+              message: 'Use absolute imports with path aliases (@common, @modules) instead of relative imports.',
+            },
           ],
         },
       ],
