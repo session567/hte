@@ -14,4 +14,12 @@ jest.mock('@common/utils/logger', () => ({
   },
 }))
 
+jest.mock('@common/utils/storage', () => ({
+  storage: {
+    get: jest.fn(),
+    set: jest.fn(),
+    remove: jest.fn(),
+  },
+}))
+
 jest.mock('@common/utils/location')

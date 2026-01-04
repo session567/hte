@@ -10,10 +10,20 @@ import htmsPoints from '@modules/htms-points'
 import links from '@modules/links'
 import salary from '@modules/salary'
 import skillBonus from '@modules/skill-bonus'
+import transferSearchPresets from '@modules/transfer-search-presets'
 import weekNumber from '@modules/week-number'
 
 // Modules are executed in the order they appear in this array
-const modules: Module[] = [links, skillBonus, htmsPoints, salary, denomination, weekNumber, hteVersion]
+const modules: Module[] = [
+  links,
+  skillBonus,
+  htmsPoints,
+  salary,
+  transferSearchPresets,
+  denomination,
+  weekNumber,
+  hteVersion,
+]
 
 logger.debug('Running HTE')
 logger.debug(`Current pathname: ${getCurrentPathname()}`)

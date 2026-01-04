@@ -1,0 +1,26 @@
+.hte-preset-link {
+  display: inline-block !important;
+  cursor: pointer;
+  text-decoration: underline
+}
+
+.hte-preset-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hte-preset-delete {
+  cursor: pointer;
+  color: var(--hte-color-dark-5);
+  font-size: 16px;
+  line-height: 1;
+
+  &::before {
+    content: "\00d7";
+  }
+
+  &:hover {
+    color: var(--hte-hattrick-green);
+  }
+}

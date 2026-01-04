@@ -13,5 +13,14 @@
   },
   "salaryPerSeason": {
     "message": "year"
+  },
+  "transferSearchPresetsTitle": {
+    "message": "Transfer Search Presets"
+  },
+  "transferSearchPresetsTitleAddPreset": {
+    "message": "Add preset"
+  },
+  "transferSearchPresetsPromptPresetName": {
+    "message": "Preset name:"
   }
 }
