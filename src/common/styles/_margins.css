@@ -1,0 +1,153 @@
+:root {
+  --hte-spacing: 0.25rem;
+}
+
+.hte-m-0 {
+  margin: 0;
+}
+
+.hte-m-1 {
+  margin: calc(var(--hte-spacing) * 1);
+}
+
+.hte-m-2 {
+  margin: calc(var(--hte-spacing) * 2);
+}
+
+.hte-m-3 {
+  margin: calc(var(--hte-spacing) * 3);
+}
+
+.hte-m-4 {
+  margin: calc(var(--hte-spacing) * 4);
+}
+
+.hte-mt-0 {
+  margin-top: 0;
+}
+
+.hte-mt-1 {
+  margin-top: calc(var(--hte-spacing) * 1);
+}
+
+.hte-mt-2 {
+  margin-top: calc(var(--hte-spacing) * 2);
+}
+
+.hte-mt-3 {
+  margin-top: calc(var(--hte-spacing) * 3);
+}
+
+.hte-mt-4 {
+  margin-top: calc(var(--hte-spacing) * 4);
+}
+
+.hte-mr-0 {
+  margin-right: 0;
+}
+
+.hte-mr-1 {
+  margin-right: calc(var(--hte-spacing) * 1);
+}
+
+.hte-mr-2 {
+  margin-right: calc(var(--hte-spacing) * 2);
+}
+
+.hte-mr-3 {
+  margin-right: calc(var(--hte-spacing) * 3);
+}
+
+.hte-mr-4 {
+  margin-right: calc(var(--hte-spacing) * 4);
+}
+
+.hte-mb-0 {
+  margin-bottom: 0;
+}
+
+.hte-mb-1 {
+  margin-bottom: calc(var(--hte-spacing) * 1);
+}
+
+.hte-mb-2 {
+  margin-bottom: calc(var(--hte-spacing) * 2);
+}
+
+.hte-mb-3 {
+  margin-bottom: calc(var(--hte-spacing) * 3);
+}
+
+.hte-mb-4 {
+  margin-bottom: calc(var(--hte-spacing) * 4);
+}
+
+.hte-ml-0 {
+  margin-left: 0;
+}
+
+.hte-ml-1 {
+  margin-left: calc(var(--hte-spacing) * 1);
+}
+
+.hte-ml-2 {
+  margin-left: calc(var(--hte-spacing) * 2);
+}
+
+.hte-ml-3 {
+  margin-left: calc(var(--hte-spacing) * 3);
+}
+
+.hte-ml-4 {
+  margin-left: calc(var(--hte-spacing) * 4);
+}
+
+.hte-mx-0 {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.hte-mx-1 {
+  margin-left: calc(var(--hte-spacing) * 1);
+  margin-right: calc(var(--hte-spacing) * 1);
+}
+
+.hte-mx-2 {
+  margin-left: calc(var(--hte-spacing) * 2);
+  margin-right: calc(var(--hte-spacing) * 2);
+}
+
+.hte-mx-3 {
+  margin-left: calc(var(--hte-spacing) * 3);
+  margin-right: calc(var(--hte-spacing) * 3);
+}
+
+.hte-mx-4 {
+  margin-left: calc(var(--hte-spacing) * 4);
+  margin-right: calc(var(--hte-spacing) * 4);
+}
+
+.hte-my-0 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.hte-my-1 {
+  margin-top: calc(var(--hte-spacing) * 1);
+  margin-bottom: calc(var(--hte-spacing) * 1);
+}
+
+.hte-my-2 {
+  margin-top: calc(var(--hte-spacing) * 2);
+  margin-bottom: calc(var(--hte-spacing) * 2);
+}
+
+.hte-my-3 {
+  margin-top: calc(var(--hte-spacing) * 3);
+  margin-bottom: calc(var(--hte-spacing) * 3);
+}
+
+.hte-my-4 {
+  margin-top: calc(var(--hte-spacing) * 4);
+  margin-bottom: calc(var(--hte-spacing) * 4);
+}

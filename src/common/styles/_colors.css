@@ -1,0 +1,161 @@
+:root {
+  --hte-hattrick-green: #277f31;
+  --hte-hattrick-light-green: #79a777;
+
+  --hte-color-black: #000;
+  --hte-color-white: #fff;
+
+  --hte-color-dark-0: #c9c9c9;
+  --hte-color-dark-1: #b8b8b8;
+  --hte-color-dark-2: #828282;
+  --hte-color-dark-3: #696969;
+  --hte-color-dark-4: #424242;
+  --hte-color-dark-5: #3b3b3b;
+  --hte-color-dark-6: #2e2e2e;
+  --hte-color-dark-7: #242424;
+  --hte-color-dark-8: #1f1f1f;
+  --hte-color-dark-9: #141414;
+
+  --hte-color-gray-0: #f8f9fa;
+  --hte-color-gray-1: #f1f3f5;
+  --hte-color-gray-2: #e9ecef;
+  --hte-color-gray-3: #dee2e6;
+  --hte-color-gray-4: #ced4da;
+  --hte-color-gray-5: #adb5bd;
+  --hte-color-gray-6: #868e96;
+  --hte-color-gray-7: #495057;
+  --hte-color-gray-8: #343a40;
+  --hte-color-gray-9: #212529;
+
+  --hte-color-red-0: #fff5f5;
+  --hte-color-red-1: #ffe3e3;
+  --hte-color-red-2: #ffc9c9;
+  --hte-color-red-3: #ffa8a8;
+  --hte-color-red-4: #ff8787;
+  --hte-color-red-5: #ff6b6b;
+  --hte-color-red-6: #fa5252;
+  --hte-color-red-7: #f03e3e;
+  --hte-color-red-8: #e03131;
+  --hte-color-red-9: #c92a2a;
+
+  --hte-color-pink-0: #fff0f6;
+  --hte-color-pink-1: #ffdeeb;
+  --hte-color-pink-2: #fcc2d7;
+  --hte-color-pink-3: #faa2c1;
+  --hte-color-pink-4: #f783ac;
+  --hte-color-pink-5: #f06595;
+  --hte-color-pink-6: #e64980;
+  --hte-color-pink-7: #d6336c;
+  --hte-color-pink-8: #c2255c;
+  --hte-color-pink-9: #a61e4d;
+
+  --hte-color-grape-0: #f8f0fc;
+  --hte-color-grape-1: #f3d9fa;
+  --hte-color-grape-2: #eebefa;
+  --hte-color-grape-3: #e599f7;
+  --hte-color-grape-4: #da77f2;
+  --hte-color-grape-5: #cc5de8;
+  --hte-color-grape-6: #be4bdb;
+  --hte-color-grape-7: #ae3ec9;
+  --hte-color-grape-8: #9c36b5;
+  --hte-color-grape-9: #862e9c;
+
+  --hte-color-violet-0: #f3f0ff;
+  --hte-color-violet-1: #e5dbff;
+  --hte-color-violet-2: #d0bfff;
+  --hte-color-violet-3: #b197fc;
+  --hte-color-violet-4: #9775fa;
+  --hte-color-violet-5: #845ef7;
+  --hte-color-violet-6: #7950f2;
+  --hte-color-violet-7: #7048e8;
+  --hte-color-violet-8: #6741d9;
+  --hte-color-violet-9: #5f3dc4;
+
+  --hte-color-indigo-0: #edf2ff;
+  --hte-color-indigo-1: #dbe4ff;
+  --hte-color-indigo-2: #bac8ff;
+  --hte-color-indigo-3: #91a7ff;
+  --hte-color-indigo-4: #748ffc;
+  --hte-color-indigo-5: #5c7cfa;
+  --hte-color-indigo-6: #4c6ef5;
+  --hte-color-indigo-7: #4263eb;
+  --hte-color-indigo-8: #3b5bdb;
+  --hte-color-indigo-9: #364fc7;
+
+  --hte-color-blue-0: #e7f5ff;
+  --hte-color-blue-1: #d0ebff;
+  --hte-color-blue-2: #a5d8ff;
+  --hte-color-blue-3: #74c0fc;
+  --hte-color-blue-4: #4dabf7;
+  --hte-color-blue-5: #339af0;
+  --hte-color-blue-6: #228be6;
+  --hte-color-blue-7: #1c7ed6;
+  --hte-color-blue-8: #1971c2;
+  --hte-color-blue-9: #1864ab;
+
+  --hte-color-cyan-0: #e3fafc;
+  --hte-color-cyan-1: #c5f6fa;
+  --hte-color-cyan-2: #99e9f2;
+  --hte-color-cyan-3: #66d9e8;
+  --hte-color-cyan-4: #3bc9db;
+  --hte-color-cyan-5: #22b8cf;
+  --hte-color-cyan-6: #15aabf;
+  --hte-color-cyan-7: #1098ad;
+  --hte-color-cyan-8: #0c8599;
+  --hte-color-cyan-9: #0b7285;
+
+  --hte-color-teal-0: #e6fcf5;
+  --hte-color-teal-1: #c3fae8;
+  --hte-color-teal-2: #96f2d7;
+  --hte-color-teal-3: #63e6be;
+  --hte-color-teal-4: #38d9a9;
+  --hte-color-teal-5: #20c997;
+  --hte-color-teal-6: #12b886;
+  --hte-color-teal-7: #0ca678;
+  --hte-color-teal-8: #099268;
+  --hte-color-teal-9: #087f5b;
+
+  --hte-color-green-0: #ebfbee;
+  --hte-color-green-1: #d3f9d8;
+  --hte-color-green-2: #b2f2bb;
+  --hte-color-green-3: #8ce99a;
+  --hte-color-green-4: #69db7c;
+  --hte-color-green-5: #51cf66;
+  --hte-color-green-6: #40c057;
+  --hte-color-green-7: #37b24d;
+  --hte-color-green-8: #2f9e44;
+  --hte-color-green-9: #2b8a3e;
+
+  --hte-color-lime-0: #f4fce3;
+  --hte-color-lime-1: #e9fac8;
+  --hte-color-lime-2: #d8f5a2;
+  --hte-color-lime-3: #c0eb75;
+  --hte-color-lime-4: #a9e34b;
+  --hte-color-lime-5: #94d82d;
+  --hte-color-lime-6: #82c91e;
+  --hte-color-lime-7: #74b816;
+  --hte-color-lime-8: #66a80f;
+  --hte-color-lime-9: #5c940d;
+
+  --hte-color-yellow-0: #fff9db;
+  --hte-color-yellow-1: #fff3bf;
+  --hte-color-yellow-2: #ffec99;
+  --hte-color-yellow-3: #ffe066;
+  --hte-color-yellow-4: #ffd43b;
+  --hte-color-yellow-5: #fcc419;
+  --hte-color-yellow-6: #fab005;
+  --hte-color-yellow-7: #f59f00;
+  --hte-color-yellow-8: #f08c00;
+  --hte-color-yellow-9: #e67700;
+
+  --hte-color-orange-0: #fff4e6;
+  --hte-color-orange-1: #ffe8cc;
+  --hte-color-orange-2: #ffd8a8;
+  --hte-color-orange-3: #ffc078;
+  --hte-color-orange-4: #ffa94d;
+  --hte-color-orange-5: #ff922b;
+  --hte-color-orange-6: #fd7e14;
+  --hte-color-orange-7: #f76707;
+  --hte-color-orange-8: #e8590c;
+  --hte-color-orange-9: #d9480f;
+}
