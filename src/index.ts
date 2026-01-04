@@ -32,5 +32,10 @@ modules.forEach((module) => {
   if (!module.pages.some((page) => page === pages.all || isPage(page))) return
 
   logger.debug(`Running module: ${module.name}`)
-  module.run()
+
+  try {
+    module.run()
+  } catch (err) {
+    logger.error(`Module ${module.name} failed`, err)
+  }
 })
