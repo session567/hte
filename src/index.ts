@@ -1,8 +1,9 @@
 import '@common/styles/global.css'
 
 import type { Module } from '@common/types/module'
+import { getCurrentPathname } from '@common/utils/location'
 import { logger } from '@common/utils/logger'
-import { getCurrentPath, paths } from '@common/utils/paths'
+import { isPage, pages } from '@common/utils/pages'
 import denomination from '@modules/denomination'
 import hteVersion from '@modules/hte-version'
 import htmsPoints from '@modules/htms-points'
@@ -11,16 +12,14 @@ import salary from '@modules/salary'
 import skillBonus from '@modules/skill-bonus'
 import weekNumber from '@modules/week-number'
 
-const currentPath = getCurrentPath()
-
 // Modules are executed in the order they appear in this array
-const modules: Module[] = [denomination, weekNumber, links, skillBonus, htmsPoints, salary, hteVersion]
+const modules: Module[] = [links, skillBonus, htmsPoints, salary, denomination, weekNumber, hteVersion]
 
 logger.debug('Running HTE')
-logger.debug('PATH', currentPath)
+logger.debug(`Current pathname: ${getCurrentPathname()}`)
 
 modules.forEach((module) => {
-  if (!module.paths.some((route) => route === currentPath || route === paths.all)) return
+  if (!module.pages.some((page) => page === pages.all || isPage(page))) return
 
   logger.debug(`Running module: ${module.name}`)
   module.run()

@@ -1,8 +1,19 @@
-import { getCurrentPath, paths } from '@common/utils/paths'
+import { isPage, pages } from '@common/utils/pages'
 import htmsPoints from '@modules/htms-points'
-import * as htmsUtils from '@modules/htms-points/utils'
+import { calcHTMSPoints } from '@modules/htms-points/utils'
 
-const mockGetCurrentPath = getCurrentPath as jest.Mock
+jest.mock('@common/utils/pages', () => ({
+  ...jest.requireActual('@common/utils/pages'),
+  isPage: jest.fn(),
+}))
+
+jest.mock('@modules/htms-points/utils', () => ({
+  ...jest.requireActual('@modules/htms-points/utils'),
+  calcHTMSPoints: jest.fn(),
+}))
+
+const mockIsPage = isPage as jest.Mock
+const mockCalcHTMSPoints = calcHTMSPoints as jest.Mock
 
 describe('htms-points module', () => {
   afterEach(() => {
@@ -10,8 +21,8 @@ describe('htms-points module', () => {
   })
 
   it('should add HTMS points to the player detail page', () => {
-    mockGetCurrentPath.mockReturnValue(paths.player)
-    jest.spyOn(htmsUtils, 'calcHTMSPoints').mockReturnValue({ ability: 1234, potential: 5678 })
+    mockIsPage.mockImplementation((page) => page === pages.playerDetailOwnTeam)
+    mockCalcHTMSPoints.mockReturnValue({ ability: 1234, potential: 5678 })
 
     document.body.innerHTML = `
       <div id="mainBody">
@@ -71,9 +82,8 @@ describe('htms-points module', () => {
   })
 
   it('should add HTMS points to the player list page', () => {
-    mockGetCurrentPath.mockReturnValue(paths.players)
-    jest
-      .spyOn(htmsUtils, 'calcHTMSPoints')
+    mockIsPage.mockImplementation((page) => page === pages.playerListOwnTeam)
+    mockCalcHTMSPoints
       .mockReturnValueOnce({ ability: 1234, potential: 5678 })
       .mockReturnValueOnce({ ability: 2345, potential: 6789 })
 
@@ -187,9 +197,8 @@ describe('htms-points module', () => {
   })
 
   it('should add HTMS points to the transfers search result page', () => {
-    mockGetCurrentPath.mockReturnValue(paths.transfersSearchResult)
-    jest
-      .spyOn(htmsUtils, 'calcHTMSPoints')
+    mockIsPage.mockImplementation((page) => page === pages.transfersSearchResult)
+    mockCalcHTMSPoints
       .mockReturnValueOnce({ ability: 1234, potential: 5678 })
       .mockReturnValueOnce({ ability: 2345, potential: 6789 })
 

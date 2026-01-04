@@ -1,15 +1,20 @@
-import { getCurrentPath, paths } from '@common/utils/paths'
+import { isPage, pages } from '@common/utils/pages'
 import skillBonus from '@modules/skill-bonus'
 
-const mockGetCurrentPath = getCurrentPath as jest.Mock
+jest.mock('@common/utils/pages', () => ({
+  ...jest.requireActual('@common/utils/pages'),
+  isPage: jest.fn(),
+}))
+
+const mockIsPage = isPage as jest.Mock
 
 describe('skill-bonus module', () => {
   afterEach(() => {
     document.body.innerHTML = ''
   })
 
-  it('should add bonus bars to skill bars', () => {
-    mockGetCurrentPath.mockReturnValue(paths.player)
+  it('should add bonus bars to skill bars on the player detail page', () => {
+    mockIsPage.mockImplementation((page) => page === pages.playerDetailOwnTeam)
 
     document.body.innerHTML = `
       <div id="mainBody">
@@ -46,7 +51,7 @@ describe('skill-bonus module', () => {
   })
 
   it('should add bonus bars to multiple skill bars', () => {
-    mockGetCurrentPath.mockReturnValue(paths.player)
+    mockIsPage.mockImplementation((page) => page === pages.playerDetailOwnTeam)
 
     document.body.innerHTML = `
       <div id="mainBody">
@@ -91,7 +96,7 @@ describe('skill-bonus module', () => {
   })
 
   it('should not add bonus bars when bonus is 0', () => {
-    mockGetCurrentPath.mockReturnValue(paths.player)
+    mockIsPage.mockImplementation((page) => page === pages.playerDetailOwnTeam)
 
     document.body.innerHTML = `
       <div id="mainBody">
@@ -125,7 +130,7 @@ describe('skill-bonus module', () => {
   })
 
   it('should not add bonus bars when no player info', () => {
-    mockGetCurrentPath.mockReturnValue(paths.player)
+    mockIsPage.mockImplementation((page) => page === pages.playerDetailOwnTeam)
 
     document.body.innerHTML = '<div>No player info</div>'
 
@@ -135,8 +140,41 @@ describe('skill-bonus module', () => {
     expect(bonusBar).toBeNull()
   })
 
+  it('should not add bonus bar when skill has no bar-level (non-existent skill)', () => {
+    mockIsPage.mockImplementation((page) => page === pages.playerDetailOwnTeam)
+
+    document.body.innerHTML = `
+      <div id="mainBody">
+        <div class="playerInfo">
+          <p>
+            Has <a href="/Help/Rules/AppDenominations.aspx?lt=skill&ll=10#skill" class="skill">outstanding</a> loyalty.
+          </p>
+          <div class="transferPlayerSkills">
+            <table>
+              <tr>
+                <td class="right">Scoring</td>
+                <td colspan="2">
+                  <div class="ht-bar" level="0" max="20">
+                    <div class="bar-max">
+                      <span class="bar-denomination">non-existent</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    `
+
+    skillBonus.run()
+
+    const bonusBar = document.querySelector('.hte-skill-bonus-bar')
+    expect(bonusBar).toBeNull()
+  })
+
   it('should add bonus bars to multiple players in playerList', () => {
-    mockGetCurrentPath.mockReturnValue(paths.players)
+    mockIsPage.mockImplementation((page) => page === pages.playerListOwnTeam)
 
     document.body.innerHTML = `
       <div id="mainBody">

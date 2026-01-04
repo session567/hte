@@ -1,8 +1,9 @@
 import '@modules/skill-bonus/index.css'
 
 import { Module } from '@common/types/module'
+import { querySelector, querySelectorAll } from '@common/utils/dom'
 import { t } from '@common/utils/i18n'
-import { isPath, paths } from '@common/utils/paths'
+import { isPage, pages } from '@common/utils/pages'
 import { calcBonus } from '@modules/skill-bonus/utils'
 
 const MAX_BAR_LENGTH = 20
@@ -11,7 +12,7 @@ const createBonusBar = (skillBar: HTMLDivElement, bonus: number): HTMLDivElement
   const level = parseInt(skillBar.getAttribute('level') || '0', 10)
   if (!level) return null
 
-  const denominationBar = skillBar.querySelector<HTMLSpanElement>('.bar-max > .bar-denomination')
+  const denominationBar = querySelector<HTMLSpanElement>(skillBar, '.bar-max > .bar-denomination')
   if (!denominationBar) return null
 
   const bonusBar = document.createElement('div')
@@ -25,28 +26,28 @@ const createBonusBar = (skillBar: HTMLDivElement, bonus: number): HTMLDivElement
 
 const skillBonus: Module = {
   name: 'Skill Bonus',
-  paths: [paths.player, paths.players],
+  pages: [pages.playerDetailOwnTeam, pages.playerListOwnTeam],
   run: () => {
     const nodes: ParentNode[] = []
 
-    if (isPath(paths.player)) {
-      const node = document.querySelector('#mainBody .playerInfo')
+    if (isPage(pages.playerDetailOwnTeam)) {
+      const node = querySelector('#mainBody .playerInfo')
 
       if (node) nodes.push(node)
-    } else if (isPath(paths.players)) {
-      nodes.push(...Array.from(document.querySelectorAll('#mainBody > .playerList > .teamphoto-player')))
+    } else if (isPage(pages.playerListOwnTeam)) {
+      nodes.push(...Array.from(querySelectorAll('#mainBody > .playerList > .teamphoto-player')))
     }
 
-    if (nodes.length === 0) return
+    if (!nodes.length) return
 
     nodes.forEach((node) => {
       const bonus = calcBonus(node)
       if (bonus === 0) return
 
-      const skillBars = node.querySelectorAll<HTMLDivElement>('.transferPlayerSkills .ht-bar')
+      const skillBars = querySelectorAll<HTMLDivElement>(node, '.transferPlayerSkills .ht-bar')
       skillBars.forEach((skillBar) => {
-        const levelBar = skillBar.querySelector<HTMLDivElement>('.bar-level')
-        if (!levelBar) return
+        const levelBar = querySelector<HTMLDivElement>(skillBar, '.bar-level', false)
+        if (!levelBar) return // non-existent skills won't have a .bar-level
 
         const bonusBar = createBonusBar(skillBar, bonus)
         if (bonusBar) skillBar.insertBefore(bonusBar, levelBar)

@@ -1,14 +1,15 @@
 import { Module } from '@common/types/module'
 import { WEEKS_PER_SEASON } from '@common/utils/constants'
+import { querySelector } from '@common/utils/dom'
 import { t } from '@common/utils/i18n'
-import { paths } from '@common/utils/paths'
+import { pages } from '@common/utils/pages'
 import { numberWithSpaces, parseSalaryAndCurency } from '@modules/salary/utils'
 
 const salary: Module = {
   name: 'Salary',
-  paths: [paths.player],
+  pages: [pages.playerDetailAllTeams],
   run: () => {
-    const salaryCell = document.querySelector('.transferPlayerInformation table tr:nth-child(2) td:nth-child(2)')
+    const salaryCell = querySelector('.transferPlayerInformation table tr:nth-child(2) td:nth-child(2)')
     if (!salaryCell) return
 
     const parsed = parseSalaryAndCurency(salaryCell)

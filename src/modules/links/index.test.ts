@@ -1,7 +1,17 @@
-import { getCurrentPath, paths } from '@common/utils/paths'
+import { getCurrentPage, pages } from '@common/utils/pages'
 import links from '@modules/links'
 
-const mockGetCurrentPath = getCurrentPath as jest.Mock
+jest.mock('@common/utils/pages', () => ({
+  ...jest.requireActual('@common/utils/pages'),
+  getCurrentPage: jest.fn(),
+}))
+
+jest.mock('@common/utils/team/utils', () => ({
+  ...jest.requireActual('@common/utils/team/utils'),
+  getOwnTeamData: jest.fn(),
+}))
+
+const mockGetCurrentPage = getCurrentPage as jest.Mock
 
 describe('links module', () => {
   afterEach(() => {
@@ -9,7 +19,7 @@ describe('links module', () => {
   })
 
   it('should render links box in sidebar', () => {
-    mockGetCurrentPath.mockReturnValue(paths.player)
+    mockGetCurrentPage.mockReturnValue(pages.playerDetailOwnTeam)
 
     document.body.innerHTML = '<div id="sidebar"></div>'
 
@@ -28,7 +38,7 @@ describe('links module', () => {
   })
 
   it('should insert box at the beginning of sidebar', () => {
-    mockGetCurrentPath.mockReturnValue(paths.matches)
+    mockGetCurrentPage.mockReturnValue(pages.matches)
 
     document.body.innerHTML = `
       <div id="sidebar">

@@ -1,5 +1,6 @@
+import { querySelector, querySelectorAll } from '@common/utils/dom'
 import { logger } from '@common/utils/logger'
-import { paths } from '@common/utils/paths'
+import { pages } from '@common/utils/pages'
 
 const MAX_LOYALTY = 20
 
@@ -15,8 +16,9 @@ export const calcBonus = (node: ParentNode): number => {
 
 const getLoyaltyBonus = (node: ParentNode): number => {
   // Extract loyalty level (last .skill link with lt=skill)
-  const skillLinks = node.querySelectorAll<HTMLAnchorElement>(
-    `p > a.skill[href*="${paths.appDenominations}"][href*="lt=skill"]`,
+  const skillLinks = querySelectorAll<HTMLAnchorElement>(
+    node,
+    `p > a.skill[href*="${pages.appDenominations.pathname}"][href*="lt=skill"]`,
   )
 
   const loyaltyLink = skillLinks[skillLinks.length - 1]
@@ -29,5 +31,5 @@ const getLoyaltyBonus = (node: ParentNode): number => {
 }
 
 const getHomegrownBonus = (node: ParentNode): number => {
-  return node.querySelector('.icon-mother-club') ? 0.5 : 0
+  return querySelector(node, '.icon-mother-club', false) ? 0.5 : 0
 }

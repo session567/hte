@@ -1,15 +1,16 @@
 import '@modules/denomination/index.css'
 
 import type { Module } from '@common/types/module'
-import { paths } from '@common/utils/paths'
+import { querySelectorAll } from '@common/utils/dom'
+import { pages } from '@common/utils/pages'
 
 const PERSONALITY_TYPES = new Set(['gentleness', 'honesty', 'aggressiveness'])
 
 const denomination: Module = {
   name: 'Denomination',
-  paths: [paths.all],
+  pages: [pages.all],
   run: () => {
-    const links = document.querySelectorAll<HTMLAnchorElement>(`a.skill[href*="${paths.appDenominations}"]`)
+    const links = querySelectorAll<HTMLAnchorElement>(`a.skill[href*="${pages.appDenominations.pathname}"]`, false)
 
     links.forEach((link) => {
       // Check if a denomination number already exists right after the link

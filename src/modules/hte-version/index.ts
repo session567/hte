@@ -1,12 +1,13 @@
 import { Module } from '@common/types/module'
-import { paths } from '@common/utils/paths'
+import { querySelector } from '@common/utils/dom'
+import { pages } from '@common/utils/pages'
 import packageJson from '@root/package.json'
 
 const hteVersion: Module = {
   name: 'HTE Version',
-  paths: [paths.all],
+  pages: [pages.all],
   run: () => {
-    const currentServer = document.querySelector('#bottom .currentServer')
+    const currentServer = querySelector('#bottom .currentServer')
     if (!currentServer) return
 
     const versionText = document.createTextNode(` | HTE v${packageJson.version}`)

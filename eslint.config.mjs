@@ -9,11 +9,12 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import eslintPluginTsdoc from 'eslint-plugin-tsdoc'
 
 export default defineConfig(
+  globalIgnores(['dist/**', 'node_modules/**', 'coverage/**']),
   eslint.configs.recommended,
   tseslint.configs.strict,
   tseslint.configs.stylistic,
   prettierRecommended,
-  globalIgnores(['.yarn/**', 'dist/**', 'node_modules/**']),
+
   {
     files: ['src/**/*.ts'],
     plugins: {
@@ -24,23 +25,69 @@ export default defineConfig(
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
       'tsdoc/syntax': 'warn',
-    },
-  },
-  {
-    files: ['src/**/*.ts'],
-    ignores: ['**/*.test.ts'],
-    rules: {
+
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          varsIgnorePattern: '^_',
+          argsIgnorePattern: '^_',
+        },
+      ],
+
       'no-restricted-imports': [
         'error',
         {
           patterns: [
             {
               group: ['@common/test/*'],
-              message: 'Test utilities should only be imported in test files',
+              message: 'Test utilities should only be imported in test files.',
             },
           ],
         },
       ],
+
+      'no-restricted-properties': [
+        'error',
+        {
+          object: 'document',
+          property: 'getElementById',
+          message: 'Use getElementById from @common/utils/dom instead.',
+        },
+        {
+          object: 'document',
+          property: 'getElementsByName',
+          message: 'Use getElementsByName from @common/utils/dom instead.',
+        },
+      ],
+
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'CallExpression[callee.property.name="querySelector"]',
+          message: 'Use querySelector from @common/utils/dom instead.',
+        },
+        {
+          selector: 'CallExpression[callee.property.name="querySelectorAll"]',
+          message: 'Use querySelectorAll from @common/utils/dom instead.',
+        },
+      ],
+    },
+  },
+
+  {
+    files: ['src/**/*.test.ts'],
+    rules: {
+      'no-restricted-imports': 'off',
+      'no-restricted-properties': 'off',
+      'no-restricted-syntax': 'off',
+    },
+  },
+
+  {
+    files: ['src/common/utils/dom.ts'],
+    rules: {
+      'no-restricted-properties': 'off',
+      'no-restricted-syntax': 'off',
     },
   },
 )

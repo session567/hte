@@ -1,54 +1,73 @@
 import '@modules/links/index.css'
 
 import { Module } from '@common/types/module'
+import { querySelector } from '@common/utils/dom'
 import { t } from '@common/utils/i18n'
-import { getCurrentPath } from '@common/utils/paths'
-import { LINKS } from '@modules/links/constants'
+import { logger } from '@common/utils/logger'
+import { getCurrentPage, Page, pages } from '@common/utils/pages'
+import { createSidebarBox } from '@common/utils/sidebar/box'
+import { getOwnTeamData } from '@common/utils/team/utils'
+import {
+  ARENA_CALCULATOR,
+  DHTH,
+  HATTID_LEAGUE,
+  HATTID_TEAM,
+  HATTRICK_CYCLE_PLANNER,
+  HATTRICK_PORTAL_TRACKER,
+  HATTRICK_YOUTHCLUB,
+  NICKARANA_LEAGUE_SIMULATOR,
+  PLAYER_INTO_COACH_CONVERSION_COST,
+  RATE_MY_ACADEMY,
+  TS_ORGANIZER,
+} from '@modules/links/constants'
+import { Link } from '@modules/links/types'
+import { replacePlaceholders } from '@modules/links/utilts'
+
+const linkMap = new Map<Page, Link[]>([
+  [pages.club, [HATTID_TEAM]],
+  [pages.matches, [DHTH, TS_ORGANIZER]],
+  [pages.playerDetailOwnTeam, [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER]],
+  [pages.playerListOwnTeam, [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER]],
+  [pages.series, [HATTID_LEAGUE, NICKARANA_LEAGUE_SIMULATOR]],
+  [pages.specialists, [PLAYER_INTO_COACH_CONVERSION_COST]],
+  [pages.stadium, [ARENA_CALCULATOR]],
+  [pages.youthPlayer, [HATTRICK_YOUTHCLUB, RATE_MY_ACADEMY]],
+  [pages.youthPlayers, [HATTRICK_YOUTHCLUB, RATE_MY_ACADEMY]],
+])
 
 const links: Module = {
   name: 'Links',
-  paths: Object.keys(LINKS),
+  pages: [...linkMap.keys()],
   run: () => {
-    const sidebar = document.querySelector<HTMLDivElement>('#sidebar')
+    const sidebar = querySelector<HTMLDivElement>('#sidebar')
     if (!sidebar) return
 
-    const links = LINKS[getCurrentPath()]
+    const currentPage = getCurrentPage()
+    const links = linkMap.get(currentPage)
 
-    const box = document.createElement('div')
-    box.className = 'box sidebarBox'
+    if (!links) {
+      logger.warn(`${currentPage} does not have any links.`)
+      return
+    }
 
-    const boxHead = document.createElement('div')
-    boxHead.className = 'boxHead'
-
-    const headIcon = document.createElement('span')
-    headIcon.className = 'header-icon hte-header-icon'
-    headIcon.innerHTML = 'HTE'
-
-    const h2 = document.createElement('h2')
-    h2.textContent = t('links')
-
-    boxHead.appendChild(headIcon)
-    boxHead.appendChild(h2)
-
-    const boxBody = document.createElement('div')
-    boxBody.className = 'boxBody'
+    const placeholderReplacements = getOwnTeamData()
+    const { box, boxBody } = createSidebarBox(t('links'))
 
     links.forEach((link) => {
       const anchor = document.createElement('a')
-      anchor.href = link.url
+
+      try {
+        anchor.href = replacePlaceholders(link.url, placeholderReplacements)
+      } catch (err) {
+        logger.error(err)
+        return
+      }
+
       anchor.textContent = link.name
       anchor.target = '_blank'
 
       boxBody.appendChild(anchor)
     })
-
-    const boxFooter = document.createElement('div')
-    boxFooter.className = 'boxFooter'
-    boxFooter.innerHTML = '&nbsp;'
-
-    box.appendChild(boxHead)
-    box.appendChild(boxBody)
-    box.appendChild(boxFooter)
 
     sidebar.insertBefore(box, sidebar.firstChild)
   },

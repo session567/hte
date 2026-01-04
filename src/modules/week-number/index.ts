@@ -1,14 +1,15 @@
 import '@modules/week-number/index.css'
 
 import { Module } from '@common/types/module'
-import { paths } from '@common/utils/paths'
+import { querySelectorAll } from '@common/utils/dom'
+import { pages } from '@common/utils/pages'
 import { calcWeekNumber, parseDate } from '@modules/week-number/utils'
 
 const weekNumber: Module = {
   name: 'Week Number',
-  paths: [paths.all],
+  pages: [pages.all],
   run: () => {
-    const nodes = document.querySelectorAll('#mainBody .date')
+    const nodes = querySelectorAll('#mainBody .date', false)
 
     nodes.forEach((node) => {
       const date = parseDate(node)

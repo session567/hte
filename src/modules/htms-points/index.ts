@@ -1,6 +1,7 @@
 import { Module } from '@common/types/module'
+import { querySelector, querySelectorAll } from '@common/utils/dom'
 import { t } from '@common/utils/i18n'
-import { isPath, paths } from '@common/utils/paths'
+import { isPage, pages } from '@common/utils/pages'
 import { parsePlayerAge, parsePlayerSkills } from '@common/utils/player/utils'
 import { HTMSPoints } from '@modules/htms-points/constants'
 import { calcHTMSPoints } from '@modules/htms-points/utils'
@@ -44,28 +45,28 @@ const createHTMSRow = (htms: HTMSPoints): HTMLTableRowElement => {
 
 const htmsPoints: Module = {
   name: 'HTMS Points',
-  paths: [paths.player, paths.players, paths.transfersSearchResult],
+  pages: [pages.playerDetailOwnTeam, pages.playerListOwnTeam, pages.transfersSearchResult],
   run: () => {
     const htmsItems: HTMSItem[] = []
 
-    if (isPath(paths.player)) {
-      const targetNode = document.querySelector('#mainBody .playerInfo')
-      const ageNode = document.querySelector('#mainBody > .byline')
+    if (isPage(pages.playerDetailOwnTeam)) {
+      const targetNode = querySelector('#mainBody .playerInfo')
+      const ageNode = querySelector('#mainBody > .byline')
       const htmsItem = processPlayerData(targetNode, ageNode)
       if (htmsItem) htmsItems.push(htmsItem)
-    } else if (isPath(paths.players)) {
-      const nodes = document.querySelectorAll('#mainBody > .playerList > .teamphoto-player .playerInfo')
+    } else if (isPage(pages.playerListOwnTeam)) {
+      const nodes = querySelectorAll('#mainBody > .playerList > .teamphoto-player .playerInfo')
 
       nodes.forEach((node) => {
-        const ageNode = node.querySelector('.transferPlayerInformation table tbody tr:first-child td:nth-child(2)')
+        const ageNode = querySelector(node, '.transferPlayerInformation table tbody tr:first-child td:nth-child(2)')
         const htmsItem = processPlayerData(node, ageNode)
         if (htmsItem) htmsItems.push(htmsItem)
       })
-    } else if (isPath(paths.transfersSearchResult)) {
-      const nodes = document.querySelectorAll('#mainBody .playerListDetails')
+    } else if (isPage(pages.transfersSearchResult)) {
+      const nodes = querySelectorAll('#mainBody .playerListDetails')
 
       nodes.forEach((node) => {
-        const ageNode = node.querySelector('.transferPlayerInformation table tbody tr:nth-child(2) td:nth-child(2)')
+        const ageNode = querySelector(node, '.transferPlayerInformation table tbody tr:nth-child(2) td:nth-child(2)')
         const htmsItem = processPlayerData(node, ageNode)
         if (htmsItem) htmsItems.push(htmsItem)
       })
@@ -73,7 +74,7 @@ const htmsPoints: Module = {
 
     htmsItems.forEach(({ targetNode, htms }) => {
       const htmsRow = createHTMSRow(htms)
-      targetNode.querySelector('.transferPlayerInformation table tbody')?.appendChild(htmsRow)
+      querySelector(targetNode, '.transferPlayerInformation table tbody')?.appendChild(htmsRow)
     })
   },
 }
