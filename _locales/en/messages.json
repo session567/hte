@@ -1,26 +1,26 @@
 {
-  "links": {
+  "links.title": {
     "message": "Links"
   },
-  "skillBonusTitle": {
+  "skill_bonus.title": {
     "message": "Loyalty and homegrown bonus: $1"
   },
-  "htmsLabel": {
+  "htms_points.label": {
     "message": "HTMS"
   },
-  "htmsHelp": {
+  "htms_points.help": {
     "message": "Ability / Potential"
   },
-  "salaryPerSeason": {
+  "salary.per_season": {
     "message": "year"
   },
-  "transferSearchPresetsTitle": {
+  "transfer_search_presets.title": {
     "message": "Transfer Search Presets"
   },
-  "transferSearchPresetsTitleAddPreset": {
+  "transfer_search_presets.add_button": {
     "message": "Add preset"
   },
-  "transferSearchPresetsPromptPresetName": {
+  "transfer_search_presets.name_prompt": {
     "message": "Preset name:"
   }
 }

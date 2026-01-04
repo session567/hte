@@ -27,6 +27,6 @@ describe('salary module', () => {
 
     const salaryCell = document.querySelector('.transferPlayerInformation table tr:nth-child(2) td:nth-child(2)')
     const yearlyDiv = salaryCell?.querySelector('div.shy')
-    expect(yearlyDiv?.textContent).toBe('24 000 €/salaryPerSeason')
+    expect(yearlyDiv?.textContent).toBe('24 000 €/salary.per_season')
   })
 })

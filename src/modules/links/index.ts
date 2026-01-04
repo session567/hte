@@ -51,7 +51,7 @@ const links: Module = {
     }
 
     const placeholderReplacements = getOwnTeamData()
-    const { box, boxBody } = createSidebarBox(t('links'))
+    const { box, boxBody } = createSidebarBox(t('links.title'))
 
     links.forEach((link) => {
       const anchor = document.createElement('a')

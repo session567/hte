@@ -18,7 +18,7 @@ const salary: Module = {
     const yearlySalary = parsed.weeklySalary * WEEKS_PER_SEASON
     const div = document.createElement('div')
     div.className = 'shy'
-    div.textContent = `${numberWithSpaces(yearlySalary)} ${parsed.currency}/${t('salaryPerSeason')}`
+    div.textContent = `${numberWithSpaces(yearlySalary)} ${parsed.currency}/${t('salary.per_season')}`
 
     salaryCell.appendChild(div)
   },

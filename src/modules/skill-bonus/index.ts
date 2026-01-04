@@ -18,7 +18,7 @@ const createBonusBar = (skillBar: HTMLDivElement, bonus: number): HTMLDivElement
   const bonusBar = document.createElement('div')
   bonusBar.className = 'hte-skill-bonus-bar'
   bonusBar.style.width = `${Math.round(((level + bonus) / MAX_BAR_LENGTH) * 100)}%`
-  bonusBar.title = t('skillBonusTitle', [bonus.toFixed(2)])
+  bonusBar.title = t('skill_bonus.title', [bonus.toFixed(2)])
   bonusBar.appendChild(denominationBar.cloneNode(true))
 
   return bonusBar

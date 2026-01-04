@@ -1,8 +1,8 @@
+import { DAYS_PER_SEASON } from '@common/utils/constants'
 import { storage } from '@common/utils/storage'
 import transferSearchPresets from '@modules/transfer-search-presets'
 import { BOOLEAN_FIELD_IDS, RADIO_FIELD_NAMES, STRING_FIELD_IDS } from '@modules/transfer-search-presets/constants'
 import { Preset } from '@modules/transfer-search-presets/types'
-import { DAYS_PER_SEASON } from '@common/utils/constants'
 
 const mockStorageGet = storage.get as jest.Mock
 
@@ -108,10 +108,10 @@ describe('transfer-search-presets module', () => {
     expect(box).not.toBeNull()
 
     const header = box?.querySelector('h2')
-    expect(header?.textContent).toBe('transferSearchPresetsTitle')
+    expect(header?.textContent).toBe('transfer_search_presets.title')
 
     const addPresetLink = box?.querySelector('.hte-preset-link')
-    expect(addPresetLink?.textContent).toBe('transferSearchPresetsTitleAddPreset')
+    expect(addPresetLink?.textContent).toBe('transfer_search_presets.add_button')
     expect(addPresetLink?.classList.contains('hte-mt-2')).toBe(false)
   })
 
@@ -133,7 +133,7 @@ describe('transfer-search-presets module', () => {
     expect(deleteButton).not.toBeNull()
 
     const addPresetLink = box?.querySelector('.hte-preset-link.hte-mt-2')
-    expect(addPresetLink?.textContent).toBe('transferSearchPresetsTitleAddPreset')
+    expect(addPresetLink?.textContent).toBe('transfer_search_presets.add_button')
   })
 
   it('should populate form fields when a preset is clicked', async () => {
