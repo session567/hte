@@ -1,4 +1,4 @@
-import { getOwnTeamData, getPageTeamId, isOwnTeamPage } from './utils'
+import { getOwnTeamData, getPageTeamId, isOwnTeamPage } from '@common/utils/team/utils'
 
 describe('getOwnTeamData', () => {
   afterEach(() => {

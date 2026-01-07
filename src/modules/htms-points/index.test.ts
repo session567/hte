@@ -2,15 +2,23 @@ import { isPage, pages } from '@common/utils/pages'
 import htmsPoints from '@modules/htms-points'
 import { calcHTMSPoints } from '@modules/htms-points/utils'
 
-jest.mock('@common/utils/pages', () => ({
-  ...jest.requireActual('@common/utils/pages'),
-  isPage: jest.fn(),
-}))
+jest.mock(
+  '@common/utils/pages',
+  () =>
+    ({
+      ...jest.requireActual('@common/utils/pages'),
+      isPage: jest.fn(),
+    }) as typeof import('@common/utils/pages'),
+)
 
-jest.mock('@modules/htms-points/utils', () => ({
-  ...jest.requireActual('@modules/htms-points/utils'),
-  calcHTMSPoints: jest.fn(),
-}))
+jest.mock(
+  '@modules/htms-points/utils',
+  () =>
+    ({
+      ...jest.requireActual('@modules/htms-points/utils'),
+      calcHTMSPoints: jest.fn(),
+    }) as typeof import('@modules/htms-points/utils'),
+)
 
 const mockIsPage = isPage as jest.Mock
 const mockCalcHTMSPoints = calcHTMSPoints as jest.Mock
@@ -181,14 +189,14 @@ describe('htms-points module', () => {
     const players = document.querySelectorAll('.teamphoto-player .playerInfo')
     expect(players).toHaveLength(2)
 
-    const htmsRow1 = players[0]?.querySelector('.transferPlayerInformation table tr:last-child')
+    const htmsRow1 = players[0].querySelector('.transferPlayerInformation table tr:last-child')
     const labelCell1 = htmsRow1?.querySelector('td.right')
     const valueCell1 = htmsRow1?.querySelector<HTMLSpanElement>('span.help.hte-help')
     expect(labelCell1?.textContent).toBe('htms_points.label')
     expect(valueCell1?.textContent).toBe('1234 / 5678')
     expect(valueCell1?.title).toBe('htms_points.help')
 
-    const htmsRow2 = players[1]?.querySelector('.transferPlayerInformation table tr:last-child')
+    const htmsRow2 = players[1].querySelector('.transferPlayerInformation table tr:last-child')
     const labelCell2 = htmsRow2?.querySelector('td.right')
     const valueCell2 = htmsRow2?.querySelector<HTMLSpanElement>('span.help.hte-help')
     expect(labelCell2?.textContent).toBe('htms_points.label')
@@ -298,14 +306,14 @@ describe('htms-points module', () => {
     const players = document.querySelectorAll('.playerListDetails')
     expect(players).toHaveLength(2)
 
-    const htmsRow1 = players[0]?.querySelector('.transferPlayerInformation table tr:last-child')
+    const htmsRow1 = players[0].querySelector('.transferPlayerInformation table tr:last-child')
     const labelCell1 = htmsRow1?.querySelector('td.right')
     const valueCell1 = htmsRow1?.querySelector<HTMLSpanElement>('span.help.hte-help')
     expect(labelCell1?.textContent).toBe('htms_points.label')
     expect(valueCell1?.textContent).toBe('1234 / 5678')
     expect(valueCell1?.title).toBe('htms_points.help')
 
-    const htmsRow2 = players[1]?.querySelector('.transferPlayerInformation table tr:last-child')
+    const htmsRow2 = players[1].querySelector('.transferPlayerInformation table tr:last-child')
     const labelCell2 = htmsRow2?.querySelector('td.right')
     const valueCell2 = htmsRow2?.querySelector<HTMLSpanElement>('span.help.hte-help')
     expect(labelCell2?.textContent).toBe('htms_points.label')

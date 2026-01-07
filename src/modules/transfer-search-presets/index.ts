@@ -13,7 +13,7 @@ import { Preset, PresetMap } from '@modules/transfer-search-presets/types'
 const STORAGE_KEY = 'transferSearchPresets'
 
 const fetchPresetsFromStorage = async (): Promise<PresetMap> => {
-  return (await storage.get<PresetMap>(STORAGE_KEY)) || {}
+  return (await storage.get<PresetMap>(STORAGE_KEY)) ?? {}
 }
 
 const savePresetsToStorage = async (presetMap: PresetMap): Promise<void> => {
@@ -75,7 +75,7 @@ const applyPresetToForm = (preset: Preset) => {
   })
 }
 
-const renderPresets = async (boxBody: HTMLDivElement, onPresetChange: () => void) => {
+const renderPresets = async (boxBody: HTMLDivElement, onPresetChange: () => Promise<void>) => {
   boxBody.innerHTML = ''
 
   const presetMap = await fetchPresetsFromStorage()
@@ -98,7 +98,7 @@ const renderPresets = async (boxBody: HTMLDivElement, onPresetChange: () => void
       const presetMap = await fetchPresetsFromStorage()
       const { [name]: _, ...remainingPresets } = presetMap
       await savePresetsToStorage(remainingPresets)
-      onPresetChange()
+      await onPresetChange()
     }
 
     row.appendChild(presetLink)
@@ -117,7 +117,7 @@ const renderPresets = async (boxBody: HTMLDivElement, onPresetChange: () => void
     const presetMap = await fetchPresetsFromStorage()
     presetMap[name] = preset
     await savePresetsToStorage(presetMap)
-    onPresetChange()
+    await onPresetChange()
   }
 
   boxBody.appendChild(addPresetLink)
@@ -133,8 +133,8 @@ const transferSearchPresets: Module = {
     const { box, boxBody } = createSidebarBox(t('transfer_search_presets.title'))
     sidebar.appendChild(box)
 
-    const render = () => renderPresets(boxBody, render)
-    render()
+    const render = async () => renderPresets(boxBody, render)
+    void render()
   },
 }
 

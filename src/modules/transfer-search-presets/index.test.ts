@@ -4,7 +4,7 @@ import transferSearchPresets from '@modules/transfer-search-presets'
 import { BOOLEAN_FIELD_IDS, RADIO_FIELD_NAMES, STRING_FIELD_IDS } from '@modules/transfer-search-presets/constants'
 import { Preset } from '@modules/transfer-search-presets/types'
 
-const mockStorageGet = storage.get as jest.Mock
+const mockStorageGet = jest.spyOn(storage, 'get')
 
 const AGE_MIN = 17
 const AGE_MAX = 99
@@ -189,12 +189,12 @@ describe('transfer-search-presets module', () => {
 
     STRING_FIELD_IDS.forEach((id) => {
       const el = document.getElementById(id) as HTMLInputElement | HTMLSelectElement
-      expect({ [id]: el?.value }).toEqual({ [id]: preset[id] })
+      expect({ [id]: el.value }).toEqual({ [id]: preset[id] })
     })
 
     BOOLEAN_FIELD_IDS.forEach((id) => {
       const el = document.getElementById(id) as HTMLInputElement
-      expect({ [id]: el?.hasAttribute('checked') }).toEqual({ [id]: preset[id] })
+      expect({ [id]: el.hasAttribute('checked') }).toEqual({ [id]: preset[id] })
     })
 
     RADIO_FIELD_NAMES.forEach((name) => {

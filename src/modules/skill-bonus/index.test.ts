@@ -1,10 +1,14 @@
 import { isPage, pages } from '@common/utils/pages'
 import skillBonus from '@modules/skill-bonus'
 
-jest.mock('@common/utils/pages', () => ({
-  ...jest.requireActual('@common/utils/pages'),
-  isPage: jest.fn(),
-}))
+jest.mock(
+  '@common/utils/pages',
+  () =>
+    ({
+      ...jest.requireActual('@common/utils/pages'),
+      isPage: jest.fn(),
+    }) as typeof import('@common/utils/pages'),
+)
 
 const mockIsPage = isPage as jest.Mock
 
@@ -226,11 +230,11 @@ describe('skill-bonus module', () => {
     expect(bonusBars).toHaveLength(2)
 
     // Skill level: 7, Bonus: 1.0
-    expect(bonusBars[0]?.getAttribute('style')).toContain('width: 40%') // (7 + 1.0) / 20 * 100
-    expect(bonusBars[0]?.querySelector('.bar-denomination')).not.toBeNull()
+    expect(bonusBars[0].getAttribute('style')).toContain('width: 40%') // (7 + 1.0) / 20 * 100
+    expect(bonusBars[0].querySelector('.bar-denomination')).not.toBeNull()
 
     // Skill level: 16, Bonus: 1.4
-    expect(bonusBars[1]?.getAttribute('style')).toContain('width: 87') // (16 + 1.4) / 20 * 100
-    expect(bonusBars[1]?.querySelector('.bar-denomination')).not.toBeNull()
+    expect(bonusBars[1].getAttribute('style')).toContain('width: 87') // (16 + 1.4) / 20 * 100
+    expect(bonusBars[1].querySelector('.bar-denomination')).not.toBeNull()
   })
 })

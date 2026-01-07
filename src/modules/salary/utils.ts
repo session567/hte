@@ -4,7 +4,7 @@ export const parseSalaryAndCurency = (node: ParentNode) => {
   const value = node.textContent?.trim()
   if (!value) return null
 
-  const match = value.match(WEEKLY_SALARY_AND_CURRENCY_REGEX)
+  const match = WEEKLY_SALARY_AND_CURRENCY_REGEX.exec(value)
   if (!match) return null
 
   return {

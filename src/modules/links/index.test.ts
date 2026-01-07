@@ -1,15 +1,23 @@
 import { getCurrentPage, pages } from '@common/utils/pages'
 import links from '@modules/links'
 
-jest.mock('@common/utils/pages', () => ({
-  ...jest.requireActual('@common/utils/pages'),
-  getCurrentPage: jest.fn(),
-}))
+jest.mock(
+  '@common/utils/pages',
+  () =>
+    ({
+      ...jest.requireActual('@common/utils/pages'),
+      getCurrentPage: jest.fn(),
+    }) as typeof import('@common/utils/pages'),
+)
 
-jest.mock('@common/utils/team/utils', () => ({
-  ...jest.requireActual('@common/utils/team/utils'),
-  getOwnTeamData: jest.fn(),
-}))
+jest.mock(
+  '@common/utils/team/utils',
+  () =>
+    ({
+      ...jest.requireActual('@common/utils/team/utils'),
+      getOwnTeamData: jest.fn(),
+    }) as typeof import('@common/utils/team/utils'),
+)
 
 const mockGetCurrentPage = getCurrentPage as jest.Mock
 
@@ -52,7 +60,7 @@ describe('links module', () => {
     const firstChild = sidebar?.firstChild
 
     expect(firstChild?.nodeName).toBe('DIV')
-    expect((firstChild as HTMLElement)?.className).toBe('box sidebarBox')
+    expect((firstChild as HTMLElement).className).toBe('box sidebarBox')
   })
 
   it('should not render box if there is no sidebar', () => {

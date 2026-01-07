@@ -20,12 +20,12 @@ const getLoyaltyBonus = (node: ParentNode): number => {
     node,
     `p > a.skill[href*="${pages.appDenominations.pathname}"][href*="lt=skill"]`,
   )
+  if (skillLinks.length === 0) return 0
 
   const loyaltyLink = skillLinks[skillLinks.length - 1]
-  if (!loyaltyLink) return 0
 
   const url = new URL(loyaltyLink.href)
-  const loyalty = parseInt(url.searchParams.get('ll') || '0', 10)
+  const loyalty = parseInt(url.searchParams.get('ll') ?? '0', 10)
 
   return loyalty / MAX_LOYALTY
 }

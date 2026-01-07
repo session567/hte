@@ -11,10 +11,21 @@ import eslintPluginTsdoc from 'eslint-plugin-tsdoc'
 export default defineConfig(
   globalIgnores(['dist/**', 'node_modules/**', 'coverage/**']),
   eslint.configs.recommended,
-  tseslint.configs.strict,
-  tseslint.configs.stylistic,
+  tseslint.configs.strictTypeChecked,
+  tseslint.configs.stylisticTypeChecked,
   prettierRecommended,
 
+  {
+    languageOptions: {
+      parserOptions: {
+        projectService: {
+          allowDefaultProject: ['*.mjs', '*.ts'],
+        },
+      },
+    },
+  },
+
+  // All files
   {
     files: ['src/**/*.ts'],
     plugins: {
@@ -22,6 +33,7 @@ export default defineConfig(
       tsdoc: eslintPluginTsdoc,
     },
     rules: {
+      '@typescript-eslint/restrict-template-expressions': 'off',
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
       'tsdoc/syntax': 'warn',
@@ -31,22 +43,6 @@ export default defineConfig(
         {
           varsIgnorePattern: '^_',
           argsIgnorePattern: '^_',
-        },
-      ],
-
-      'no-restricted-imports': [
-        'error',
-        {
-          patterns: [
-            {
-              group: ['@common/test/*'],
-              message: 'Test utilities should only be imported in test files.',
-            },
-            {
-              group: ['./*', '../*'],
-              message: 'Use absolute imports with path aliases (@common, @modules) instead of relative imports.',
-            },
-          ],
         },
       ],
 
@@ -78,20 +74,56 @@ export default defineConfig(
     },
   },
 
+  // Non-test files
+  {
+    files: ['src/**/*.ts'],
+    ignores: ['src/**/*.test.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@common/test/*'],
+              message: 'Test utilities should only be imported in test files.',
+            },
+            {
+              group: ['./**', '../**'],
+              message: 'Use absolute imports with path aliases (@common, @modules) instead of relative imports.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+
+  // Test files
   {
     files: ['src/**/*.test.ts'],
     rules: {
-      'no-restricted-imports': 'off',
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['./**', '../**'],
+              message: 'Use absolute imports with path aliases (@common, @modules) instead of relative imports.',
+            },
+          ],
+        },
+      ],
       'no-restricted-properties': 'off',
       'no-restricted-syntax': 'off',
     },
   },
 
+  // Specific files
   {
     files: ['src/common/utils/dom.ts'],
     rules: {
       'no-restricted-properties': 'off',
       'no-restricted-syntax': 'off',
+      '@typescript-eslint/no-unnecessary-type-parameters': 'off',
     },
   },
 )

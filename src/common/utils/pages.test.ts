@@ -61,6 +61,6 @@ describe('getCurrentPage', () => {
     mockGetCurrentPathname.mockReturnValue('/Unsupported/Path/')
     mockIsOwnTeamPage.mockReturnValue(false)
 
-    expect(() => getCurrentPage()).toThrow('The current page is not supported.')
+    expect(() => getCurrentPage()).toThrow('The current page is not supported')
   })
 })

@@ -19,7 +19,7 @@ export const parsePlayerAge = (node: ParentNode): PlayerAge | null => {
   const value = node.textContent?.trim()
   if (!value) return null
 
-  const match = value?.match(PLAYER_AGE_REGEX)
+  const match = PLAYER_AGE_REGEX.exec(value)
   if (!match) return null
 
   return {

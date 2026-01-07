@@ -45,7 +45,7 @@ export const isPage = (page: Page): boolean => {
 
 export const getCurrentPage = (): Page => {
   const page = Object.values(pages).find((page) => isPage(page))
-  if (page === undefined) throw new Error('The current page is not supported.')
+  if (page === undefined) throw new Error('The current page is not supported')
 
   return page
 }

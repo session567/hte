@@ -1,4 +1,4 @@
-import { replacePlaceholders } from './utilts'
+import { replacePlaceholders } from '@modules/links/utils'
 
 describe('replacePlaceholders', () => {
   it('should replace valid placeholders with data', () => {
@@ -33,7 +33,7 @@ describe('replacePlaceholders', () => {
     const data = { teamId: '123', seriesId: '456' }
 
     expect(() => replacePlaceholders(url, data)).toThrow(
-      'Invalid placeholder {userId} in link https://example.com/user/{userId}.',
+      'Invalid placeholder {userId} in link https://example.com/user/{userId}',
     )
   })
 
@@ -41,13 +41,13 @@ describe('replacePlaceholders', () => {
     const url = 'https://example.com/team/{teamId}'
     const data = { teamId: null, seriesId: '456' }
 
-    expect(() => replacePlaceholders(url, data)).toThrow('Missing data for placeholder {teamId}.')
+    expect(() => replacePlaceholders(url, data)).toThrow('Missing data for placeholder {teamId}')
   })
 
   it('should throw error when data is missing a key', () => {
     const url = 'https://example.com/team/{teamId}'
     const data = { seriesId: '456' } as Record<string, string | null>
 
-    expect(() => replacePlaceholders(url, data)).toThrow('Missing data for placeholder {teamId}.')
+    expect(() => replacePlaceholders(url, data)).toThrow('Missing data for placeholder {teamId}')
   })
 })

@@ -11,7 +11,7 @@ export const parseDate = (node: ParentNode): Date | null => {
   const value = node.textContent?.trim()
   if (!value) return null
 
-  const longMatch = value.match(DATE_REGEX_LONG)
+  const longMatch = DATE_REGEX_LONG.exec(value)
 
   if (longMatch) {
     const [, day, month, year, hour, minute] = longMatch.map((m) => parseInt(m, 10))
@@ -19,7 +19,7 @@ export const parseDate = (node: ParentNode): Date | null => {
     return new Date(year, month - 1, day, hour, minute)
   }
 
-  const shortMatch = value.match(DATE_REGEX_SHORT)
+  const shortMatch = DATE_REGEX_SHORT.exec(value)
 
   if (shortMatch) {
     const [, day, month, year] = shortMatch.map((m) => parseInt(m, 10))

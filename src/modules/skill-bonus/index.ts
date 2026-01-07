@@ -9,7 +9,7 @@ import { calcBonus } from '@modules/skill-bonus/utils'
 const MAX_BAR_LENGTH = 20
 
 const createBonusBar = (skillBar: HTMLDivElement, bonus: number): HTMLDivElement | null => {
-  const level = parseInt(skillBar.getAttribute('level') || '0', 10)
+  const level = parseInt(skillBar.getAttribute('level') ?? '0', 10)
   if (!level) return null
 
   const denominationBar = querySelector<HTMLSpanElement>(skillBar, '.bar-max > .bar-denomination')

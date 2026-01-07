@@ -1,6 +1,6 @@
 import { Link } from '@modules/links/types'
 
-export const ALLOWED_PLACEHOLDERS = ['teamId', 'seriesId'] as const satisfies string[]
+export const ALLOWED_PLACEHOLDERS = ['teamId', 'seriesId']
 
 export const ARENA_CALCULATOR: Link = {
   name: 'Arena Calculator',
