@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "HTE",
+  "name": "hte",
   "version": "0.1.0",
   "description": "Various enhancements for Hattrick",
   "default_locale": "en",
@@ -16,10 +16,10 @@
         "https://*.hattrick.org/*"
       ],
       "css": [
-        "dist/bundle.css"
+        "dist/index.css"
       ],
       "js": [
-        "dist/bundle.js"
+        "dist/index.js"
       ]
     }
   ],
