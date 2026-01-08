@@ -7,8 +7,8 @@ const TARGET_AGE_YEARS = 28
 /**
  * Calculates HTMS points for a player.
  *
- * @see https://www.youtube.com/watch?v=vfVac6S861o
- * @see https://www87.hattrick.org/Forum/Read.aspx?t=17568840&v=0&a=1&n=43
+ * @see {@link https://www.youtube.com/watch?v=vfVac6S861o}
+ * @see {@link https://www87.hattrick.org/Forum/Read.aspx?t=17568840&v=0&a=1&n=43}
  *
  * @param age - The player's age
  * @param skills - The player's skills

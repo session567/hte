@@ -1,13 +1,6 @@
 import hteVersion from '@modules/hte-version'
 
 describe('hte-version module', () => {
-  beforeAll(() => {
-    Object.defineProperty(globalThis, '__VERSION__', {
-      value: '1.2.3',
-      writable: true,
-    })
-  })
-
   afterEach(() => {
     document.body.innerHTML = ''
   })

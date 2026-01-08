@@ -1,3 +1,5 @@
+Object.defineProperty(globalThis, '__VERSION__', { value: '1.2.3' })
+
 globalThis.chrome = {
   i18n: {
     getMessage: jest.fn(),

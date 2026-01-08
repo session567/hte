@@ -1,3 +1,9 @@
+/**
+ * Create a sidebar box matching Hattrick's UI.
+ *
+ * @param title - The title text to display in the box header
+ * @returns Object containing the box element and its body element for adding content
+ */
 export const createSidebarBox = (title: string) => {
   const box = document.createElement('div')
   box.className = 'box sidebarBox'

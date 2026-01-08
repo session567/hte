@@ -1,5 +1,5 @@
 /**
- * Get translated message from chrome.i18n API.
+ * Get the localized string from chrome.i18n API.
  *
  * @param key - Message key from messages.json
  * @param substitutions - Optional placeholder substitutions

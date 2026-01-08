@@ -1,8 +1,7 @@
 import { Module } from '@common/types/module'
+import { VERSION } from '@common/utils/constants'
 import { querySelector } from '@common/utils/dom'
 import { pages } from '@common/utils/pages'
-
-declare const __VERSION__: string
 
 const hteVersion: Module = {
   name: 'HTE Version',
@@ -11,7 +10,7 @@ const hteVersion: Module = {
     const currentServer = querySelector('#bottom .currentServer')
     if (!currentServer) return
 
-    const versionText = document.createTextNode(` | HTE v${__VERSION__}`)
+    const versionText = document.createTextNode(` | HTE v${VERSION}`)
     currentServer.appendChild(versionText)
   },
 }
