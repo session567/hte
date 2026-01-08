@@ -1,7 +1,13 @@
 import hteVersion from '@modules/hte-version'
-import packageJson from '@root/package.json'
 
 describe('hte-version module', () => {
+  beforeAll(() => {
+    Object.defineProperty(globalThis, '__VERSION__', {
+      value: '1.2.3',
+      writable: true,
+    })
+  })
+
   afterEach(() => {
     document.body.innerHTML = ''
   })
@@ -16,6 +22,6 @@ describe('hte-version module', () => {
     hteVersion.run()
 
     const currentServer = document.querySelector('#bottom .currentServer')
-    expect(currentServer?.textContent).toBe(`Server 1 | HTE v${packageJson.version}`)
+    expect(currentServer?.textContent).toBe('Server 1 | HTE v1.2.3')
   })
 })

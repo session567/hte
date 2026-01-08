@@ -6,7 +6,6 @@
     "moduleResolution": "bundler",
     "strict": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true,
     "noEmit": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
@@ -14,8 +13,7 @@
     "paths": {
       "@/*": ["src/*"],
       "@common/*": ["src/common/*"],
-      "@modules/*": ["src/modules/*"],
-      "@root/*": ["./*"]
+      "@modules/*": ["src/modules/*"]
     }
   },
   "include": ["src/**/*"]

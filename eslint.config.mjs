@@ -9,7 +9,7 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import eslintPluginTsdoc from 'eslint-plugin-tsdoc'
 
 export default defineConfig(
-  globalIgnores(['dist/**', 'node_modules/**', 'coverage/**']),
+  globalIgnores(['coverage/**', 'dist/**', 'node_modules/**', 'scripts/**']),
   eslint.configs.recommended,
   tseslint.configs.strictTypeChecked,
   tseslint.configs.stylisticTypeChecked,

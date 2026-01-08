@@ -8,7 +8,6 @@ const config: Config = {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@common/(.*)$': '<rootDir>/src/common/$1',
     '^@modules/(.*)$': '<rootDir>/src/modules/$1',
-    '^@root/(.*)$': '<rootDir>/$1',
   },
   setupFiles: ['<rootDir>/src/common/test/setup.ts'],
   testEnvironment: 'jsdom',
