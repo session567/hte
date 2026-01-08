@@ -1,17 +1,14 @@
 import { getCurrentPathname } from '@common/utils/location'
 import { isOwnTeamPage } from '@common/utils/team/utils'
 
-export enum Scope {
-  AllTeams = 'ALL_TEAMS',
-  OwnTeam = 'OWN_TEAM',
-}
+export type Scope = 'ALL_TEAMS' | 'OWN_TEAM'
 
 export class Page {
   static readonly __ALL__ = '__ALL__' // All pages
 
   constructor(
     public readonly pathname: string,
-    public readonly scope = Scope.AllTeams,
+    public readonly scope: Scope = 'ALL_TEAMS',
   ) {}
 
   toString(): string {
@@ -25,9 +22,9 @@ export const pages = {
   club: new Page('/Club/'),
   matches: new Page('/Club/Matches/'),
   playerDetailAllTeams: new Page('/Club/Players/Player.aspx'),
-  playerDetailOwnTeam: new Page('/Club/Players/Player.aspx', Scope.OwnTeam),
+  playerDetailOwnTeam: new Page('/Club/Players/Player.aspx', 'OWN_TEAM'),
   playerListAllTeams: new Page('/Club/Players/'),
-  playerListOwnTeam: new Page('/Club/Players/', Scope.OwnTeam),
+  playerListOwnTeam: new Page('/Club/Players/', 'OWN_TEAM'),
   series: new Page('/World/Series/'),
   specialists: new Page('/Club/Specialists/'),
   stadium: new Page('/Club/Stadium/'),
@@ -39,8 +36,8 @@ export const pages = {
 
 export const isPage = (page: Page): boolean => {
   if (page.pathname !== getCurrentPathname()) return false
-  if (isOwnTeamPage()) return page.scope === Scope.OwnTeam
-  return page.scope === Scope.AllTeams
+  if (isOwnTeamPage()) return page.scope === 'OWN_TEAM'
+  return page.scope === 'ALL_TEAMS'
 }
 
 export const getCurrentPage = (): Page => {

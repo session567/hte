@@ -6,13 +6,13 @@ import { NUM_OF_SKILLS, PlayerAge, PlayerSkills, Skill } from '@common/utils/pla
 const PLAYER_AGE_REGEX = /(\d+)\D+(\d+)(?:\D*\d{2}\.\d{2}\.\d{4})?/
 
 const ROW_ID_TO_SKILL: Record<string, Skill> = {
-  trKeeper: Skill.Keeper,
-  trDefender: Skill.Defending,
-  trPlaymaker: Skill.Playmaking,
-  trWinger: Skill.Winger,
-  trPasser: Skill.Passing,
-  trScorer: Skill.Scoring,
-  trKicker: Skill.SetPieces,
+  trKeeper: 'keeper',
+  trDefender: 'defending',
+  trPlaymaker: 'playmaking',
+  trWinger: 'winger',
+  trPasser: 'passing',
+  trScorer: 'scoring',
+  trKicker: 'setPieces',
 }
 
 export const parsePlayerAge = (node: ParentNode): PlayerAge | null => {

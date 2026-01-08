@@ -34,6 +34,7 @@ export default defineConfig(
     },
     rules: {
       '@typescript-eslint/restrict-template-expressions': 'off',
+      '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
       'tsdoc/syntax': 'warn',

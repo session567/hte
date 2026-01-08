@@ -1,5 +1,5 @@
 import { getCurrentPathname } from '@common/utils/location'
-import { getCurrentPage, isPage, Page, pages, Scope } from '@common/utils/pages'
+import { getCurrentPage, isPage, Page, pages } from '@common/utils/pages'
 import { isOwnTeamPage } from '@common/utils/team/utils'
 
 jest.mock('@common/utils/team/utils')
@@ -12,28 +12,28 @@ describe('isPage', () => {
     {
       desc: 'same path, different scope',
       currentPathname: '/Foo',
-      page: new Page('/Foo', Scope.AllTeams),
+      page: new Page('/Foo', 'ALL_TEAMS'),
       isOwnTeamPage: true,
       expected: false,
     },
     {
       desc: 'same path, same (all teams) scope',
       currentPathname: '/Foo',
-      page: new Page('/Foo', Scope.AllTeams),
+      page: new Page('/Foo', 'ALL_TEAMS'),
       isOwnTeamPage: false,
       expected: true,
     },
     {
       desc: 'same path, same (own team) scope',
       currentPathname: '/Foo',
-      page: new Page('/Foo', Scope.OwnTeam),
+      page: new Page('/Foo', 'OWN_TEAM'),
       isOwnTeamPage: true,
       expected: true,
     },
     {
       desc: 'different path, same scope',
       currentPathname: '/Foo',
-      page: new Page('/Bar', Scope.AllTeams),
+      page: new Page('/Bar', 'ALL_TEAMS'),
       isOwnTeamPage: false,
       expected: false,
     },

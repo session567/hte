@@ -1,4 +1,3 @@
-import { Skill } from '@common/utils/player/constants'
 import { calcHTMSPoints } from '@modules/htms-points/utils'
 
 describe('calcHTMSPoints', () => {
@@ -15,13 +14,13 @@ describe('calcHTMSPoints', () => {
     'should calculate ability=$expectedAbility and potential=$expectedPotential',
     ({ age, levels, expectedAbility, expectedPotential }) => {
       const skills = {
-        [Skill.Keeper]: levels[0],
-        [Skill.Defending]: levels[1],
-        [Skill.Playmaking]: levels[2],
-        [Skill.Winger]: levels[3],
-        [Skill.Passing]: levels[4],
-        [Skill.Scoring]: levels[5],
-        [Skill.SetPieces]: levels[6],
+        keeper: levels[0],
+        defending: levels[1],
+        playmaking: levels[2],
+        winger: levels[3],
+        passing: levels[4],
+        scoring: levels[5],
+        setPieces: levels[6],
       }
       const result = calcHTMSPoints(age, skills)
 

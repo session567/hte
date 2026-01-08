@@ -6,7 +6,7 @@ import { parsePlayerAge, parsePlayerSkills } from '@common/utils/player/utils'
 import { HTMSPoints } from '@modules/htms-points/constants'
 import { calcHTMSPoints } from '@modules/htms-points/utils'
 
-interface HTMSItem {
+type HTMSItem = {
   targetNode: ParentNode
   htms: HTMSPoints
 }

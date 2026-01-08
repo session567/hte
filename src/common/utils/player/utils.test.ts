@@ -1,6 +1,5 @@
 import { createNode } from '@common/test/utils'
 import { logger } from '@common/utils/logger'
-import { Skill } from '@common/utils/player/constants'
 import { parsePlayerAge, parsePlayerSkills } from '@common/utils/player/utils'
 
 describe('parsePlayerAge', () => {
@@ -82,13 +81,13 @@ describe('parsePlayerSkills', () => {
     const result = parsePlayerSkills(node)
 
     expect(result).not.toBeNull()
-    expect(result?.[Skill.Keeper]).toBe(1)
-    expect(result?.[Skill.Defending]).toBe(6)
-    expect(result?.[Skill.Playmaking]).toBe(4)
-    expect(result?.[Skill.Winger]).toBe(6)
-    expect(result?.[Skill.Passing]).toBe(4)
-    expect(result?.[Skill.Scoring]).toBe(3)
-    expect(result?.[Skill.SetPieces]).toBe(2)
+    expect(result?.keeper).toBe(1)
+    expect(result?.defending).toBe(6)
+    expect(result?.playmaking).toBe(4)
+    expect(result?.winger).toBe(6)
+    expect(result?.passing).toBe(4)
+    expect(result?.scoring).toBe(3)
+    expect(result?.setPieces).toBe(2)
   })
 
   it('should return null and log warning when only one skill is found', () => {
@@ -108,7 +107,7 @@ describe('parsePlayerSkills', () => {
     const result = parsePlayerSkills(node)
 
     expect(result).toBeNull()
-    expect(logger.warn).toHaveBeenCalledWith('Cannot parse skills. Expected 7 skill, found 1.', { [Skill.Keeper]: 1 })
+    expect(logger.warn).toHaveBeenCalledWith('Cannot parse skills. Expected 7 skill, found 1.', { keeper: 1 })
   })
 
   it('should return null for empty HTML', () => {

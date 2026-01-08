@@ -1,0 +1,2 @@
+- Prefer `type` over `interface`.
+- Never use `enum`; always prefer literal unions instead.
