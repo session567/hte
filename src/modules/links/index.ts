@@ -17,7 +17,7 @@ import {
   HATTRICK_YOUTHCLUB,
   NICKARANA_LEAGUE_SIMULATOR,
   PLAYER_INTO_COACH_CONVERSION_COST,
-  RATE_MY_ACADEMY,
+  SCOUTRICK,
   TS_ORGANIZER,
 } from '@modules/links/constants'
 import { Link } from '@modules/links/types'
@@ -31,8 +31,8 @@ const linkMap = new Map<Page, Link[]>([
   [pages.series, [HATTID_LEAGUE, NICKARANA_LEAGUE_SIMULATOR]],
   [pages.specialists, [PLAYER_INTO_COACH_CONVERSION_COST]],
   [pages.stadium, [ARENA_CALCULATOR]],
-  [pages.youthPlayer, [HATTRICK_YOUTHCLUB, RATE_MY_ACADEMY]],
-  [pages.youthPlayers, [HATTRICK_YOUTHCLUB, RATE_MY_ACADEMY]],
+  [pages.youthPlayer, [HATTRICK_YOUTHCLUB, SCOUTRICK]],
+  [pages.youthPlayers, [HATTRICK_YOUTHCLUB, SCOUTRICK]],
 ])
 
 /**

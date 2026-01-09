@@ -47,9 +47,9 @@ export const PLAYER_INTO_COACH_CONVERSION_COST: Link = {
   url: 'https://ht.alergromania.ro/tools/player-into-coach-cost',
 }
 
-export const RATE_MY_ACADEMY: Link = {
-  name: 'Rate My Academy',
-  url: 'https://www.rate-my.academy',
+export const SCOUTRICK: Link = {
+  name: 'Scoutrick',
+  url: 'https://www.scoutrick.org/',
 }
 
 export const TS_ORGANIZER: Link = {
