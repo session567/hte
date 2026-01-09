@@ -188,13 +188,13 @@ describe('transfer-search-presets module', () => {
     await new Promise((resolve) => setTimeout(resolve, 0))
 
     STRING_FIELD_IDS.forEach((id) => {
-      const el = document.getElementById(id) as HTMLInputElement | HTMLSelectElement
-      expect({ [id]: el.value }).toEqual({ [id]: preset[id] })
+      const element = document.getElementById(id) as HTMLInputElement | HTMLSelectElement
+      expect({ [id]: element.value }).toEqual({ [id]: preset[id] })
     })
 
     BOOLEAN_FIELD_IDS.forEach((id) => {
-      const el = document.getElementById(id) as HTMLInputElement
-      expect({ [id]: el.hasAttribute('checked') }).toEqual({ [id]: preset[id] })
+      const element = document.getElementById(id) as HTMLInputElement
+      expect({ [id]: element.hasAttribute('checked') }).toEqual({ [id]: preset[id] })
     })
 
     RADIO_FIELD_NAMES.forEach((name) => {

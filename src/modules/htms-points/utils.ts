@@ -1,8 +1,11 @@
 import { DAYS_PER_SEASON, DAYS_PER_WEEK, WEEKS_PER_SEASON } from '@common/utils/constants'
 import { PlayerAge, PlayerSkills, Skill } from '@common/utils/player/constants'
-import { HTMS_ABILITY_TABLE, HTMS_POINTS_PER_WEEK, HTMSPoints } from '@modules/htms-points/constants'
-
-const TARGET_AGE_YEARS = 28
+import {
+  HTMS_ABILITY_TABLE,
+  HTMS_POINTS_PER_WEEK,
+  HTMS_TARGET_AGE_YEARS,
+  HTMSPoints,
+} from '@modules/htms-points/constants'
 
 /**
  * Calculates HTMS points for a player.
@@ -24,16 +27,16 @@ export const calcHTMSPoints = (age: PlayerAge, skills: PlayerSkills): HTMSPoints
 
   let potential = ability
 
-  if (age.years < TARGET_AGE_YEARS) {
+  if (age.years < HTMS_TARGET_AGE_YEARS) {
     potential += HTMS_POINTS_PER_WEEK[age.years] * ((DAYS_PER_SEASON - age.days) / DAYS_PER_WEEK)
 
-    for (let i = age.years + 1; i < TARGET_AGE_YEARS; i++) {
+    for (let i = age.years + 1; i < HTMS_TARGET_AGE_YEARS; i++) {
       potential += HTMS_POINTS_PER_WEEK[i] * WEEKS_PER_SEASON
     }
   } else if (age.years in HTMS_POINTS_PER_WEEK) {
     potential -= HTMS_POINTS_PER_WEEK[age.years] * (age.days / DAYS_PER_WEEK)
 
-    for (let i = age.years - 1; i >= TARGET_AGE_YEARS; i--) {
+    for (let i = age.years - 1; i >= HTMS_TARGET_AGE_YEARS; i--) {
       potential -= HTMS_POINTS_PER_WEEK[i] * WEEKS_PER_SEASON
     }
   } else {

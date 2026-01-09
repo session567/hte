@@ -63,7 +63,7 @@ export const isPage = (page: Page): boolean => {
 /**
  * Returns the current page based on the browser's location.
  *
- * @throws {Error} If the current page is not in the {@link pages}
+ * @throws {@link Error} If the current page is not in {@link pages}
  */
 export const getCurrentPage = (): Page => {
   const page = Object.values(pages).find((page) => isPage(page))

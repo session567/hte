@@ -1,10 +1,10 @@
-const WEEKLY_SALARY_AND_CURRENCY_REGEX = /^([\d\s]+)\s([^/]+)/
+const REGEX_WEEKLY_SALARY_AND_CURRENCY = /^([\d\s]+)\s([^/]+)/
 
-export const parseSalaryAndCurency = (node: ParentNode) => {
-  const value = node.textContent?.trim()
+export const parseSalaryAndCurency = (element: Element) => {
+  const value = element.textContent.trim()
   if (!value) return null
 
-  const match = WEEKLY_SALARY_AND_CURRENCY_REGEX.exec(value)
+  const match = REGEX_WEEKLY_SALARY_AND_CURRENCY.exec(value)
   if (!match) return null
 
   return {

@@ -4,9 +4,9 @@ import { pages } from '@common/utils/pages'
 
 const MAX_LOYALTY = 20
 
-export const calcBonus = (node: ParentNode): number => {
-  const loyaltyBonus = getLoyaltyBonus(node)
-  const homegrownBonus = getHomegrownBonus(node)
+export const calcBonus = (element: Element): number => {
+  const loyaltyBonus = getLoyaltyBonus(element)
+  const homegrownBonus = getHomegrownBonus(element)
   const totalBonus = loyaltyBonus + homegrownBonus
 
   logger.debug(`loyaltyBonus=${loyaltyBonus}, homegrownBonus=${homegrownBonus}, totalBonus=${totalBonus}`)
@@ -14,10 +14,10 @@ export const calcBonus = (node: ParentNode): number => {
   return totalBonus
 }
 
-const getLoyaltyBonus = (node: ParentNode): number => {
+const getLoyaltyBonus = (element: Element): number => {
   // Extract loyalty level (last .skill link with lt=skill)
   const skillLinks = querySelectorAll<HTMLAnchorElement>(
-    node,
+    element,
     `p > a.skill[href*="${pages.appDenominations.pathname}"][href*="lt=skill"]`,
   )
   if (skillLinks.length === 0) return 0
@@ -30,6 +30,6 @@ const getLoyaltyBonus = (node: ParentNode): number => {
   return loyalty / MAX_LOYALTY
 }
 
-const getHomegrownBonus = (node: ParentNode): number => {
-  return querySelector(node, '.icon-mother-club', false) ? 0.5 : 0
+const getHomegrownBonus = (element: Element): number => {
+  return querySelector(element, '.icon-mother-club', false) ? 0.5 : 0
 }

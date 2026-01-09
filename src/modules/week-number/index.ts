@@ -9,10 +9,10 @@ const weekNumber: Module = {
   name: 'Week Number',
   pages: [pages.all],
   run: () => {
-    const nodes = querySelectorAll('#mainBody .date', false)
+    const elements = querySelectorAll('#mainBody .date', false)
 
-    nodes.forEach((node) => {
-      const date = parseDate(node)
+    elements.forEach((element) => {
+      const date = parseDate(element)
       if (!date) return
 
       const weekNumber = calcWeekNumber(date)
@@ -21,7 +21,7 @@ const weekNumber: Module = {
       span.className = 'hte-week-number shy'
       span.textContent = ` (W${weekNumber})`
 
-      node.appendChild(span)
+      element.appendChild(span)
     })
   },
 }

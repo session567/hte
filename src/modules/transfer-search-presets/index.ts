@@ -24,13 +24,13 @@ const extractPresetFromForm = () => {
   const preset: Partial<Preset> = {}
 
   STRING_FIELD_IDS.forEach((id) => {
-    const el = getElementById<HTMLInputElement | HTMLSelectElement>(id)
-    if (el) preset[id] = el.value
+    const element = getElementById<HTMLInputElement | HTMLSelectElement>(id)
+    if (element) preset[id] = element.value
   })
 
   BOOLEAN_FIELD_IDS.forEach((id) => {
-    const el = getElementById<HTMLInputElement>(id)
-    if (el) preset[id] = el.checked
+    const element = getElementById<HTMLInputElement>(id)
+    if (element) preset[id] = element.checked
   })
 
   RADIO_FIELD_NAMES.forEach((name) => {
@@ -47,18 +47,18 @@ const applyPresetToForm = (preset: Preset) => {
   logger.debug('Applying preset to form', preset)
 
   STRING_FIELD_IDS.forEach((id) => {
-    const el = getElementById<HTMLInputElement | HTMLSelectElement>(id)
-    if (el) el.value = preset[id]
+    const element = getElementById<HTMLInputElement | HTMLSelectElement>(id)
+    if (element) element.value = preset[id]
   })
 
   BOOLEAN_FIELD_IDS.forEach((id) => {
-    const el = getElementById<HTMLInputElement>(id)
-    if (!el) return
+    const element = getElementById<HTMLInputElement>(id)
+    if (!element) return
 
     if (preset[id]) {
-      el.setAttribute('checked', 'checked')
+      element.setAttribute('checked', 'checked')
     } else {
-      el.removeAttribute('checked')
+      element.removeAttribute('checked')
     }
   })
 

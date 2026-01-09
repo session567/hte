@@ -1,4 +1,4 @@
-import { createNode } from '@common/test/utils'
+import { createElement } from '@common/test/utils'
 import { calcWeekNumber, parseDate } from '@modules/week-number/utils'
 
 describe('parseDate', () => {
@@ -6,9 +6,9 @@ describe('parseDate', () => {
     { html: '15.03.2024 14:30', expected: new Date(2024, 2, 15, 14, 30) },
     { html: '31.12.2023', expected: new Date(2023, 11, 31) },
   ])('should parse date from text: $html', ({ html, expected }) => {
-    const node = createNode(html)
+    const element = createElement(html)
 
-    const result = parseDate(node)
+    const result = parseDate(element)
 
     expect(result).toStrictEqual(expected)
   })
@@ -17,9 +17,9 @@ describe('parseDate', () => {
     { desc: 'empty text', html: '' },
     { desc: 'invalid format', html: 'invalid-format' },
   ])('should return null for $desc', ({ html }) => {
-    const node = createNode(html)
+    const element = createElement(html)
 
-    const result = parseDate(node)
+    const result = parseDate(element)
 
     expect(result).toBeNull()
   })

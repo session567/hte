@@ -6,21 +6,6 @@ import { parsePlayerAge, parsePlayerSkills } from '@common/utils/player/utils'
 import { HTMSPoints } from '@modules/htms-points/constants'
 import { calcHTMSPoints } from '@modules/htms-points/utils'
 
-type HTMSItem = {
-  targetNode: ParentNode
-  htms: HTMSPoints
-}
-
-const processPlayerData = (targetNode: ParentNode | null, ageNode: ParentNode | null): HTMSItem | null => {
-  if (!targetNode || !ageNode) return null
-
-  const age = parsePlayerAge(ageNode)
-  const skills = parsePlayerSkills(targetNode)
-  if (!age || !skills) return null
-
-  return { targetNode, htms: calcHTMSPoints(age, skills) }
-}
-
 const createHTMSRow = (htms: HTMSPoints): HTMLTableRowElement => {
   const htmsRow = document.createElement('tr')
 
@@ -43,39 +28,45 @@ const createHTMSRow = (htms: HTMSPoints): HTMLTableRowElement => {
   return htmsRow
 }
 
+const processPlayer = (playerElement: Element, ageElement: Element): void => {
+  const age = parsePlayerAge(ageElement)
+  const skills = parsePlayerSkills(playerElement)
+  if (!age || !skills) return
+
+  const htms = calcHTMSPoints(age, skills)
+  const tbody = querySelector(playerElement, '.transferPlayerInformation table tbody')
+  if (!tbody) return
+
+  const htmsRow = createHTMSRow(htms)
+  tbody.appendChild(htmsRow)
+}
+
+const processPlayers = (playerSelector: string, ageSelector: string): void => {
+  const playerElements = querySelectorAll(playerSelector)
+
+  playerElements.forEach((playerElement) => {
+    const ageElement = querySelector(playerElement, ageSelector)
+    if (ageElement) processPlayer(playerElement, ageElement)
+  })
+}
+
 const htmsPoints: Module = {
   name: 'HTMS Points',
   pages: [pages.playerDetailOwnTeam, pages.playerListOwnTeam, pages.transfersSearchResult],
   run: () => {
-    const htmsItems: HTMSItem[] = []
-
     if (isPage(pages.playerDetailOwnTeam)) {
-      const targetNode = querySelector('#mainBody .playerInfo')
-      const ageNode = querySelector('#mainBody > .byline')
-      const htmsItem = processPlayerData(targetNode, ageNode)
-      if (htmsItem) htmsItems.push(htmsItem)
+      const playerElement = querySelector('#mainBody .playerInfo')
+      const ageElement = querySelector('#mainBody > .byline')
+      if (playerElement && ageElement) processPlayer(playerElement, ageElement)
     } else if (isPage(pages.playerListOwnTeam)) {
-      const nodes = querySelectorAll('#mainBody > .playerList > .teamphoto-player .playerInfo')
-
-      nodes.forEach((node) => {
-        const ageNode = querySelector(node, '.transferPlayerInformation table tbody tr:first-child td:nth-child(2)')
-        const htmsItem = processPlayerData(node, ageNode)
-        if (htmsItem) htmsItems.push(htmsItem)
-      })
+      const playerSelector = '#mainBody > .playerList > .teamphoto-player .playerInfo'
+      const ageSelector = '.transferPlayerInformation table tbody tr:first-child td:nth-child(2)'
+      processPlayers(playerSelector, ageSelector)
     } else if (isPage(pages.transfersSearchResult)) {
-      const nodes = querySelectorAll('#mainBody .playerListDetails')
-
-      nodes.forEach((node) => {
-        const ageNode = querySelector(node, '.transferPlayerInformation table tbody tr:nth-child(2) td:nth-child(2)')
-        const htmsItem = processPlayerData(node, ageNode)
-        if (htmsItem) htmsItems.push(htmsItem)
-      })
+      const playerSelector = '#mainBody .playerListDetails'
+      const ageSelector = '.transferPlayerInformation table tbody tr:nth-child(2) td:nth-child(2)'
+      processPlayers(playerSelector, ageSelector)
     }
-
-    htmsItems.forEach(({ targetNode, htms }) => {
-      const htmsRow = createHTMSRow(htms)
-      querySelector(targetNode, '.transferPlayerInformation table tbody')?.appendChild(htmsRow)
-    })
   },
 }
 

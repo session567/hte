@@ -28,23 +28,23 @@ const skillBonus: Module = {
   name: 'Skill Bonus',
   pages: [pages.playerDetailOwnTeam, pages.playerListOwnTeam],
   run: () => {
-    const nodes: ParentNode[] = []
+    const elements: Element[] = []
 
     if (isPage(pages.playerDetailOwnTeam)) {
-      const node = querySelector('#mainBody .playerInfo')
+      const element = querySelector('#mainBody .playerInfo')
 
-      if (node) nodes.push(node)
+      if (element) elements.push(element)
     } else if (isPage(pages.playerListOwnTeam)) {
-      nodes.push(...Array.from(querySelectorAll('#mainBody > .playerList > .teamphoto-player')))
+      elements.push(...Array.from(querySelectorAll('#mainBody > .playerList > .teamphoto-player')))
     }
 
-    if (!nodes.length) return
+    if (!elements.length) return
 
-    nodes.forEach((node) => {
-      const bonus = calcBonus(node)
+    elements.forEach((element) => {
+      const bonus = calcBonus(element)
       if (bonus === 0) return
 
-      const skillBars = querySelectorAll<HTMLDivElement>(node, '.transferPlayerSkills .ht-bar')
+      const skillBars = querySelectorAll<HTMLDivElement>(element, '.transferPlayerSkills .ht-bar')
       skillBars.forEach((skillBar) => {
         const levelBar = querySelector<HTMLDivElement>(skillBar, '.bar-level', false)
         if (!levelBar) return // non-existent skills won't have a .bar-level

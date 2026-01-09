@@ -1,4 +1,4 @@
-import { createNode } from '@common/test/utils'
+import { createElement } from '@common/test/utils'
 import { calcBonus } from '@modules/skill-bonus/utils'
 
 describe('calcBonus', () => {
@@ -9,9 +9,9 @@ describe('calcBonus', () => {
       </p>
       <div class="ownerAndStatusPlayerInfo"><i class="icon-mother-club"></i></div>
     `
-    const node = createNode(html)
+    const element = createElement(html)
 
-    const bonus = calcBonus(node)
+    const bonus = calcBonus(element)
 
     expect(bonus).toBe(1.5)
   })
@@ -19,17 +19,17 @@ describe('calcBonus', () => {
   it('should calculate bonus for non-homegrown player', () => {
     const html =
       '<p>Has <a href="/Help/Rules/AppDenominations.aspx?lt=skill&ll=20#skill" class="skill">divine</a> loyalty.</p>'
-    const node = createNode(html)
+    const element = createElement(html)
 
-    const bonus = calcBonus(node)
+    const bonus = calcBonus(element)
 
     expect(bonus).toBe(1.0)
   })
 
   it('should return 0 when no loyalty link exists', () => {
-    const node = createNode('<p>Some text without loyalty information</p>')
+    const element = createElement('<p>Some text without loyalty information</p>')
 
-    const bonus = calcBonus(node)
+    const bonus = calcBonus(element)
 
     expect(bonus).toBe(0)
   })

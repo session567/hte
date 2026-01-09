@@ -3,15 +3,15 @@ import { logger } from '@common/utils/logger'
 
 const HATTRICK_START_DATE = new Date(1997, 8, 22)
 // Format: DD.MM.YYYY HH:mm
-const DATE_REGEX_LONG = /(\d{2})\.(\d{2})\.(\d{4})\s+(\d{2}):(\d{2})/
+const REGEX_DATE_LONG = /(\d{2})\.(\d{2})\.(\d{4})\s+(\d{2}):(\d{2})/
 // Format: DD.MM.YYYY
-const DATE_REGEX_SHORT = /(\d{2})\.(\d{2})\.(\d{4})/
+const REGEX_DATE_SHORT = /(\d{2})\.(\d{2})\.(\d{4})/
 
-export const parseDate = (node: ParentNode): Date | null => {
-  const value = node.textContent?.trim()
+export const parseDate = (element: Element): Date | null => {
+  const value = element.textContent.trim()
   if (!value) return null
 
-  const longMatch = DATE_REGEX_LONG.exec(value)
+  const longMatch = REGEX_DATE_LONG.exec(value)
 
   if (longMatch) {
     const [, day, month, year, hour, minute] = longMatch.map((m) => parseInt(m, 10))
@@ -19,7 +19,7 @@ export const parseDate = (node: ParentNode): Date | null => {
     return new Date(year, month - 1, day, hour, minute)
   }
 
-  const shortMatch = DATE_REGEX_SHORT.exec(value)
+  const shortMatch = REGEX_DATE_SHORT.exec(value)
 
   if (shortMatch) {
     const [, day, month, year] = shortMatch.map((m) => parseInt(m, 10))

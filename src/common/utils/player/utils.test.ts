@@ -1,4 +1,4 @@
-import { createNode } from '@common/test/utils'
+import { createElement } from '@common/test/utils'
 import { logger } from '@common/utils/logger'
 import { parsePlayerAge, parsePlayerSkills } from '@common/utils/player/utils'
 
@@ -9,9 +9,9 @@ describe('parsePlayerAge', () => {
     { html: '26 years and 86 days, Next birthday: 28.01.2026', expected: { years: 26, days: 86 } },
     { html: '29 years and 20 days, Next birthday: 01.01.2026', expected: { years: 29, days: 20 } },
   ])('should parse age from text: $html', ({ html, expected }) => {
-    const node = createNode(html)
+    const element = createElement(html)
 
-    const result = parsePlayerAge(node)
+    const result = parsePlayerAge(element)
 
     expect(result).toEqual(expected)
   })
@@ -25,9 +25,9 @@ describe('parsePlayerAge', () => {
         </tr>
       </table>
     `
-    const node = createNode(html)
+    const element = createElement(html)
 
-    const result = parsePlayerAge(node)
+    const result = parsePlayerAge(element)
 
     expect(result).toEqual({ years: 26, days: 86 })
   })
@@ -37,9 +37,9 @@ describe('parsePlayerAge', () => {
     { desc: 'invalid format', html: 'invalid age format' },
     { desc: 'partial match', html: '26 years' },
   ])('should return null for $desc', ({ html }) => {
-    const node = createNode(html)
+    const element = createElement(html)
 
-    const result = parsePlayerAge(node)
+    const result = parsePlayerAge(element)
 
     expect(result).toBeNull()
   })
@@ -76,9 +76,9 @@ describe('parsePlayerSkills', () => {
         </table>
       </div>
     `
-    const node = createNode(html)
+    const element = createElement(html)
 
-    const result = parsePlayerSkills(node)
+    const result = parsePlayerSkills(element)
 
     expect(result).not.toBeNull()
     expect(result?.keeper).toBe(1)
@@ -102,9 +102,9 @@ describe('parsePlayerSkills', () => {
         </table>
       </div>
     `
-    const node = createNode(html)
+    const element = createElement(html)
 
-    const result = parsePlayerSkills(node)
+    const result = parsePlayerSkills(element)
 
     expect(result).toBeNull()
     expect(logger.warn).toHaveBeenCalledWith('Cannot parse skills. Expected 7 skill, found 1.', { keeper: 1 })
@@ -112,9 +112,9 @@ describe('parsePlayerSkills', () => {
 
   it('should return null for empty HTML', () => {
     const html = ''
-    const node = createNode(html)
+    const element = createElement(html)
 
-    const result = parsePlayerSkills(node)
+    const result = parsePlayerSkills(element)
 
     expect(result).toBeNull()
   })

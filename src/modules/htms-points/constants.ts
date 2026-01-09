@@ -5,6 +5,8 @@ export type HTMSPoints = {
   potential: number
 }
 
+export const HTMS_TARGET_AGE_YEARS = 28
+
 export const HTMS_ABILITY_TABLE: Record<Skill, number[]> = {
   keeper: [
     0, 2, 12, 23, 39, 56, 76, 99, 123, 150, 183, 222, 268, 321, 380, 446, 519, 600, 691, 797, 924, 1074, 1278, 1278,

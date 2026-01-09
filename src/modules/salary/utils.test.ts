@@ -1,4 +1,4 @@
-import { createNode } from '@common/test/utils'
+import { createElement } from '@common/test/utils'
 import { numberWithSpaces, parseSalaryAndCurency } from '@modules/salary/utils'
 
 describe('parseWeeklySalaryAndCurrency', () => {
@@ -7,9 +7,9 @@ describe('parseWeeklySalaryAndCurrency', () => {
     { text: '217 200 zł/week', expected: { weeklySalary: 217_200, currency: 'zł' } },
     { text: '2 715 000 taka/week', expected: { weeklySalary: 2_715_000, currency: 'taka' } },
   ])('should parse weekly salary and currency for $text', ({ text, expected }) => {
-    const node = createNode(text)
+    const element = createElement(text)
 
-    const result = parseSalaryAndCurency(node)
+    const result = parseSalaryAndCurency(element)
 
     expect(result).toEqual(expected)
   })

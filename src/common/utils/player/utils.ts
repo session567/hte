@@ -3,7 +3,7 @@ import { logger } from '@common/utils/logger'
 import { NUM_OF_SKILLS, PlayerAge, PlayerSkills, Skill } from '@common/utils/player/constants'
 
 // [N] years [M] days, optionally followed by: <text> DD.MM.YYYY
-const PLAYER_AGE_REGEX = /(\d+)\D+(\d+)(?:\D*\d{2}\.\d{2}\.\d{4})?/
+const REGEX_PLAYER_AGE = /(\d+)\D+(\d+)(?:\D*\d{2}\.\d{2}\.\d{4})?/
 
 const ROW_ID_TO_SKILL: Record<string, Skill> = {
   trKeeper: 'keeper',
@@ -15,11 +15,17 @@ const ROW_ID_TO_SKILL: Record<string, Skill> = {
   trKicker: 'setPieces',
 }
 
-export const parsePlayerAge = (node: ParentNode): PlayerAge | null => {
-  const value = node.textContent?.trim()
+/**
+ * Parse a player's age from a DOM element.
+ *
+ * @param element - The DOM element containing the age text (e.g., "17 years 42 days")
+ * @returns The parsed age, or null if parsing fails
+ */
+export const parsePlayerAge = (element: Element): PlayerAge | null => {
+  const value = element.textContent.trim()
   if (!value) return null
 
-  const match = PLAYER_AGE_REGEX.exec(value)
+  const match = REGEX_PLAYER_AGE.exec(value)
   if (!match) return null
 
   return {
@@ -28,10 +34,16 @@ export const parsePlayerAge = (node: ParentNode): PlayerAge | null => {
   }
 }
 
-export const parsePlayerSkills = (node: ParentNode): PlayerSkills | null => {
+/**
+ * Parse all player skills from a DOM element.
+ *
+ * @param element - The DOM element containing the player's skills
+ * @returns Object with all skill levels, or null if parsing fails or skills are incomplete
+ */
+export const parsePlayerSkills = (element: Element): PlayerSkills | null => {
   const skills: Partial<Record<Skill, number>> = {}
   const skillRows = querySelectorAll<HTMLTableRowElement>(
-    node,
+    element,
     '.transferPlayerSkills table tr[id*="ucPlayerSkills_tr"], .transferPlayerSkills table tr[id*="TransferPlayer_tr"]',
   )
 
