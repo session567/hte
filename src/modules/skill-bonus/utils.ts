@@ -4,9 +4,15 @@ import { pages } from '@common/utils/pages'
 
 const MAX_LOYALTY = 20
 
+/**
+ * Calculate skill bonus from loyalty and homegrown status.
+ *
+ * @param element - Element containing player information
+ * @returns Total skill bonus value
+ */
 export const calcBonus = (element: Element): number => {
-  const loyaltyBonus = getLoyaltyBonus(element)
-  const homegrownBonus = getHomegrownBonus(element)
+  const loyaltyBonus = calcLoyaltyBonus(element)
+  const homegrownBonus = calcHomegrownBonus(element)
   const totalBonus = loyaltyBonus + homegrownBonus
 
   logger.debug(`loyaltyBonus=${loyaltyBonus}, homegrownBonus=${homegrownBonus}, totalBonus=${totalBonus}`)
@@ -14,7 +20,13 @@ export const calcBonus = (element: Element): number => {
   return totalBonus
 }
 
-const getLoyaltyBonus = (element: Element): number => {
+/**
+ * Calculate skill bonus from player loyalty.
+ *
+ * @param element - Element containing player information
+ * @returns Loyalty bonus value (from 0 to 1)
+ */
+const calcLoyaltyBonus = (element: Element): number => {
   // Extract loyalty level (last .skill link with lt=skill)
   const skillLinks = querySelectorAll<HTMLAnchorElement>(
     element,
@@ -30,6 +42,12 @@ const getLoyaltyBonus = (element: Element): number => {
   return loyalty / MAX_LOYALTY
 }
 
-const getHomegrownBonus = (element: Element): number => {
+/**
+ * Calculate skill bonus from homegrown status.
+ *
+ * @param element - Element containing player information
+ * @returns Homegrown bonus (0.5 if homegrown, 0 otherwise)
+ */
+const calcHomegrownBonus = (element: Element): number => {
   return querySelector(element, '.icon-mother-club', false) ? 0.5 : 0
 }

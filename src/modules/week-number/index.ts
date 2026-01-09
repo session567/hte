@@ -5,6 +5,9 @@ import { querySelectorAll } from '@common/utils/dom'
 import { pages } from '@common/utils/pages'
 import { calcWeekNumber, parseDate } from '@modules/week-number/utils'
 
+/**
+ * Display week numbers next to dates throughout Hattrick.
+ */
 const weekNumber: Module = {
   name: 'Week Number',
   pages: [pages.all],

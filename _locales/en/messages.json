@@ -14,13 +14,13 @@
   "salary.per_season": {
     "message": "year"
   },
-  "transfer_search_presets.title": {
-    "message": "Transfer Search Presets"
+  "transfer_search_filters.title": {
+    "message": "Transfer Search Filters"
   },
-  "transfer_search_presets.add_button": {
-    "message": "Add preset"
+  "transfer_search_filters.add_button": {
+    "message": "Add filter"
   },
-  "transfer_search_presets.name_prompt": {
-    "message": "Preset name:"
+  "transfer_search_filters.name_prompt": {
+    "message": "Filter name:"
   }
 }

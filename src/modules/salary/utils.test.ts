@@ -1,5 +1,5 @@
 import { createElement } from '@common/test/utils'
-import { numberWithSpaces, parseSalaryAndCurency } from '@modules/salary/utils'
+import { formatThousands, parseSalaryAndCurency } from '@modules/salary/utils'
 
 describe('parseWeeklySalaryAndCurrency', () => {
   it.each([
@@ -25,7 +25,7 @@ describe('numberWithSpaces', () => {
     { value: 12345678, expected: '12 345 678' },
     { value: 123456789, expected: '123 456 789' },
   ])('should convert $value to $expected', ({ value, expected }) => {
-    const result = numberWithSpaces(value)
+    const result = formatThousands(value)
 
     expect(result).toEqual(expected)
   })

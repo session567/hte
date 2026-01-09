@@ -8,6 +8,13 @@ import { calcBonus } from '@modules/skill-bonus/utils'
 
 const MAX_BAR_LENGTH = 20
 
+/**
+ * Create a skill bar element for the bonus.
+ *
+ * @param skillBar - The skill bar element
+ * @param bonus - The bonus value to display
+ * @returns A div element representing the bonus skill bar, or null if creation fails
+ */
 const createBonusBar = (skillBar: HTMLDivElement, bonus: number): HTMLDivElement | null => {
   const level = parseInt(skillBar.getAttribute('level') ?? '0', 10)
   if (!level) return null
@@ -24,6 +31,9 @@ const createBonusBar = (skillBar: HTMLDivElement, bonus: number): HTMLDivElement
   return bonusBar
 }
 
+/**
+ * Extend player skill bars to include loyalty and homegrown bonus.
+ */
 const skillBonus: Module = {
   name: 'Skill Bonus',
   pages: [pages.playerDetailOwnTeam, pages.playerListOwnTeam],

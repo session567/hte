@@ -2,7 +2,7 @@ import { querySelector, querySelectorAll } from '@common/utils/dom'
 import { logger } from '@common/utils/logger'
 import { NUM_OF_SKILLS, PlayerAge, PlayerSkills, Skill } from '@common/utils/player/constants'
 
-// [N] years [M] days, optionally followed by: <text> DD.MM.YYYY
+// Matches: [N] years [M] days, optionally followed by: <text> DD.MM.YYYY
 const REGEX_PLAYER_AGE = /(\d+)\D+(\d+)(?:\D*\d{2}\.\d{2}\.\d{4})?/
 
 const ROW_ID_TO_SKILL: Record<string, Skill> = {

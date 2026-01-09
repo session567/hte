@@ -2,11 +2,19 @@ import { DAYS_PER_SEASON, DAYS_PER_WEEK } from '@common/utils/constants'
 import { logger } from '@common/utils/logger'
 
 const HATTRICK_START_DATE = new Date(1997, 8, 22)
-// Format: DD.MM.YYYY HH:mm
+// Matches: DD.MM.YYYY HH:mm
 const REGEX_DATE_LONG = /(\d{2})\.(\d{2})\.(\d{4})\s+(\d{2}):(\d{2})/
-// Format: DD.MM.YYYY
+// Matches: DD.MM.YYYY
 const REGEX_DATE_SHORT = /(\d{2})\.(\d{2})\.(\d{4})/
 
+/**
+ * Parse a date from a DOM element.
+ *
+ * Supports formats `DD.MM.YYYY HH:mm` and `DD.MM.YYYY`.
+ *
+ * @param element - Element containing date text
+ * @returns Parsed Date object, or null if parsing fails
+ */
 export const parseDate = (element: Element): Date | null => {
   const value = element.textContent.trim()
   if (!value) return null
@@ -32,6 +40,12 @@ export const parseDate = (element: Element): Date | null => {
   return null
 }
 
+/**
+ * Calculate the Hattrick week number for a given date.
+ *
+ * @param date - The date to calculate week number for
+ * @returns Week number within the current season (1-16)
+ */
 export const calcWeekNumber = (date: Date): number => {
   const daysSinceStart = Math.floor((date.getTime() - HATTRICK_START_DATE.getTime()) / (1000 * 60 * 60 * 24))
   const dayWithinSeason = daysSinceStart % DAYS_PER_SEASON

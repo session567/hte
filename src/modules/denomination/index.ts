@@ -6,6 +6,9 @@ import { pages } from '@common/utils/pages'
 
 const PERSONALITY_TYPES = new Set(['gentleness', 'honesty', 'aggressiveness'])
 
+/**
+ * Display numeric values near all team and player abilities.
+ */
 const denomination: Module = {
   name: 'Denomination',
   pages: [pages.all],
@@ -19,7 +22,6 @@ const denomination: Module = {
       const url = new URL(link.href)
       const lt = url.searchParams.get('lt')
       const ll = url.searchParams.get('ll')
-
       if (!lt || !ll) return
 
       const span = document.createElement('span')

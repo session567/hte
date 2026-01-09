@@ -3,6 +3,9 @@ import { VERSION } from '@common/utils/constants'
 import { querySelector } from '@common/utils/dom'
 import { pages } from '@common/utils/pages'
 
+/**
+ * Display the HTE version in the page footer.
+ */
 const hteVersion: Module = {
   name: 'HTE Version',
   pages: [pages.all],

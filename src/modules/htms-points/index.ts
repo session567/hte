@@ -6,6 +6,12 @@ import { parsePlayerAge, parsePlayerSkills } from '@common/utils/player/utils'
 import { HTMSPoints } from '@modules/htms-points/constants'
 import { calcHTMSPoints } from '@modules/htms-points/utils'
 
+/**
+ * Display the player's HTMS points.
+ *
+ * @param htms - The HTMS points to display
+ * @returns A table row element
+ */
 const createHTMSRow = (htms: HTMSPoints): HTMLTableRowElement => {
   const htmsRow = document.createElement('tr')
 
@@ -28,6 +34,12 @@ const createHTMSRow = (htms: HTMSPoints): HTMLTableRowElement => {
   return htmsRow
 }
 
+/**
+ * Calculate and display HTMS points for a single player.
+ *
+ * @param playerElement - Element containing player skills
+ * @param ageElement - Element containing player age
+ */
 const processPlayer = (playerElement: Element, ageElement: Element): void => {
   const age = parsePlayerAge(ageElement)
   const skills = parsePlayerSkills(playerElement)
@@ -41,6 +53,12 @@ const processPlayer = (playerElement: Element, ageElement: Element): void => {
   tbody.appendChild(htmsRow)
 }
 
+/**
+ * Calculate and display HTMS points for multiple players.
+ *
+ * @param playerSelector - CSS selector for player elements
+ * @param ageSelector - CSS selector for player age elements
+ */
 const processPlayers = (playerSelector: string, ageSelector: string): void => {
   const playerElements = querySelectorAll(playerSelector)
 
@@ -50,6 +68,9 @@ const processPlayers = (playerSelector: string, ageSelector: string): void => {
   })
 }
 
+/**
+ * Display HTMS points (ability and potential) for players.
+ */
 const htmsPoints: Module = {
   name: 'HTMS Points',
   pages: [pages.playerDetailOwnTeam, pages.playerListOwnTeam, pages.transfersSearchResult],

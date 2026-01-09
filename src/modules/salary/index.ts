@@ -3,8 +3,11 @@ import { WEEKS_PER_SEASON } from '@common/utils/constants'
 import { querySelector } from '@common/utils/dom'
 import { t } from '@common/utils/i18n'
 import { pages } from '@common/utils/pages'
-import { numberWithSpaces, parseSalaryAndCurency } from '@modules/salary/utils'
+import { formatThousands, parseSalaryAndCurency } from '@modules/salary/utils'
 
+/**
+ * Display yearly salary next to the weekly salary on the player detail page.
+ */
 const salary: Module = {
   name: 'Salary',
   pages: [pages.playerDetailAllTeams],
@@ -18,7 +21,7 @@ const salary: Module = {
     const yearlySalary = parsed.weeklySalary * WEEKS_PER_SEASON
     const div = document.createElement('div')
     div.className = 'shy'
-    div.textContent = `${numberWithSpaces(yearlySalary)} ${parsed.currency}/${t('salary.per_season')}`
+    div.textContent = `${formatThousands(yearlySalary)} ${parsed.currency}/${t('salary.per_season')}`
 
     salaryCell.appendChild(div)
   },

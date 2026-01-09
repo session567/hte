@@ -1,5 +1,12 @@
+// Matches: [salary] [currency]/week
 const REGEX_WEEKLY_SALARY_AND_CURRENCY = /^([\d\s]+)\s([^/]+)/
 
+/**
+ * Parse weekly salary and currency from an element.
+ *
+ * @param element - Element containing salary text
+ * @returns Object with weeklySalary and currency, or null if parsing fails
+ */
 export const parseSalaryAndCurency = (element: Element) => {
   const value = element.textContent.trim()
   if (!value) return null
@@ -13,6 +20,12 @@ export const parseSalaryAndCurency = (element: Element) => {
   }
 }
 
-export const numberWithSpaces = (value: number) => {
+/**
+ * Format a number by using spaces as thousand separators.
+ *
+ * @param value - Number to format
+ * @returns Formatted string
+ */
+export const formatThousands = (value: number): string => {
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 }

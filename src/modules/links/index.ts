@@ -35,6 +35,9 @@ const linkMap = new Map<Page, Link[]>([
   [pages.youthPlayers, [HATTRICK_YOUTHCLUB, RATE_MY_ACADEMY]],
 ])
 
+/**
+ * Display relevant links to external tools in the sidebar.
+ */
 const links: Module = {
   name: 'Links',
   pages: [...linkMap.keys()],

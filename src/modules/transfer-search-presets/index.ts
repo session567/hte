@@ -12,14 +12,29 @@ import { Preset, PresetMap } from '@modules/transfer-search-presets/types'
 
 const STORAGE_KEY = 'transferSearchPresets'
 
+/**
+ * Fetch transfer search presets from storage.
+ *
+ * @returns Map of preset names to presets
+ */
 const fetchPresetsFromStorage = async (): Promise<PresetMap> => {
   return (await storage.get<PresetMap>(STORAGE_KEY)) ?? {}
 }
 
+/**
+ * Save transfer search presets to storage.
+ *
+ * @param presetMap - Map of preset names to presets
+ */
 const savePresetsToStorage = async (presetMap: PresetMap): Promise<void> => {
   await storage.set(STORAGE_KEY, presetMap)
 }
 
+/**
+ * Extract current form values as a preset.
+ *
+ * @returns Preset from form fields
+ */
 const extractPresetFromForm = () => {
   const preset: Partial<Preset> = {}
 
@@ -43,6 +58,11 @@ const extractPresetFromForm = () => {
   return preset as Preset
 }
 
+/**
+ * Apply a preset to the transfer search form.
+ *
+ * @param preset - Preset to apply
+ */
 const applyPresetToForm = (preset: Preset) => {
   logger.debug('Applying preset to form', preset)
 
@@ -75,6 +95,12 @@ const applyPresetToForm = (preset: Preset) => {
   })
 }
 
+/**
+ * Render the preset list in the sidebar.
+ *
+ * @param boxBody - Container element for preset list
+ * @param onPresetChange - Callback to re-render when presets change
+ */
 const renderPresets = async (boxBody: HTMLDivElement, onPresetChange: () => Promise<void>) => {
   boxBody.innerHTML = ''
 
@@ -123,6 +149,9 @@ const renderPresets = async (boxBody: HTMLDivElement, onPresetChange: () => Prom
   boxBody.appendChild(addPresetLink)
 }
 
+/**
+ * Save and reuse transfer search filters.
+ */
 const transferSearchPresets: Module = {
   name: 'Transfer Search Presets',
   pages: [pages.transfers],
