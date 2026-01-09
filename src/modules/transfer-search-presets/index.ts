@@ -133,10 +133,10 @@ const renderPresets = async (boxBody: HTMLDivElement, onPresetChange: () => Prom
   })
 
   const addPresetLink = document.createElement('a')
-  addPresetLink.textContent = t('transfer_search_presets.add_button')
+  addPresetLink.textContent = t('transfer_search_presets_add_button')
   addPresetLink.className = `hte-preset-link ${hasPresets ? 'hte-mt-2' : ''}`
   addPresetLink.onclick = async () => {
-    const name = prompt(t('transfer_search_presets.name_prompt'))
+    const name = prompt(t('transfer_search_presets_name_prompt'))
     if (!name) return
 
     const preset = extractPresetFromForm()
@@ -159,7 +159,7 @@ const transferSearchPresets: Module = {
     const sidebar = querySelector<HTMLDivElement>('#sidebar')
     if (!sidebar) return
 
-    const { box, boxBody } = createSidebarBox(t('transfer_search_presets.title'))
+    const { box, boxBody } = createSidebarBox(t('transfer_search_presets_title'))
     sidebar.appendChild(box)
 
     const render = async () => renderPresets(boxBody, render)

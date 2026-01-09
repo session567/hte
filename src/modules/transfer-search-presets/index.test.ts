@@ -108,10 +108,10 @@ describe('transfer-search-presets module', () => {
     expect(box).not.toBeNull()
 
     const header = box?.querySelector('h2')
-    expect(header?.textContent).toBe('transfer_search_presets.title')
+    expect(header?.textContent).toBe('transfer_search_presets_title')
 
     const addPresetLink = box?.querySelector('.hte-preset-link')
-    expect(addPresetLink?.textContent).toBe('transfer_search_presets.add_button')
+    expect(addPresetLink?.textContent).toBe('transfer_search_presets_add_button')
     expect(addPresetLink?.classList.contains('hte-mt-2')).toBe(false)
   })
 
@@ -133,7 +133,7 @@ describe('transfer-search-presets module', () => {
     expect(deleteButton).not.toBeNull()
 
     const addPresetLink = box?.querySelector('.hte-preset-link.hte-mt-2')
-    expect(addPresetLink?.textContent).toBe('transfer_search_presets.add_button')
+    expect(addPresetLink?.textContent).toBe('transfer_search_presets_add_button')
   })
 
   it('should populate form fields when a preset is clicked', async () => {

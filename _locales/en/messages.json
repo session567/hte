@@ -1,26 +1,26 @@
 {
-  "links.title": {
+  "links_title": {
     "message": "Links"
   },
-  "skill_bonus.title": {
+  "skill_bonus_title": {
     "message": "Loyalty and homegrown bonus: $1"
   },
-  "htms_points.label": {
+  "htms_points_label": {
     "message": "HTMS"
   },
-  "htms_points.help": {
+  "htms_points_help": {
     "message": "Ability / Potential"
   },
-  "salary.per_season": {
+  "salary_per_season": {
     "message": "year"
   },
-  "transfer_search_filters.title": {
+  "transfer_search_presets_title": {
     "message": "Transfer Search Filters"
   },
-  "transfer_search_filters.add_button": {
+  "transfer_search_presets_add_button": {
     "message": "Add filter"
   },
-  "transfer_search_filters.name_prompt": {
+  "transfer_search_presets_name_prompt": {
     "message": "Filter name:"
   }
 }

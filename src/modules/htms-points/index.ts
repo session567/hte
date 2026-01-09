@@ -17,14 +17,14 @@ const createHTMSRow = (htms: HTMSPoints): HTMLTableRowElement => {
 
   const labelCell = document.createElement('td')
   labelCell.className = 'right'
-  labelCell.textContent = t('htms_points.label')
+  labelCell.textContent = t('htms_points_label')
 
   const valueCell = document.createElement('td')
   valueCell.colSpan = 2
 
   const helpSpan = document.createElement('span')
   helpSpan.className = 'help hte-help'
-  helpSpan.title = t('htms_points.help')
+  helpSpan.title = t('htms_points_help')
   helpSpan.textContent = `${htms.ability} / ${htms.potential}`
 
   valueCell.appendChild(helpSpan)
