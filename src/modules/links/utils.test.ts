@@ -33,7 +33,7 @@ describe('replacePlaceholders', () => {
     const data = { teamId: '123', seriesId: '456' }
 
     expect(() => replacePlaceholders(url, data)).toThrow(
-      'Invalid placeholder {userId} in link https://example.com/user/{userId}',
+      'Invalid placeholder {userId} in https://example.com/user/{userId}',
     )
   })
 
