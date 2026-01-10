@@ -1,30 +1,15 @@
-Object.defineProperty(globalThis, '__VERSION__', { value: '1.2.3' })
+import { beforeEach, vi } from 'vitest'
 
-globalThis.chrome = {
+vi.stubGlobal('__VERSION__', '1.2.3')
+vi.stubGlobal('chrome', {
   i18n: {
-    getMessage: jest.fn(),
+    getMessage: vi.fn(),
   },
-} as unknown as typeof globalThis.chrome
+})
 
-jest.mock(
-  '@common/utils/logger',
-  () =>
-    ({
-      ...jest.requireActual('@common/utils/logger'),
-      logger: {
-        debug: jest.fn(),
-        warn: jest.fn(),
-        error: jest.fn(),
-      },
-    }) as typeof import('@common/utils/logger'),
-)
+vi.mock('@common/utils/logger')
+vi.mock('@common/utils/storage')
 
-jest.mock('@common/utils/storage', () => ({
-  storage: {
-    get: jest.fn(),
-    set: jest.fn(),
-    remove: jest.fn(),
-  },
-}))
-
-jest.mock('@common/utils/location')
+beforeEach(() => {
+  document.body.innerHTML = ''
+})

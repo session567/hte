@@ -3,7 +3,7 @@ import { logger } from '@common/utils/logger'
 import { NUM_OF_SKILLS, PlayerAge, PlayerSkills, Skill } from '@common/utils/player/constants'
 
 // Matches: [N] years [M] days, optionally followed by: <text> DD.MM.YYYY
-const REGEX_PLAYER_AGE = /(\d+)\D+(\d+)(?:\D*\d{2}\.\d{2}\.\d{4})?/
+const REGEX_PLAYER_AGE = /^(\d+)\D+(\d+)(?:\D*\d{2}\.\d{2}\.\d{4})?/
 
 const ROW_ID_TO_SKILL: Record<string, Skill> = {
   trKeeper: 'keeper',
@@ -58,7 +58,7 @@ export const parsePlayerSkills = (element: Element): PlayerSkills | null => {
   })
 
   if (Object.keys(skills).length !== NUM_OF_SKILLS) {
-    logger.warn(`Cannot parse skills. Expected ${NUM_OF_SKILLS} skill, found ${Object.keys(skills).length}.`, skills)
+    logger.warn(`Cannot parse skills. Expected ${NUM_OF_SKILLS} skills, found ${Object.keys(skills).length}.`, skills)
     return null
   }
 

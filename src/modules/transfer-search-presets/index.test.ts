@@ -3,14 +3,15 @@ import { storage } from '@common/utils/storage'
 import transferSearchPresets from '@modules/transfer-search-presets'
 import { BOOLEAN_FIELD_IDS, RADIO_FIELD_NAMES, STRING_FIELD_IDS } from '@modules/transfer-search-presets/constants'
 import { Preset } from '@modules/transfer-search-presets/types'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 
-const mockStorageGet = jest.spyOn(storage, 'get')
+vi.mock('@common/utils/storage')
 
 const AGE_MIN = 17
 const AGE_MAX = 99
 
 describe('transfer-search-presets module', () => {
-  afterEach(() => {
+  beforeEach(() => {
     // Creates options with values -1 and from 17 to 99
     const ageOptions =
       '<option value="-1">-1</option>' +
@@ -29,84 +30,84 @@ describe('transfer-search-presets module', () => {
       .join('')
 
     document.body.innerHTML = `
-     <div id="mainBody">
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlAgeMin"> ${ageOptions} </select>
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlAgeDaysMin">${ageDaysOptions}</select>
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlAgeMax"> ${ageOptions} </select>
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlAgeDaysMax">${ageDaysOptions}</select>
-
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlSkillSearchType">
-        <option value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-      </select>
-
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill1">${skillOptions}</select>
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill1Min">${skillOptions}</select>
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill1Max">${skillOptions}</select>
-
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill2">${skillOptions}</select>
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill2Min">${skillOptions}</select>
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill2Max">${skillOptions}</select>
-
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill3">${skillOptions}</select>
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill3Min">${skillOptions}</select>
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill3Max">${skillOptions}</select>
-
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill4">${skillOptions}</select>
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill4Min">${skillOptions}</select>
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill4Max">${skillOptions}</select>
-
-      <input type="checkbox" id="ctl00_ctl00_CPContent_CPMain_chkSpecialty1">
-      <input type="checkbox" id="ctl00_ctl00_CPContent_CPMain_chkSpecialty2">
-      <input type="checkbox" id="ctl00_ctl00_CPContent_CPMain_chkSpecialty3">
-      <input type="checkbox" id="ctl00_ctl00_CPContent_CPMain_chkSpecialty4">
-      <input type="checkbox" id="ctl00_ctl00_CPContent_CPMain_chkSpecialty5">
-      <input type="checkbox" id="ctl00_ctl00_CPContent_CPMain_chkSpecialty6">
-      <input type="checkbox" id="ctl00_ctl00_CPContent_CPMain_chkSpecialty8">
-      <input type="checkbox" id="ctl00_ctl00_CPContent_CPMain_chkSpecialty0">
-
-      <input type="text" id="ctl00_ctl00_CPContent_CPMain_txtBidMax" value="0">
-
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlBornIn">
-        <option value="-1">-1</option>
-        <option value="45">Country 45</option>
-      </select>
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlContinent">
-        <option value="-1">-1</option>
-        <option value="4">Continent 4</option>
-      </select>
-
-      <input type="text" id="ctl00_ctl00_CPContent_CPMain_txtTSIMin_text" value="0">
-      <input type="text" id="ctl00_ctl00_CPContent_CPMain_txtTSIMax_text" value="0">
-
-      <input type="text" id="ctl00_ctl00_CPContent_CPMain_txtSalaryMin" value="0">
-      <input type="text" id="ctl00_ctl00_CPContent_CPMain_txtSalaryMax" value="0">
-
-      <input type="text" id="ctl00_ctl00_CPContent_CPMain_txtTransferCompareAvgMin" value="0">
-      <input type="text" id="ctl00_ctl00_CPContent_CPMain_txtTransferCompareAvgMax" value="0">
-
-      <input type="checkbox" id="ctl00_ctl00_CPContent_CPMain_chkUseGlobalMax">
-      <select id="ctl00_ctl00_CPContent_CPMain_ddlGlobalSkillMax">${skillOptions}</select>
-
-      <input type="radio" id="ctl00_ctl00_CPContent_CPMain_rdSort_0" name="ctl00$ctl00$CPContent$CPMain$rdSort" value="ASC">
-      <input type="radio" id="ctl00_ctl00_CPContent_CPMain_rdSort_1" name="ctl00$ctl00$CPContent$CPMain$rdSort" value="DESC">
-      </div>
+      <div id="mainBody">
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlAgeMin"> ${ageOptions} </select>
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlAgeDaysMin">${ageDaysOptions}</select>
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlAgeMax"> ${ageOptions} </select>
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlAgeDaysMax">${ageDaysOptions}</select>
+        
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlSkillSearchType">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+        </select>
+        
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill1">${skillOptions}</select>
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill1Min">${skillOptions}</select>
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill1Max">${skillOptions}</select>
+        
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill2">${skillOptions}</select>
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill2Min">${skillOptions}</select>
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill2Max">${skillOptions}</select>
+        
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill3">${skillOptions}</select>
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill3Min">${skillOptions}</select>
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill3Max">${skillOptions}</select>
+        
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill4">${skillOptions}</select>
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill4Min">${skillOptions}</select>
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlSkill4Max">${skillOptions}</select>
+        
+        <input type="checkbox" id="ctl00_ctl00_CPContent_CPMain_chkSpecialty1">
+        <input type="checkbox" id="ctl00_ctl00_CPContent_CPMain_chkSpecialty2">
+        <input type="checkbox" id="ctl00_ctl00_CPContent_CPMain_chkSpecialty3">
+        <input type="checkbox" id="ctl00_ctl00_CPContent_CPMain_chkSpecialty4">
+        <input type="checkbox" id="ctl00_ctl00_CPContent_CPMain_chkSpecialty5">
+        <input type="checkbox" id="ctl00_ctl00_CPContent_CPMain_chkSpecialty6">
+        <input type="checkbox" id="ctl00_ctl00_CPContent_CPMain_chkSpecialty8">
+        <input type="checkbox" id="ctl00_ctl00_CPContent_CPMain_chkSpecialty0">
+        
+        <input type="text" id="ctl00_ctl00_CPContent_CPMain_txtBidMax" value="0">
+        
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlBornIn">
+          <option value="-1">-1</option>
+          <option value="45">Country 45</option>
+        </select>
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlContinent">
+          <option value="-1">-1</option>
+          <option value="4">Continent 4</option>
+        </select>
+        
+        <input type="text" id="ctl00_ctl00_CPContent_CPMain_txtTSIMin_text" value="0">
+        <input type="text" id="ctl00_ctl00_CPContent_CPMain_txtTSIMax_text" value="0">
+        
+        <input type="text" id="ctl00_ctl00_CPContent_CPMain_txtSalaryMin" value="0">
+        <input type="text" id="ctl00_ctl00_CPContent_CPMain_txtSalaryMax" value="0">
+        
+        <input type="text" id="ctl00_ctl00_CPContent_CPMain_txtTransferCompareAvgMin" value="0">
+        <input type="text" id="ctl00_ctl00_CPContent_CPMain_txtTransferCompareAvgMax" value="0">
+        
+        <input type="checkbox" id="ctl00_ctl00_CPContent_CPMain_chkUseGlobalMax">
+        <select id="ctl00_ctl00_CPContent_CPMain_ddlGlobalSkillMax">${skillOptions}</select>
+        
+        <input type="radio" id="ctl00_ctl00_CPContent_CPMain_rdSort_0" name="ctl00$ctl00$CPContent$CPMain$rdSort" value="ASC">
+        <input type="radio" id="ctl00_ctl00_CPContent_CPMain_rdSort_1" name="ctl00$ctl00$CPContent$CPMain$rdSort" value="DESC">
+        </div>
       <div id="sidebar"></div>
-  `
+    `
   })
 
-  it('should render sidebar box with "Add preset" link when no presets exist', async () => {
+  test('renders sidebar box with "Add preset" link when no presets exist', async () => {
     document.body.innerHTML = '<div id="sidebar"></div>'
-    mockStorageGet.mockResolvedValue(null)
+    vi.mocked(storage).get.mockResolvedValue(null)
 
     transferSearchPresets.run()
 
-    await new Promise((resolve) => setTimeout(resolve, 0))
+    await vi.waitFor(() => {
+      expect(document.querySelector('#sidebar .box .hte-preset-link')).not.toBeNull()
+    })
 
     const box = document.querySelector('#sidebar .box')
-    expect(box).not.toBeNull()
-
     const header = box?.querySelector('h2')
     expect(header?.textContent).toBe('transfer_search_presets_title')
 
@@ -115,17 +116,18 @@ describe('transfer-search-presets module', () => {
     expect(addPresetLink?.classList.contains('hte-mt-2')).toBe(false)
   })
 
-  it('should render existing presets', async () => {
+  test('renders existing presets', async () => {
     document.body.innerHTML = '<div id="sidebar"></div>'
-    mockStorageGet.mockResolvedValue({ 'Test Preset': { foo: 'bar' } })
+    vi.mocked(storage).get.mockResolvedValue({ 'Test Preset': { foo: 'bar' } })
 
     transferSearchPresets.run()
-    await new Promise((resolve) => setTimeout(resolve, 0))
+
+    await vi.waitFor(() => {
+      expect(document.querySelector('#sidebar .box .hte-preset-link')).not.toBeNull()
+    })
 
     const box = document.querySelector('#sidebar .box')
     const presetRow = box?.querySelector('.hte-preset-row')
-    expect(presetRow).not.toBeNull()
-
     const presetLink = presetRow?.querySelector('.hte-preset-link')
     expect(presetLink?.textContent).toBe('Test Preset')
 
@@ -136,7 +138,7 @@ describe('transfer-search-presets module', () => {
     expect(addPresetLink?.textContent).toBe('transfer_search_presets_add_button')
   })
 
-  it('should populate form fields when a preset is clicked', async () => {
+  test('populates form fields when a preset is clicked', async () => {
     const preset: Preset = {
       ctl00_ctl00_CPContent_CPMain_ddlAgeMin: '20',
       ctl00_ctl00_CPContent_CPMain_ddlAgeDaysMin: '4',
@@ -176,16 +178,19 @@ describe('transfer-search-presets module', () => {
       ctl00_ctl00_CPContent_CPMain_chkUseGlobalMax: true,
       ctl00$ctl00$CPContent$CPMain$rdSort: 'DESC',
     }
-    mockStorageGet.mockResolvedValue({ 'My Preset': preset })
+    vi.mocked(storage).get.mockResolvedValue({ 'My Preset': preset })
 
     transferSearchPresets.run()
-    await new Promise((resolve) => setTimeout(resolve, 0))
 
-    const presetLink = document.querySelector<HTMLAnchorElement>('.hte-preset-link')
+    await vi.waitFor(() => {
+      expect(document.querySelector('#sidebar .box .hte-preset-link')).not.toBeNull()
+    })
+
+    const box = document.querySelector('#sidebar .box')
+    const presetLink = box?.querySelector<HTMLAnchorElement>('.hte-preset-link')
     expect(presetLink?.textContent).toBe('My Preset')
 
     presetLink?.click()
-    await new Promise((resolve) => setTimeout(resolve, 0))
 
     STRING_FIELD_IDS.forEach((id) => {
       const element = document.getElementById(id) as HTMLInputElement | HTMLSelectElement

@@ -1,42 +1,33 @@
 import { createElement } from '@common/test/utils'
 import { calcBonus } from '@modules/skill-bonus/utils'
+import { describe, expect, test } from 'vitest'
 
 describe('calcBonus', () => {
-  it('should calculate bonus for homegrown player', () => {
-    const html = `
-      <p>
-        Has <a href="/Help/Rules/AppDenominations.aspx?lt=skill&ll=20#skill" class="skill">divine</a> loyalty.
-      </p>
+  test('calculates bonus for homegrown player', () => {
+    const element = createElement(`
+      <p>Has <a href="/Help/Rules/AppDenominations.aspx?lt=skill&ll=20#skill" class="skill">divine</a> loyalty.</p>
       <div class="ownerAndStatusPlayerInfo"><i class="icon-mother-club"></i></div>
-    `
-    const element = createElement(html)
+    `)
 
-    const bonus = calcBonus(element)
-
-    expect(bonus).toBe(1.5)
+    expect(calcBonus(element)).toBe(1.5)
   })
 
-  it('should calculate bonus for non-homegrown player', () => {
-    const html =
-      '<p>Has <a href="/Help/Rules/AppDenominations.aspx?lt=skill&ll=20#skill" class="skill">divine</a> loyalty.</p>'
-    const element = createElement(html)
+  test('calculates bonus for non-homegrown player', () => {
+    const element = createElement(
+      `<p>Has <a href="/Help/Rules/AppDenominations.aspx?lt=skill&ll=20#skill" class="skill">divine</a> loyalty.</p>`,
+    )
 
-    const bonus = calcBonus(element)
-
-    expect(bonus).toBe(1.0)
+    expect(calcBonus(element)).toBe(1.0)
   })
 
-  it('should return 0 when no loyalty link exists', () => {
+  test('returns 0 when no loyalty link exists', () => {
     const element = createElement('<p>Some text without loyalty information</p>')
 
-    const bonus = calcBonus(element)
-
-    expect(bonus).toBe(0)
+    expect(calcBonus(element)).toBe(0)
   })
 
-  it('should handle complex HTML with multiple skill links', () => {
-    const container = document.createElement('div')
-    container.innerHTML = `
+  test('handles complex HTML with multiple skill links', () => {
+    const element = createElement(`
       <p>
         A <a href="/Help/Rules/AppDenominations.aspx?lt=gentleness&ll=2#gentleness" class="skill">pleasant guy</a>
         who is <a href="/Help/Rules/AppDenominations.aspx?lt=aggressiveness&ll=2#aggressiveness" class="skill">balanced</a>
@@ -49,10 +40,8 @@ describe('calcBonus', () => {
       <div class="ownerAndStatusPlayerInfo">
         <i class="icon-mother-club"></i>
       </div>
-    `
+    `)
 
-    const bonus = calcBonus(container)
-
-    expect(bonus).toBe(1.5)
+    expect(calcBonus(element)).toBe(1.5)
   })
 })

@@ -24,6 +24,7 @@ export const getOwnTeamData = (): Record<string, string | null> => {
 export const getPageTeamId = (): string | null => {
   const breadcrumbLink = querySelector<HTMLAnchorElement>(
     `#ctl00_ctl00_CPContent_divStartMain > .boxHead a[href*="${pages.club.pathname}"]`,
+    false,
   )
   if (!breadcrumbLink) return null
 

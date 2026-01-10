@@ -12,8 +12,8 @@
     "dev:stage": "web-ext run --source-dir . --start-url https://stage.hattrick.org --watch-files dist/index.js dist/index.css",
     "clean": "rm -rf dist/",
     "lint": "eslint .",
-    "test": "jest",
-    "coverage": "jest --coverage",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -24,8 +24,6 @@
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@types/chrome": "^0.1.32",
-    "@types/identity-obj-proxy": "^3",
-    "@types/jest": "^30.0.0",
     "esbuild": "^0.27.2",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
@@ -33,14 +31,11 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-tsdoc": "^0.5.0",
     "husky": "^9.1.7",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^30.2.0",
-    "jest-environment-jsdom": "^30.2.0",
     "lint-staged": "^16.2.7",
     "prettier": "^3.7.4",
-    "ts-jest": "^29.4.6",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.51.0",
+    "vitest": "^4.0.16",
     "web-ext": "^9.2.0"
   },
   "engines": {

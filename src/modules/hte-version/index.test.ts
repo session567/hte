@@ -1,11 +1,8 @@
 import hteVersion from '@modules/hte-version'
+import { describe, expect, test } from 'vitest'
 
 describe('hte-version module', () => {
-  afterEach(() => {
-    document.body.innerHTML = ''
-  })
-
-  it('should add version text to currentServer element', () => {
+  test("displays HTE's version in Hattrick's footer", () => {
     document.body.innerHTML = `
       <div id="bottom">
         <div class="currentServer">Server 1</div>

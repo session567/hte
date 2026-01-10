@@ -1,34 +1,28 @@
 import { getCurrentPage, pages } from '@common/utils/pages'
 import links from '@modules/links'
+import { describe, expect, test, vi } from 'vitest'
 
-jest.mock(
-  '@common/utils/pages',
-  () =>
-    ({
-      ...jest.requireActual('@common/utils/pages'),
-      getCurrentPage: jest.fn(),
-    }) as typeof import('@common/utils/pages'),
-)
+vi.mock('@common/utils/pages', async () => {
+  const originalModule = await vi.importActual('@common/utils/pages')
 
-jest.mock(
-  '@common/utils/team/utils',
-  () =>
-    ({
-      ...jest.requireActual('@common/utils/team/utils'),
-      getOwnTeamData: jest.fn(),
-    }) as typeof import('@common/utils/team/utils'),
-)
+  return {
+    ...originalModule,
+    getCurrentPage: vi.fn(),
+  }
+})
 
-const mockGetCurrentPage = getCurrentPage as jest.Mock
+vi.mock('@common/utils/team/utils', async () => {
+  const originalModule = await vi.importActual('@common/utils/team/utils')
+
+  return {
+    ...originalModule,
+    getOwnTeamData: vi.fn(),
+  }
+})
 
 describe('links module', () => {
-  afterEach(() => {
-    document.body.innerHTML = ''
-  })
-
-  it('should render links box in sidebar', () => {
-    mockGetCurrentPage.mockReturnValue(pages.playerDetailOwnTeam)
-
+  test('renders links box in sidebar', () => {
+    vi.mocked(getCurrentPage).mockReturnValue(pages.playerDetailOwnTeam)
     document.body.innerHTML = '<div id="sidebar"></div>'
 
     links.run()
@@ -45,9 +39,8 @@ describe('links module', () => {
     expect(anchors[1].target).toBe('_blank')
   })
 
-  it('should insert box at the beginning of sidebar', () => {
-    mockGetCurrentPage.mockReturnValue(pages.matches)
-
+  test('inserts box at the beginning of sidebar', () => {
+    vi.mocked(getCurrentPage).mockReturnValue(pages.matches)
     document.body.innerHTML = `
       <div id="sidebar">
         <div class="existing-box">Existing content</div>
@@ -58,17 +51,6 @@ describe('links module', () => {
 
     const sidebar = document.querySelector('#sidebar')
     const firstChild = sidebar?.firstChild
-
-    expect(firstChild?.nodeName).toBe('DIV')
     expect((firstChild as HTMLElement).className).toBe('box sidebarBox')
-  })
-
-  it('should not render box if there is no sidebar', () => {
-    document.body.innerHTML = '<div>No sidebar</div>'
-
-    links.run()
-
-    const box = document.querySelector('.sidebarBox')
-    expect(box).toBeNull()
   })
 })

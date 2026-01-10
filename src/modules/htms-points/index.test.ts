@@ -1,36 +1,30 @@
 import { isPage, pages } from '@common/utils/pages'
 import htmsPoints from '@modules/htms-points'
 import { calcHTMSPoints } from '@modules/htms-points/utils'
+import { describe, expect, test, vi } from 'vitest'
 
-jest.mock(
-  '@common/utils/pages',
-  () =>
-    ({
-      ...jest.requireActual('@common/utils/pages'),
-      isPage: jest.fn(),
-    }) as typeof import('@common/utils/pages'),
-)
+vi.mock('@common/utils/pages', async () => {
+  const originalModule = await vi.importActual('@common/utils/pages')
 
-jest.mock(
-  '@modules/htms-points/utils',
-  () =>
-    ({
-      ...jest.requireActual('@modules/htms-points/utils'),
-      calcHTMSPoints: jest.fn(),
-    }) as typeof import('@modules/htms-points/utils'),
-)
+  return {
+    ...originalModule,
+    isPage: vi.fn(),
+  }
+})
 
-const mockIsPage = isPage as jest.Mock
-const mockCalcHTMSPoints = calcHTMSPoints as jest.Mock
+vi.mock('@modules/htms-points/utils', async () => {
+  const originalModule = await vi.importActual('@modules/htms-points/utils')
+
+  return {
+    ...originalModule,
+    calcHTMSPoints: vi.fn(),
+  }
+})
 
 describe('htms-points module', () => {
-  afterEach(() => {
-    document.body.innerHTML = ''
-  })
-
-  it('should add HTMS points to the player detail page', () => {
-    mockIsPage.mockImplementation((page) => page === pages.playerDetailOwnTeam)
-    mockCalcHTMSPoints.mockReturnValue({ ability: 1234, potential: 5678 })
+  test('adds HTMS points to the player detail page', () => {
+    vi.mocked(isPage).mockImplementation((page) => page === pages.playerDetailOwnTeam)
+    vi.mocked(calcHTMSPoints).mockReturnValue({ ability: 1234, potential: 5678 })
 
     document.body.innerHTML = `
       <div id="mainBody">
@@ -89,9 +83,9 @@ describe('htms-points module', () => {
     expect(valueCell?.title).toBe('htms_points_help')
   })
 
-  it('should add HTMS points to the player list page', () => {
-    mockIsPage.mockImplementation((page) => page === pages.playerListOwnTeam)
-    mockCalcHTMSPoints
+  test('adds HTMS points to the player list page', () => {
+    vi.mocked(isPage).mockImplementation((page) => page === pages.playerListOwnTeam)
+    vi.mocked(calcHTMSPoints)
       .mockReturnValueOnce({ ability: 1234, potential: 5678 })
       .mockReturnValueOnce({ ability: 2345, potential: 6789 })
 
@@ -204,9 +198,9 @@ describe('htms-points module', () => {
     expect(valueCell2?.title).toBe('htms_points_help')
   })
 
-  it('should add HTMS points to the transfers search result page', () => {
-    mockIsPage.mockImplementation((page) => page === pages.transfersSearchResult)
-    mockCalcHTMSPoints
+  test('adds HTMS points to the transfers search result page', () => {
+    vi.mocked(isPage).mockImplementation((page) => page === pages.transfersSearchResult)
+    vi.mocked(calcHTMSPoints)
       .mockReturnValueOnce({ ability: 1234, potential: 5678 })
       .mockReturnValueOnce({ ability: 2345, potential: 6789 })
 

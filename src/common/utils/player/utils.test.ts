@@ -1,53 +1,36 @@
 import { createElement } from '@common/test/utils'
 import { logger } from '@common/utils/logger'
+import { PlayerSkills } from '@common/utils/player/constants'
 import { parsePlayerAge, parsePlayerSkills } from '@common/utils/player/utils'
+import { describe, expect, test } from 'vitest'
 
 describe('parsePlayerAge', () => {
-  it.each([
+  test.each([
     { html: '26 years and 86 days', expected: { years: 26, days: 86 } },
     { html: '21 years and 0 days', expected: { years: 21, days: 0 } },
     { html: '26 years and 86 days, Next birthday: 28.01.2026', expected: { years: 26, days: 86 } },
     { html: '29 years and 20 days, Next birthday: 01.01.2026', expected: { years: 29, days: 20 } },
-  ])('should parse age from text: $html', ({ html, expected }) => {
+  ])('parses age from text: $html', ({ html, expected }) => {
     const element = createElement(html)
 
-    const result = parsePlayerAge(element)
-
-    expect(result).toEqual(expected)
+    expect(parsePlayerAge(element)).toEqual(expected)
   })
 
-  it('should parse age from table cell with additional text', () => {
-    const html = `
-      <table>
-        <tr>
-          <td class="right">Age</td>
-          <td colspan="2" class="nowrap">26 years and 86 days</td>
-        </tr>
-      </table>
-    `
-    const element = createElement(html)
-
-    const result = parsePlayerAge(element)
-
-    expect(result).toEqual({ years: 26, days: 86 })
-  })
-
-  it.each([
+  test.each([
     { desc: 'empty text', html: '' },
     { desc: 'invalid format', html: 'invalid age format' },
     { desc: 'partial match', html: '26 years' },
-  ])('should return null for $desc', ({ html }) => {
+    { desc: 'extra text', html: 'extra text 26 years and 10 days' },
+  ])('returns null for $desc', ({ html }) => {
     const element = createElement(html)
 
-    const result = parsePlayerAge(element)
-
-    expect(result).toBeNull()
+    expect(parsePlayerAge(element)).toBeNull()
   })
 })
 
 describe('parsePlayerSkills', () => {
-  it('should parse all skills from player detail page', () => {
-    const html = `
+  test('parses all skills from player detail page', () => {
+    const element = createElement(`
       <div class="transferPlayerSkills">
         <table>
           <tbody>
@@ -75,23 +58,22 @@ describe('parsePlayerSkills', () => {
           </tbody>
         </table>
       </div>
-    `
-    const element = createElement(html)
+    `)
 
-    const result = parsePlayerSkills(element)
-
-    expect(result).not.toBeNull()
-    expect(result?.keeper).toBe(1)
-    expect(result?.defending).toBe(6)
-    expect(result?.playmaking).toBe(4)
-    expect(result?.winger).toBe(6)
-    expect(result?.passing).toBe(4)
-    expect(result?.scoring).toBe(3)
-    expect(result?.setPieces).toBe(2)
+    const expected: PlayerSkills = {
+      keeper: 1,
+      defending: 6,
+      playmaking: 4,
+      winger: 6,
+      passing: 4,
+      scoring: 3,
+      setPieces: 2,
+    }
+    expect(parsePlayerSkills(element)).toEqual(expected)
   })
 
-  it('should return null and log warning when only one skill is found', () => {
-    const html = `
+  test('returns null and logs warning when only one skill is found', () => {
+    const element = createElement(`
       <div class="transferPlayerSkills">
         <table>
           <tbody>
@@ -101,21 +83,15 @@ describe('parsePlayerSkills', () => {
           </tbody>
         </table>
       </div>
-    `
-    const element = createElement(html)
+    `)
 
-    const result = parsePlayerSkills(element)
-
-    expect(result).toBeNull()
-    expect(logger.warn).toHaveBeenCalledWith('Cannot parse skills. Expected 7 skill, found 1.', { keeper: 1 })
+    expect(parsePlayerSkills(element)).toBeNull()
+    expect(logger.warn).toHaveBeenCalledWith('Cannot parse skills. Expected 7 skills, found 1.', { keeper: 1 })
   })
 
-  it('should return null for empty HTML', () => {
-    const html = ''
-    const element = createElement(html)
+  test('returns null for empty HTML', () => {
+    const element = createElement('')
 
-    const result = parsePlayerSkills(element)
-
-    expect(result).toBeNull()
+    expect(parsePlayerSkills(element)).toBeNull()
   })
 })

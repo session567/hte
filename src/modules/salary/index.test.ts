@@ -1,11 +1,8 @@
 import salary from '@modules/salary'
+import { describe, expect, test } from 'vitest'
 
 describe('salary module', () => {
-  afterEach(() => {
-    document.body.innerHTML = ''
-  })
-
-  it('should add yearly salary to the player page', () => {
+  test('adds yearly salary to the player page', () => {
     document.body.innerHTML = `
       <div class="transferPlayerInformation">
         <table>

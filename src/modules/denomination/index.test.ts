@@ -1,13 +1,9 @@
 import denomination from '@modules/denomination'
+import { describe, expect, test } from 'vitest'
 
 describe('denomination module', () => {
-  afterEach(() => {
-    document.body.innerHTML = ''
-  })
-
-  it('should add denomination number after link', () => {
-    document.body.innerHTML =
-      '<a href="/Help/Rules/AppDenominations.aspx?lt=skill&amp;ll=6#skill" class="skill">passable</a>'
+  test('adds denomination number after link', () => {
+    document.body.innerHTML = `<a href="/Help/Rules/AppDenominations.aspx?lt=skill&amp;ll=6#skill" class="skill">passable</a>`
 
     denomination.run()
 
@@ -15,7 +11,7 @@ describe('denomination module', () => {
     expect(span?.textContent).toBe('(6)')
   })
 
-  it('should not add denomination number after link if it already exists', () => {
+  test("doesn't add denomination number after link if it already exists", () => {
     document.body.innerHTML = `
       <a href="/Help/Rules/AppDenominations.aspx?lt=skill&amp;ll=6#skill" class="skill">passable</a>
       <span class="shy denominationNumber">(6)</span>
@@ -30,7 +26,7 @@ describe('denomination module', () => {
     expect(spansAfter).toHaveLength(1)
   })
 
-  it('should add personality number after link for personality types', () => {
+  test('adds personality number after link for personality types', () => {
     document.body.innerHTML = `
       A <a href="/Help/Rules/AppDenominations.aspx?lt=gentleness&amp;ll=2#gentleness" class="skill">pleasant guy</a>
       who is <a href="/Help/Rules/AppDenominations.aspx?lt=aggressiveness&amp;ll=4#aggressiveness" class="skill">balanced</a>
