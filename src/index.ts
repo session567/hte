@@ -1,3 +1,9 @@
+/**
+ * Main entry point.
+ *
+ * Initializes and runs registered modules on applicable pages.
+ */
+
 import '@common/styles/global.css'
 
 import type { Module } from '@common/types/module'
