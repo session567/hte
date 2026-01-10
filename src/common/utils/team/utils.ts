@@ -7,7 +7,7 @@ import { pages } from '@common/utils/pages'
  * @returns Object containing teamId and seriesId, or null values if not found
  */
 export const getOwnTeamData = (): Record<string, string | null> => {
-  const seriesLink = querySelector<HTMLAnchorElement>(`#teamLinks > a[href*="${pages.series.pathname}"]`)
+  const seriesLink = querySelector<HTMLAnchorElement>(`#teamLinks > a[href*="${pages.series.pathname}"]`, false)
   const params = new URLSearchParams(seriesLink?.search)
 
   return {
@@ -44,3 +44,10 @@ export const isOwnTeamPage = (): boolean => {
 
   return pageTeamId !== null && ownTeamId !== null && pageTeamId === ownTeamId
 }
+
+/**
+ * Check if the user is logged in.
+ *
+ * @returns True if the user is logged in, false otherwise
+ */
+export const isLoggedIn = (): boolean => getOwnTeamData().teamId !== null

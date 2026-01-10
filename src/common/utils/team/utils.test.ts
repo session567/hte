@@ -1,4 +1,4 @@
-import { getOwnTeamData, getPageTeamId, isOwnTeamPage } from '@common/utils/team/utils'
+import { getOwnTeamData, getPageTeamId, isLoggedIn, isOwnTeamPage } from '@common/utils/team/utils'
 import { describe, expect, test } from 'vitest'
 
 describe('getOwnTeamData', () => {
@@ -79,5 +79,21 @@ describe('isOwnTeamPage', () => {
 
   test('returns false when team data is missing', () => {
     expect(isOwnTeamPage()).toBe(false)
+  })
+})
+
+describe('isLoggedIn', () => {
+  test('returns true when user is logged in', () => {
+    document.body.innerHTML = `
+      <div id="teamLinks">
+        <a href="/World/Series/?LeagueLevelUnitID=456&TeamID=123">III.3</a>
+      </div>
+    `
+
+    expect(isLoggedIn()).toBe(true)
+  })
+
+  test('returns false when user is not logged in', () => {
+    expect(isLoggedIn()).toBe(false)
   })
 })
