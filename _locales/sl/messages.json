@@ -1,0 +1,26 @@
+{
+  "links_title": {
+    "message": "Povezave"
+  },
+  "skill_bonus_title": {
+    "message": "Bonus za zvestobo in bonus matičnega kluba: $1"
+  },
+  "htms_points_label": {
+    "message": "HTMS"
+  },
+  "htms_points_help": {
+    "message": "Sposobnost / Potencial"
+  },
+  "salary_per_season": {
+    "message": "leto"
+  },
+  "transfer_search_presets_title": {
+    "message": "Transfer Search Presets"
+  },
+  "transfer_search_presets_add_button": {
+    "message": "Add Preset"
+  },
+  "transfer_search_presets_name_prompt": {
+    "message": "Preset name"
+  }
+}
