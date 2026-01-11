@@ -15,12 +15,12 @@
     "message": "year"
   },
   "transfer_search_presets_title": {
-    "message": "Transfer Search Filters"
+    "message": "Transfer Search Presets"
   },
   "transfer_search_presets_add_button": {
-    "message": "Add filter"
+    "message": "Add Preset"
   },
   "transfer_search_presets_name_prompt": {
-    "message": "Filter name:"
+    "message": "Preset name"
   }
 }
