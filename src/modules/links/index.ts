@@ -1,6 +1,6 @@
 import '@modules/links/index.css'
 
-import { Module } from '@common/types/module'
+import type { Module } from '@common/types/module'
 import { querySelector } from '@common/utils/dom'
 import { t } from '@common/utils/i18n'
 import { logger } from '@common/utils/logger'

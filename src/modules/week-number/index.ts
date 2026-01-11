@@ -1,6 +1,6 @@
 import '@modules/week-number/index.css'
 
-import { Module } from '@common/types/module'
+import type { Module } from '@common/types/module'
 import { querySelectorAll } from '@common/utils/dom'
 import { pages } from '@common/utils/pages'
 import { calcWeekNumber, parseDate } from '@modules/week-number/utils'

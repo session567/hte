@@ -1,4 +1,4 @@
-import { Module } from '@common/types/module'
+import type { Module } from '@common/types/module'
 import { WEEKS_PER_SEASON } from '@common/utils/constants'
 import { querySelector } from '@common/utils/dom'
 import { t } from '@common/utils/i18n'

@@ -1,4 +1,4 @@
-import { Module } from '@common/types/module'
+import type { Module } from '@common/types/module'
 import { VERSION } from '@common/utils/constants'
 import { querySelector } from '@common/utils/dom'
 import { pages } from '@common/utils/pages'

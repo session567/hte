@@ -1,4 +1,4 @@
-import { Module } from '@common/types/module'
+import type { Module } from '@common/types/module'
 import { querySelector, querySelectorAll } from '@common/utils/dom'
 import { t } from '@common/utils/i18n'
 import { isPage, pages } from '@common/utils/pages'
