@@ -1,0 +1,26 @@
+{
+  "links_title": {
+    "message": "Links"
+  },
+  "skill_bonus_title": {
+    "message": "Loyalty and homegrown bonus: $1"
+  },
+  "htms_points_label": {
+    "message": "HTMS"
+  },
+  "htms_points_help": {
+    "message": "Ability / Potential"
+  },
+  "salary_per_season": {
+    "message": "year"
+  },
+  "transfer_search_presets_title": {
+    "message": "Transfer Search Presets"
+  },
+  "transfer_search_presets_add_button": {
+    "message": "Add Preset"
+  },
+  "transfer_search_presets_name_prompt": {
+    "message": "Preset name"
+  }
+}
