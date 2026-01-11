@@ -32,7 +32,7 @@ const createBonusBar = (skillBar: HTMLDivElement, bonus: number): HTMLDivElement
 }
 
 /**
- * Extend player skill bars to include loyalty and homegrown bonus.
+ * Extend player skill bars to include loyalty and homegrown bonuses.
  */
 const skillBonus: Module = {
   name: 'Skill Bonus',

@@ -6,7 +6,7 @@ import { pages } from '@common/utils/pages'
 import { formatThousands, parseSalaryAndCurency } from '@modules/salary/utils'
 
 /**
- * Display yearly salary next to the weekly salary on the player detail page.
+ * Display the player's yearly salary next to weekly salary on the player detail page.
  */
 const salary: Module = {
   name: 'Salary',

@@ -7,7 +7,7 @@ import { pages } from '@common/utils/pages'
 const PERSONALITY_TYPES = new Set(['gentleness', 'honesty', 'aggressiveness'])
 
 /**
- * Display numeric values near all team and player abilities.
+ * Display numeric values next to all team and player abilities.
  */
 const denomination: Module = {
   name: 'Denomination',
