@@ -1,8 +1,7 @@
 import { DAYS_PER_SEASON } from '@common/utils/constants'
 import { storage } from '@common/utils/storage'
-import transferSearchPresets from '@modules/transfer-search-presets'
+import transferSearchPresets, { Preset } from '@modules/transfer-search-presets'
 import { BOOLEAN_FIELD_IDS, RADIO_FIELD_NAMES, STRING_FIELD_IDS } from '@modules/transfer-search-presets/constants'
-import { Preset } from '@modules/transfer-search-presets/types'
 import { beforeEach, describe, expect, test, vi } from 'vitest'
 
 vi.mock('@common/utils/storage')

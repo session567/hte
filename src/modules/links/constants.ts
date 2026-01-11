@@ -1,4 +1,7 @@
-import { Link } from '@modules/links/types'
+export type Link = {
+  name: string
+  url: string
+}
 
 export const ALLOWED_PLACEHOLDERS = ['teamId', 'seriesId']
 

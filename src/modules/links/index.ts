@@ -15,12 +15,12 @@ import {
   HATTRICK_CYCLE_PLANNER,
   HATTRICK_PORTAL_TRACKER,
   HATTRICK_YOUTHCLUB,
+  Link,
   NICKARANA_LEAGUE_SIMULATOR,
   PLAYER_INTO_COACH_CONVERSION_COST,
   SCOUTRICK,
   TS_ORGANIZER,
 } from '@modules/links/constants'
-import { Link } from '@modules/links/types'
 import { replacePlaceholders } from '@modules/links/utils'
 
 const linkMap = new Map<Page, Link[]>([
