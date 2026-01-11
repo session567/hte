@@ -69,7 +69,7 @@ modules/example-module/
    
    export default exampleModule
    ```
-   
+
    For a simple module example,
    see [src/modules/denomination/index.ts](https://github.com/session567/hte/blob/main/src/modules/denomination/index.ts).
 
@@ -115,40 +115,11 @@ All pnpm scripts are located in [package.json](https://github.com/session567/hte
 
 ## Translations
 
-We use [Crowdin](https://crowdin.com/project/hte) for community-driven translations. Translators work in Crowdin's web
-interface, and Crowdin automatically creates pull requests with updated translations.
+We currently don't support translations, but HTE is built in a way that it could support translations in the future if
+there's enough interest.
 
-Translation strings are stored in `_locales/[language]/messages.json` files.
-
-### Adding Translation Strings
-
-When adding user-facing text in your module, use the `t()` function from `@common/utils/i18n`:
-
-```typescript
-import {t} from '@common/utils/i18n';
-
-const message = t('my_module_greeting'); // Simple translation
-const messageWithParam = t('my_module_welcome', 'John'); // With placeholder
-```
-
-Then add the English translation to `_locales/en/messages.json`:
-
-```json
-  {
-  "my_module_greeting": {
-    "message": "Hello!"
-  },
-  "my_module_welcome": {
-    "message": "Welcome, $1!"
-  }
-}
-```
-
-General guidelines:
-
-- Use descriptive keys with the module's name as the prefix: `module_name_description`.
-- Use `$1`, `$2`, etc. for placeholders in messages.
-- Only edit `_locales/en/messages.json`; other languages are managed via Crowdin.
+For now, all user-facing text should be defined in English in `_locales/en/messages.json`, and retrieved using the `t()`
+function from `@common/utils/i18n`.
 
 ## License
 
