@@ -1,6 +1,6 @@
 {
-  "manifest_version": 2,
-  "name": "hte",
+  "manifest_version": 3,
+  "name": "HTE",
   "version": "0.1.0",
   "description": "Various enhancements for Hattrick",
   "default_locale": "en",
@@ -8,7 +8,8 @@
     "48": "icons/logo.svg",
     "64": "icons/logo.svg",
     "72": "icons/logo.svg",
-    "96": "icons/logo.svg"
+    "96": "icons/logo.svg",
+    "128": "icons/logo.svg"
   },
   "content_scripts": [
     {
