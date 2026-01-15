@@ -65,11 +65,11 @@ export default defineConfig(
         'error',
         {
           selector: 'CallExpression[callee.property.name="querySelector"]',
-          message: 'Use querySelector from @common/utils/dom instead.',
+          message: 'Use querySelector or querySelectorIn from @common/utils/dom instead.',
         },
         {
           selector: 'CallExpression[callee.property.name="querySelectorAll"]',
-          message: 'Use querySelectorAll from @common/utils/dom instead.',
+          message: 'Use querySelectorAll or querySelectorAllIn from @common/utils/dom instead.',
         },
       ],
     },
@@ -102,6 +102,7 @@ export default defineConfig(
   {
     files: ['src/**/*.test.ts'],
     rules: {
+      '@typescript-eslint/no-non-null-assertion': 'off',
       'no-restricted-imports': [
         'error',
         {

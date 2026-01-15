@@ -47,7 +47,13 @@ export const getElementsByName = <T extends HTMLElement = HTMLElement>(name: str
  * @param warn - Whether to log a warning if element is not found (default: true)
  * @returns The first matching element, or null if not found
  */
-export function querySelector<E extends Element = Element>(selectors: string, warn?: boolean): E | null
+export const querySelector = <E extends Element = Element>(selectors: string, warn = true): E | null => {
+  const element = document.querySelector<E>(selectors)
+  if (warn && !element) logger.warn(`querySelector: ${selectors} not found`)
+
+  return element
+}
+
 /**
  * Find the first element matching the CSS selector within a specific root element.
  *
@@ -60,21 +66,11 @@ export function querySelector<E extends Element = Element>(selectors: string, wa
  * @param warn - Whether to log a warning if element is not found (default: true)
  * @returns The first matching element, or null if not found
  */
-export function querySelector<E extends Element = Element>(
-  root: ParentNode,
+export const querySelectorIn = <E extends Element = Element>(
+  root: Element,
   selectors: string,
-  warn?: boolean,
-): E | null
-export function querySelector<E extends Element = Element>(
-  rootOrSelectors: ParentNode | string,
-  selectorsOrWarn?: string | boolean,
-  warnParam?: boolean,
-): E | null {
-  const isRootProvided = typeof rootOrSelectors !== 'string'
-  const root = isRootProvided ? rootOrSelectors : document
-  const selectors = isRootProvided ? (selectorsOrWarn as string) : rootOrSelectors
-  const warn = isRootProvided ? (warnParam ?? true) : (selectorsOrWarn ?? true)
-
+  warn = true,
+): E | null => {
   const element = root.querySelector<E>(selectors)
   if (warn && !element) logger.warn(`querySelector: ${selectors} not found`)
 
@@ -92,7 +88,13 @@ export function querySelector<E extends Element = Element>(
  * @param warn - Whether to log a warning if no elements are found (default: true)
  * @returns A NodeList of matching elements (may be empty)
  */
-export function querySelectorAll<E extends Element = Element>(selectors: string, warn?: boolean): NodeListOf<E>
+export const querySelectorAll = <E extends Element = Element>(selectors: string, warn = true): NodeListOf<E> => {
+  const elements = document.querySelectorAll<E>(selectors)
+  if (warn && !elements.length) logger.warn(`querySelectorAll: ${selectors} not found`)
+
+  return elements
+}
+
 /**
  * Find all elements matching the CSS selector within a specific root element.
  *
@@ -105,21 +107,11 @@ export function querySelectorAll<E extends Element = Element>(selectors: string,
  * @param warn - Whether to log a warning if no elements are found (default: true)
  * @returns A NodeList of matching elements (may be empty)
  */
-export function querySelectorAll<E extends Element = Element>(
-  root: ParentNode,
+export const querySelectorAllIn = <E extends Element = Element>(
+  root: Element,
   selectors: string,
-  warn?: boolean,
-): NodeListOf<E>
-export function querySelectorAll<E extends Element = Element>(
-  rootOrSelectors: ParentNode | string,
-  selectorsOrWarn?: string | boolean,
-  warnParam?: boolean,
-): NodeListOf<E> {
-  const isRootProvided = typeof rootOrSelectors !== 'string'
-  const root = isRootProvided ? rootOrSelectors : document
-  const selectors = isRootProvided ? (selectorsOrWarn as string) : rootOrSelectors
-  const warn = isRootProvided ? (warnParam ?? true) : (selectorsOrWarn ?? true)
-
+  warn = true,
+): NodeListOf<E> => {
   const elements = root.querySelectorAll<E>(selectors)
   if (warn && !elements.length) logger.warn(`querySelectorAll: ${selectors} not found`)
 

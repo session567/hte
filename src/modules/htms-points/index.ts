@@ -1,5 +1,5 @@
 import type { Module } from '@common/types/module'
-import { querySelector, querySelectorAll } from '@common/utils/dom'
+import { querySelector, querySelectorAll, querySelectorIn } from '@common/utils/dom'
 import { t } from '@common/utils/i18n'
 import { isPage, pages } from '@common/utils/pages'
 import { parsePlayerAge, parsePlayerSkills } from '@common/utils/player/utils'
@@ -46,7 +46,7 @@ const processPlayer = (playerElement: Element, ageElement: Element): void => {
   if (!age || !skills) return
 
   const htms = calcHTMSPoints(age, skills)
-  const tbody = querySelector(playerElement, '.transferPlayerInformation table tbody')
+  const tbody = querySelectorIn(playerElement, '.transferPlayerInformation table tbody')
   if (!tbody) return
 
   const htmsRow = createHTMSRow(htms)
@@ -63,7 +63,7 @@ const processPlayers = (playerSelector: string, ageSelector: string): void => {
   const playerElements = querySelectorAll(playerSelector)
 
   playerElements.forEach((playerElement) => {
-    const ageElement = querySelector(playerElement, ageSelector)
+    const ageElement = querySelectorIn(playerElement, ageSelector)
     if (ageElement) processPlayer(playerElement, ageElement)
   })
 }

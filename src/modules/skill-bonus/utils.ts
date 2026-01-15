@@ -1,4 +1,4 @@
-import { querySelector, querySelectorAll } from '@common/utils/dom'
+import { querySelectorAllIn, querySelectorIn } from '@common/utils/dom'
 import { logger } from '@common/utils/logger'
 import { pages } from '@common/utils/pages'
 
@@ -28,7 +28,7 @@ export const calcBonus = (element: Element): number => {
  */
 const calcLoyaltyBonus = (element: Element): number => {
   // Extract loyalty level (last .skill link with lt=skill)
-  const skillLinks = querySelectorAll<HTMLAnchorElement>(
+  const skillLinks = querySelectorAllIn<HTMLAnchorElement>(
     element,
     `p > a.skill[href*="${pages.appDenominations.pathname}"][href*="lt=skill"]`,
   )
@@ -49,5 +49,5 @@ const calcLoyaltyBonus = (element: Element): number => {
  * @returns Homegrown bonus (0.5 if homegrown, 0 otherwise)
  */
 const calcHomegrownBonus = (element: Element): number => {
-  return querySelector(element, '.icon-mother-club', false) ? 0.5 : 0
+  return querySelectorIn(element, '.icon-mother-club', false) ? 0.5 : 0
 }

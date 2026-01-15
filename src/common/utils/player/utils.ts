@@ -1,4 +1,4 @@
-import { querySelector, querySelectorAll } from '@common/utils/dom'
+import { querySelectorAllIn, querySelectorIn } from '@common/utils/dom'
 import { logger } from '@common/utils/logger'
 import { NUM_OF_SKILLS, PlayerAge, PlayerSkills, Skill } from '@common/utils/player/constants'
 
@@ -42,7 +42,7 @@ export const parsePlayerAge = (element: Element): PlayerAge | null => {
  */
 export const parsePlayerSkills = (element: Element): PlayerSkills | null => {
   const skills: Partial<Record<Skill, number>> = {}
-  const skillRows = querySelectorAll<HTMLTableRowElement>(
+  const skillRows = querySelectorAllIn<HTMLTableRowElement>(
     element,
     '.transferPlayerSkills table tr[id*="ucPlayerSkills_tr"], .transferPlayerSkills table tr[id*="TransferPlayer_tr"]',
   )
@@ -50,7 +50,7 @@ export const parsePlayerSkills = (element: Element): PlayerSkills | null => {
   skillRows.forEach((row) => {
     const rowId = row.id.split('_').pop()
     const skill = rowId ? ROW_ID_TO_SKILL[rowId] : undefined
-    const level = querySelector<HTMLDivElement>(row, '.ht-bar')?.getAttribute('level')
+    const level = querySelectorIn<HTMLDivElement>(row, '.ht-bar')?.getAttribute('level')
 
     if (!skill || !level) return
 

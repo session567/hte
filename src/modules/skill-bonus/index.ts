@@ -1,7 +1,7 @@
 import '@modules/skill-bonus/index.css'
 
 import type { Module } from '@common/types/module'
-import { querySelector, querySelectorAll } from '@common/utils/dom'
+import { querySelector, querySelectorAll, querySelectorAllIn, querySelectorIn } from '@common/utils/dom'
 import { t } from '@common/utils/i18n'
 import { isPage, pages } from '@common/utils/pages'
 import { calcBonus } from '@modules/skill-bonus/utils'
@@ -19,7 +19,7 @@ const createBonusBar = (skillBar: HTMLDivElement, bonus: number): HTMLDivElement
   const level = parseInt(skillBar.getAttribute('level') ?? '0', 10)
   if (!level) return null
 
-  const denominationBar = querySelector<HTMLSpanElement>(skillBar, '.bar-max > .bar-denomination')
+  const denominationBar = querySelectorIn<HTMLSpanElement>(skillBar, '.bar-max > .bar-denomination')
   if (!denominationBar) return null
 
   const bonusBar = document.createElement('div')
@@ -54,9 +54,9 @@ const skillBonus: Module = {
       const bonus = calcBonus(element)
       if (bonus === 0) return
 
-      const skillBars = querySelectorAll<HTMLDivElement>(element, '.transferPlayerSkills .ht-bar')
+      const skillBars = querySelectorAllIn<HTMLDivElement>(element, '.transferPlayerSkills .ht-bar')
       skillBars.forEach((skillBar) => {
-        const levelBar = querySelector<HTMLDivElement>(skillBar, '.bar-level', false)
+        const levelBar = querySelectorIn<HTMLDivElement>(skillBar, '.bar-level', false)
         if (!levelBar) return // non-existent skills won't have a .bar-level
 
         const bonusBar = createBonusBar(skillBar, bonus)
