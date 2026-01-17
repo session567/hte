@@ -1,28 +1,28 @@
 import { isPage, pages } from '@common/utils/pages'
 import htmsPoints from '@modules/htms-points'
 import { calcHTMSPoints } from '@modules/htms-points/utils'
-import { describe, expect, test, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
-vi.mock('@common/utils/pages', async () => {
+vi.mock(import('@common/utils/pages'), async () => {
   const originalModule = await vi.importActual('@common/utils/pages')
 
   return {
     ...originalModule,
-    isPage: vi.fn(),
+    isPage: vi.fn<typeof isPage>(),
   }
 })
 
-vi.mock('@modules/htms-points/utils', async () => {
+vi.mock(import('@modules/htms-points/utils'), async () => {
   const originalModule = await vi.importActual('@modules/htms-points/utils')
 
   return {
     ...originalModule,
-    calcHTMSPoints: vi.fn(),
+    calcHTMSPoints: vi.fn<typeof calcHTMSPoints>(),
   }
 })
 
 describe('htms-points module', () => {
-  test('adds HTMS points to the player detail page', () => {
+  it('adds HTMS points to the player detail page', () => {
     vi.mocked(isPage).mockImplementation((page) => page === pages.playerDetailOwnTeam)
     vi.mocked(calcHTMSPoints).mockReturnValue({ ability: 1234, potential: 5678 })
 
@@ -78,12 +78,13 @@ describe('htms-points module', () => {
     const htmsRow = document.querySelector('.transferPlayerInformation table tbody tr:last-child')
     const labelCell = htmsRow?.querySelector('td.right')
     const valueCell = htmsRow?.querySelector<HTMLSpanElement>('span.help.hte-help')
+
     expect(labelCell?.textContent).toBe('htms_points_label')
     expect(valueCell?.textContent).toBe('1234 / 5678')
     expect(valueCell?.title).toBe('htms_points_help')
   })
 
-  test('adds HTMS points to the player list page', () => {
+  it('adds HTMS points to the player list page', () => {
     vi.mocked(isPage).mockImplementation((page) => page === pages.playerListOwnTeam)
     vi.mocked(calcHTMSPoints)
       .mockReturnValueOnce({ ability: 1234, potential: 5678 })
@@ -181,11 +182,13 @@ describe('htms-points module', () => {
     htmsPoints.run()
 
     const players = document.querySelectorAll('.teamphoto-player .playerInfo')
+
     expect(players).toHaveLength(2)
 
     const htmsRow1 = players[0].querySelector('.transferPlayerInformation table tr:last-child')
     const labelCell1 = htmsRow1?.querySelector('td.right')
     const valueCell1 = htmsRow1?.querySelector<HTMLSpanElement>('span.help.hte-help')
+
     expect(labelCell1?.textContent).toBe('htms_points_label')
     expect(valueCell1?.textContent).toBe('1234 / 5678')
     expect(valueCell1?.title).toBe('htms_points_help')
@@ -193,12 +196,13 @@ describe('htms-points module', () => {
     const htmsRow2 = players[1].querySelector('.transferPlayerInformation table tr:last-child')
     const labelCell2 = htmsRow2?.querySelector('td.right')
     const valueCell2 = htmsRow2?.querySelector<HTMLSpanElement>('span.help.hte-help')
+
     expect(labelCell2?.textContent).toBe('htms_points_label')
     expect(valueCell2?.textContent).toBe('2345 / 6789')
     expect(valueCell2?.title).toBe('htms_points_help')
   })
 
-  test('adds HTMS points to the transfers search result page', () => {
+  it('adds HTMS points to the transfers search result page', () => {
     vi.mocked(isPage).mockImplementation((page) => page === pages.transfersSearchResult)
     vi.mocked(calcHTMSPoints)
       .mockReturnValueOnce({ ability: 1234, potential: 5678 })
@@ -298,11 +302,13 @@ describe('htms-points module', () => {
     htmsPoints.run()
 
     const players = document.querySelectorAll('.playerListDetails')
+
     expect(players).toHaveLength(2)
 
     const htmsRow1 = players[0].querySelector('.transferPlayerInformation table tr:last-child')
     const labelCell1 = htmsRow1?.querySelector('td.right')
     const valueCell1 = htmsRow1?.querySelector<HTMLSpanElement>('span.help.hte-help')
+
     expect(labelCell1?.textContent).toBe('htms_points_label')
     expect(valueCell1?.textContent).toBe('1234 / 5678')
     expect(valueCell1?.title).toBe('htms_points_help')
@@ -310,6 +316,7 @@ describe('htms-points module', () => {
     const htmsRow2 = players[1].querySelector('.transferPlayerInformation table tr:last-child')
     const labelCell2 = htmsRow2?.querySelector('td.right')
     const valueCell2 = htmsRow2?.querySelector<HTMLSpanElement>('span.help.hte-help')
+
     expect(labelCell2?.textContent).toBe('htms_points_label')
     expect(valueCell2?.textContent).toBe('2345 / 6789')
     expect(valueCell2?.title).toBe('htms_points_help')

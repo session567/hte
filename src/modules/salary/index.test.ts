@@ -1,8 +1,8 @@
 import salary from '@modules/salary'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 describe('salary module', () => {
-  test('adds yearly salary to the player page', () => {
+  it('adds yearly salary to the player page', () => {
     document.body.innerHTML = `
       <div class="transferPlayerInformation">
         <table>
@@ -24,6 +24,7 @@ describe('salary module', () => {
 
     const salaryCell = document.querySelector('.transferPlayerInformation table tr:nth-child(2) td:nth-child(2)')
     const yearlyDiv = salaryCell?.querySelector('div.shy')
+
     expect(yearlyDiv?.textContent).toBe('24 000 €/salary_per_season')
   })
 })

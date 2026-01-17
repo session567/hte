@@ -1,8 +1,8 @@
 import { calcHTMSPoints } from '@modules/htms-points/utils'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
-describe('calcHTMSPoints', () => {
-  test.each([
+describe(calcHTMSPoints, () => {
+  it.each([
     { age: { years: 17, days: 3 }, levels: [1, 6, 8, 5, 5, 3, 3], expectedAbility: 502, expectedPotential: 2139 },
     { age: { years: 17, days: 3 }, levels: [1, 3, 3, 7, 3, 5, 2], expectedAbility: 301, expectedPotential: 1938 },
     { age: { years: 24, days: 27 }, levels: [2, 7, 7, 3, 5, 4, 2], expectedAbility: 498, expectedPotential: 1023 },
@@ -24,7 +24,7 @@ describe('calcHTMSPoints', () => {
         setPieces: levels[6],
       }
 
-      expect(calcHTMSPoints(age, skills)).toEqual({ ability: expectedAbility, potential: expectedPotential })
+      expect(calcHTMSPoints(age, skills)).toStrictEqual({ ability: expectedAbility, potential: expectedPotential })
     },
   )
 })

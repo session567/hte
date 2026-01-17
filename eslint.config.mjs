@@ -7,6 +7,7 @@ import tseslint from 'typescript-eslint'
 import prettierRecommended from 'eslint-plugin-prettier/recommended'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import eslintPluginTsdoc from 'eslint-plugin-tsdoc'
+import vitest from '@vitest/eslint-plugin'
 
 export default defineConfig(
   globalIgnores(['coverage/**', 'dist/**', 'node_modules/**', 'scripts/**']),
@@ -101,7 +102,15 @@ export default defineConfig(
   // Test files
   {
     files: ['src/**/*.test.ts'],
+    plugins: {
+      vitest,
+    },
     rules: {
+      ...vitest.configs.all.rules,
+      'vitest/max-expects': 'off',
+      'vitest/no-hooks': 'off',
+      'vitest/prefer-expect-assertions': 'off',
+      'vitest/valid-title': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off',
       'no-restricted-imports': [
         'error',

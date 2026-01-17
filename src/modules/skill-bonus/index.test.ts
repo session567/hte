@@ -1,18 +1,18 @@
 import { isPage, pages } from '@common/utils/pages'
 import skillBonus from '@modules/skill-bonus'
-import { describe, expect, test, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
-vi.mock('@common/utils/pages', async () => {
+vi.mock(import('@common/utils/pages'), async () => {
   const originalModule = await vi.importActual('@common/utils/pages')
 
   return {
     ...originalModule,
-    isPage: vi.fn(),
+    isPage: vi.fn<typeof isPage>(),
   }
 })
 
 describe('skill-bonus module', () => {
-  test('adds bonus bars to skill bars on the player detail page', () => {
+  it('adds bonus bars to skill bars on the player detail page', () => {
     vi.mocked(isPage).mockImplementation((page) => page === pages.playerDetailOwnTeam)
     document.body.innerHTML = `
       <div id="mainBody">
@@ -42,13 +42,14 @@ describe('skill-bonus module', () => {
     skillBonus.run()
 
     const bonusBar = document.querySelector('.hte-skill-bonus-bar')
+
     expect(bonusBar).not.toBeNull()
     // Skill level: 10, Bonus: 0.55
     expect(bonusBar?.getAttribute('style')).toContain('width: 53%') // (10 + 0.55) / 20 * 100
     expect(bonusBar?.querySelector('.bar-denomination')).not.toBeNull()
   })
 
-  test('adds bonus bars to multiple skill bars', () => {
+  it('adds bonus bars to multiple skill bars', () => {
     vi.mocked(isPage).mockImplementation((page) => page === pages.playerDetailOwnTeam)
     document.body.innerHTML = `
       <div id="mainBody">
@@ -89,10 +90,11 @@ describe('skill-bonus module', () => {
     skillBonus.run()
 
     const bonusBars = document.querySelectorAll('.hte-skill-bonus-bar')
+
     expect(bonusBars).toHaveLength(2)
   })
 
-  test("doesn't add bonus bars when bonus is 0", () => {
+  it("doesn't add bonus bars when bonus is 0", () => {
     vi.mocked(isPage).mockImplementation((page) => page === pages.playerDetailOwnTeam)
     document.body.innerHTML = `
       <div id="mainBody">
@@ -122,10 +124,11 @@ describe('skill-bonus module', () => {
     skillBonus.run()
 
     const bonusBar = document.querySelector('.hte-skill-bonus-bar')
+
     expect(bonusBar).toBeNull()
   })
 
-  test("doesn't add bonus bar when skill has no bar-level (non-existent skill)", () => {
+  it("doesn't add bonus bar when skill has no bar-level (non-existent skill)", () => {
     vi.mocked(isPage).mockImplementation((page) => page === pages.playerDetailOwnTeam)
     document.body.innerHTML = `
       <div id="mainBody">
@@ -154,10 +157,11 @@ describe('skill-bonus module', () => {
     skillBonus.run()
 
     const bonusBar = document.querySelector('.hte-skill-bonus-bar')
+
     expect(bonusBar).toBeNull()
   })
 
-  test('adds bonus bars to multiple players on the player list', () => {
+  it('adds bonus bars to multiple players on the player list', () => {
     vi.mocked(isPage).mockImplementation((page) => page === pages.playerListOwnTeam)
     document.body.innerHTML = `
       <div id="mainBody">
@@ -206,6 +210,7 @@ describe('skill-bonus module', () => {
     skillBonus.run()
 
     const bonusBars = document.querySelectorAll('.hte-skill-bonus-bar')
+
     expect(bonusBars).toHaveLength(2)
 
     // Skill level: 7, Bonus: 1.0

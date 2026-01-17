@@ -1,13 +1,13 @@
 import { getCurrentPathname } from '@common/utils/location'
 import { getCurrentPage, isPage, Page, pages } from '@common/utils/pages'
 import { isOwnTeamPage } from '@common/utils/team/utils'
-import { describe, expect, test, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
-vi.mock('@common/utils/location')
-vi.mock('@common/utils/team/utils')
+vi.mock(import('@common/utils/location'))
+vi.mock(import('@common/utils/team/utils'))
 
-describe('isPage', () => {
-  test.each([
+describe(isPage, () => {
+  it.each([
     {
       desc: 'same path, different scope',
       currentPathname: '/Foo',
@@ -44,18 +44,18 @@ describe('isPage', () => {
   })
 })
 
-describe('getCurrentPage', () => {
-  test('returns the current page', () => {
+describe(getCurrentPage, () => {
+  it('returns the current page', () => {
     vi.mocked(getCurrentPathname).mockReturnValue(pages.club.pathname)
     vi.mocked(isOwnTeamPage).mockReturnValue(false)
 
     expect(getCurrentPage()).toBe(pages.club)
   })
 
-  test('throws an error when no page matches', () => {
+  it('throws an error when no page matches', () => {
     vi.mocked(getCurrentPathname).mockReturnValue('/Unsupported/Path/')
     vi.mocked(isOwnTeamPage).mockReturnValue(false)
 
-    expect(() => getCurrentPage()).toThrow('The current page is not supported')
+    expect(() => getCurrentPage()).toThrowError('The current page is not supported')
   })
 })

@@ -1,8 +1,8 @@
 import { getOwnTeamData, getPageTeamId, isLoggedIn, isOwnTeamPage } from '@common/utils/team/utils'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
-describe('getOwnTeamData', () => {
-  test('extracts teamId and seriesId from series link', () => {
+describe(getOwnTeamData, () => {
+  it('extracts teamId and seriesId from series link', () => {
     document.body.innerHTML = `
       <div id="teamLinks">
         <a href="/Club/?TeamID=123">Foobar</a>
@@ -11,16 +11,16 @@ describe('getOwnTeamData', () => {
       </div>
     `
 
-    expect(getOwnTeamData()).toEqual({ teamId: '123', seriesId: '456' })
+    expect(getOwnTeamData()).toStrictEqual({ teamId: '123', seriesId: '456' })
   })
 
-  test('returns null values when the series link is not found', () => {
-    expect(getOwnTeamData()).toEqual({ teamId: null, seriesId: null })
+  it('returns null values when the series link is not found', () => {
+    expect(getOwnTeamData()).toStrictEqual({ teamId: null, seriesId: null })
   })
 })
 
-describe('getPageTeamId', () => {
-  test('extracts team ID from breadcrumb when present', () => {
+describe(getPageTeamId, () => {
+  it('extracts team ID from breadcrumb when present', () => {
     document.body.innerHTML = `
       <div id="ctl00_ctl00_CPContent_divStartMain">
         <div class="boxHead">
@@ -35,13 +35,13 @@ describe('getPageTeamId', () => {
     expect(getPageTeamId()).toBe('1234')
   })
 
-  test('returns null when breadcrumb is missing', () => {
+  it('returns null when breadcrumb is missing', () => {
     expect(getPageTeamId()).toBeNull()
   })
 })
 
-describe('isOwnTeamPage', () => {
-  test('returns true when both IDs match', () => {
+describe(isOwnTeamPage, () => {
+  it('returns true when both IDs match', () => {
     document.body.innerHTML = `
       <div id="teamLinks">
         <a href="/World/Series/?LeagueLevelUnitID=456&TeamID=123">III.3</a>
@@ -59,7 +59,7 @@ describe('isOwnTeamPage', () => {
     expect(isOwnTeamPage()).toBe(true)
   })
 
-  test('returns false when IDs do not match', () => {
+  it('returns false when IDs do not match', () => {
     document.body.innerHTML = `
       <div id="teamLinks">
         <a href="/World/Series/?LeagueLevelUnitID=456&TeamID=123">III.3</a>
@@ -77,13 +77,13 @@ describe('isOwnTeamPage', () => {
     expect(isOwnTeamPage()).toBe(false)
   })
 
-  test('returns false when team data is missing', () => {
+  it('returns false when team data is missing', () => {
     expect(isOwnTeamPage()).toBe(false)
   })
 })
 
-describe('isLoggedIn', () => {
-  test('returns true when user is logged in', () => {
+describe(isLoggedIn, () => {
+  it('returns true when user is logged in', () => {
     document.body.innerHTML = `
       <div id="teamLinks">
         <a href="/World/Series/?LeagueLevelUnitID=456&TeamID=123">III.3</a>
@@ -93,7 +93,7 @@ describe('isLoggedIn', () => {
     expect(isLoggedIn()).toBe(true)
   })
 
-  test('returns false when user is not logged in', () => {
+  it('returns false when user is not logged in', () => {
     expect(isLoggedIn()).toBe(false)
   })
 })

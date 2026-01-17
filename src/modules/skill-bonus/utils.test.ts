@@ -1,9 +1,9 @@
 import { createElement } from '@common/test/utils'
 import { calcBonus } from '@modules/skill-bonus/utils'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
-describe('calcBonus', () => {
-  test('calculates bonus for homegrown player', () => {
+describe(calcBonus, () => {
+  it('calculates bonus for homegrown player', () => {
     const element = createElement(`
       <p>Has <a href="/Help/Rules/AppDenominations.aspx?lt=skill&ll=20#skill" class="skill">divine</a> loyalty.</p>
       <div class="ownerAndStatusPlayerInfo"><i class="icon-mother-club"></i></div>
@@ -12,7 +12,7 @@ describe('calcBonus', () => {
     expect(calcBonus(element)).toBe(1.5)
   })
 
-  test('calculates bonus for non-homegrown player', () => {
+  it('calculates bonus for non-homegrown player', () => {
     const element = createElement(
       `<p>Has <a href="/Help/Rules/AppDenominations.aspx?lt=skill&ll=20#skill" class="skill">divine</a> loyalty.</p>`,
     )
@@ -20,13 +20,13 @@ describe('calcBonus', () => {
     expect(calcBonus(element)).toBe(1.0)
   })
 
-  test('returns 0 when no loyalty link exists', () => {
+  it('returns 0 when no loyalty link exists', () => {
     const element = createElement('<p>Some text without loyalty information</p>')
 
     expect(calcBonus(element)).toBe(0)
   })
 
-  test('handles complex HTML with multiple skill links', () => {
+  it('handles complex HTML with multiple skill links', () => {
     const element = createElement(`
       <p>
         A <a href="/Help/Rules/AppDenominations.aspx?lt=gentleness&ll=2#gentleness" class="skill">pleasant guy</a>

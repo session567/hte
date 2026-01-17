@@ -7,28 +7,28 @@ import {
   querySelectorIn,
 } from '@common/utils/dom'
 import { logger } from '@common/utils/logger'
-import { beforeEach, describe, expect, test } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 
-describe('getElementById', () => {
+describe(getElementById, () => {
   beforeEach(() => {
     document.body.innerHTML = '<div id="test-element">Test</div>'
   })
 
-  test('returns element when found', () => {
+  it('returns element when found', () => {
     const element = getElementById('test-element')
 
     expect(element?.textContent).toBe('Test')
     expect(logger.warn).not.toHaveBeenCalled()
   })
 
-  test('returns null and warns when element not found', () => {
+  it('returns null and warns when element not found', () => {
     const element = getElementById('nonexistent')
 
     expect(element).toBeNull()
     expect(logger.warn).toHaveBeenCalledWith('getElementById: nonexistent not found')
   })
 
-  test('returns null without warning when warn is false', () => {
+  it('returns null without warning when warn is false', () => {
     const element = getElementById('nonexistent', false)
 
     expect(element).toBeNull()
@@ -36,7 +36,7 @@ describe('getElementById', () => {
   })
 })
 
-describe('getElementsByName', () => {
+describe(getElementsByName, () => {
   beforeEach(() => {
     document.body.innerHTML = `
       <input name="test-input" value="1">
@@ -45,21 +45,21 @@ describe('getElementsByName', () => {
     `
   })
 
-  test('returns elements when found', () => {
+  it('returns elements when found', () => {
     const elements = getElementsByName('test-input')
 
     expect(elements).toHaveLength(2)
     expect(logger.warn).not.toHaveBeenCalled()
   })
 
-  test('returns empty list and warns when no elements found', () => {
+  it('returns empty list and warns when no elements found', () => {
     const elements = getElementsByName('nonexistent')
 
     expect(elements).toHaveLength(0)
     expect(logger.warn).toHaveBeenCalledWith('getElementsByName: nonexistent not found')
   })
 
-  test('returns empty list without warning when warn is false', () => {
+  it('returns empty list without warning when warn is false', () => {
     const elements = getElementsByName('nonexistent', false)
 
     expect(elements).toHaveLength(0)
@@ -67,7 +67,7 @@ describe('getElementsByName', () => {
   })
 })
 
-describe('querySelector', () => {
+describe(querySelector, () => {
   beforeEach(() => {
     document.body.innerHTML = `
       <div class="container">
@@ -76,21 +76,21 @@ describe('querySelector', () => {
     `
   })
 
-  test('returns element when found', () => {
+  it('returns element when found', () => {
     const element = querySelector('.target')
 
     expect(element?.textContent).toBe('Found')
     expect(logger.warn).not.toHaveBeenCalled()
   })
 
-  test('returns null and warns when element not found', () => {
+  it('returns null and warns when element not found', () => {
     const element = querySelector('.nonexistent')
 
     expect(element).toBeNull()
     expect(logger.warn).toHaveBeenCalledWith('querySelector: .nonexistent not found')
   })
 
-  test('returns null without warning when warn is false', () => {
+  it('returns null without warning when warn is false', () => {
     const element = querySelector('.nonexistent', false)
 
     expect(element).toBeNull()
@@ -98,7 +98,7 @@ describe('querySelector', () => {
   })
 })
 
-describe('querySelectorIn', () => {
+describe(querySelectorIn, () => {
   beforeEach(() => {
     document.body.innerHTML = `
       <div class="container">
@@ -110,7 +110,7 @@ describe('querySelectorIn', () => {
     `
   })
 
-  test('returns element within root', () => {
+  it('returns element within root', () => {
     const root = document.querySelector('.container')!
     const element = querySelectorIn(root, '.target')
 
@@ -118,7 +118,7 @@ describe('querySelectorIn', () => {
     expect(logger.warn).not.toHaveBeenCalled()
   })
 
-  test('returns null and warns when element not found in root', () => {
+  it('returns null and warns when element not found in root', () => {
     const root = document.querySelector('.container')!
     const element = querySelectorIn(root, '.nonexistent')
 
@@ -126,7 +126,7 @@ describe('querySelectorIn', () => {
     expect(logger.warn).toHaveBeenCalledWith('querySelector: .nonexistent not found')
   })
 
-  test('returns null without warning when warn is false', () => {
+  it('returns null without warning when warn is false', () => {
     const root = document.querySelector('.container')!
     const element = querySelectorIn(root, '.nonexistent', false)
 
@@ -134,7 +134,7 @@ describe('querySelectorIn', () => {
     expect(logger.warn).not.toHaveBeenCalled()
   })
 
-  test('scopes search to specific root', () => {
+  it('scopes search to specific root', () => {
     const root = document.querySelector('.container')!
     const element = querySelectorIn(root, '.target')
 
@@ -142,7 +142,7 @@ describe('querySelectorIn', () => {
   })
 })
 
-describe('querySelectorAll', () => {
+describe(querySelectorAll, () => {
   beforeEach(() => {
     document.body.innerHTML = `
       <div class="item">Item 1</div>
@@ -151,7 +151,7 @@ describe('querySelectorAll', () => {
     `
   })
 
-  test('returns elements when found', () => {
+  it('returns elements when found', () => {
     const elements = querySelectorAll('.item')
 
     expect(elements).toHaveLength(2)
@@ -160,14 +160,14 @@ describe('querySelectorAll', () => {
     expect(logger.warn).not.toHaveBeenCalled()
   })
 
-  test('returns empty list and warns when no elements found', () => {
+  it('returns empty list and warns when no elements found', () => {
     const elements = querySelectorAll('.nonexistent')
 
     expect(elements).toHaveLength(0)
     expect(logger.warn).toHaveBeenCalledWith('querySelectorAll: .nonexistent not found')
   })
 
-  test('returns empty list without warning when warn is false', () => {
+  it('returns empty list without warning when warn is false', () => {
     const elements = querySelectorAll('.nonexistent', false)
 
     expect(elements).toHaveLength(0)
@@ -175,7 +175,7 @@ describe('querySelectorAll', () => {
   })
 })
 
-describe('querySelectorAllIn', () => {
+describe(querySelectorAllIn, () => {
   beforeEach(() => {
     document.body.innerHTML = `
       <div class="container">
@@ -188,7 +188,7 @@ describe('querySelectorAllIn', () => {
     `
   })
 
-  test('returns elements within root', () => {
+  it('returns elements within root', () => {
     const root = document.querySelector('.container')!
     const elements = querySelectorAllIn(root, '.item')
 
@@ -198,7 +198,7 @@ describe('querySelectorAllIn', () => {
     expect(logger.warn).not.toHaveBeenCalled()
   })
 
-  test('returns empty list and warns when no elements found in root', () => {
+  it('returns empty list and warns when no elements found in root', () => {
     const root = document.querySelector('.container')!
     const elements = querySelectorAllIn(root, '.nonexistent')
 
@@ -206,7 +206,7 @@ describe('querySelectorAllIn', () => {
     expect(logger.warn).toHaveBeenCalledWith('querySelectorAll: .nonexistent not found')
   })
 
-  test('returns empty list without warning when warn is false', () => {
+  it('returns empty list without warning when warn is false', () => {
     const root = document.querySelector('.container')!
     const elements = querySelectorAllIn(root, '.nonexistent', false)
 

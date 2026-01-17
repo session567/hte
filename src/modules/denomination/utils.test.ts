@@ -1,8 +1,8 @@
 import { adjustDenominationValue, isDenominationType } from '@modules/denomination/utils'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
-describe('adjustDenominationValue', () => {
-  test.each([
+describe(adjustDenominationValue, () => {
+  it.each([
     { lt: 'skill', ll: 6, expected: 6 },
     { lt: 'leadership', ll: 5, expected: 5 },
     { lt: 'gentleness', ll: 3, expected: 3 },
@@ -19,13 +19,13 @@ describe('adjustDenominationValue', () => {
   })
 })
 
-describe('isDenominationType', () => {
-  test('returns true for valid denomination types', () => {
+describe(isDenominationType, () => {
+  it('returns true for valid denomination types', () => {
     expect(isDenominationType('skill')).toBe(true)
     expect(isDenominationType('FanMood')).toBe(true)
   })
 
-  test('returns false for invalid denomination types', () => {
+  it('returns false for invalid denomination types', () => {
     expect(isDenominationType('invalid')).toBe(false)
     expect(isDenominationType('SKILL')).toBe(false)
   })

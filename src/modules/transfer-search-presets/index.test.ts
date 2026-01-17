@@ -2,9 +2,9 @@ import { DAYS_PER_SEASON } from '@common/utils/constants'
 import { storage } from '@common/utils/storage'
 import transferSearchPresets, { Preset } from '@modules/transfer-search-presets'
 import { BOOLEAN_FIELD_IDS, RADIO_FIELD_NAMES, STRING_FIELD_IDS } from '@modules/transfer-search-presets/constants'
-import { describe, expect, test, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
-vi.mock('@common/utils/storage')
+vi.mock(import('@common/utils/storage'))
 
 const AGE_MIN = 17
 const AGE_MAX = 99
@@ -93,7 +93,7 @@ const buildHTML = (): string => {
 }
 
 describe('transfer-search-presets module', () => {
-  test('renders sidebar box with "Add preset" link when no presets exist', async () => {
+  it('renders sidebar box with "Add preset" link when no presets exist', async () => {
     document.body.innerHTML = '<div id="sidebar"></div>'
     vi.mocked(storage).get.mockResolvedValue(null)
 
@@ -105,14 +105,16 @@ describe('transfer-search-presets module', () => {
 
     const box = document.querySelector('#sidebar .box')
     const header = box?.querySelector('h2')
+
     expect(header?.textContent).toBe('transfer_search_presets_title')
 
     const addPresetLink = box?.querySelector('.hte-preset-link')
+
     expect(addPresetLink?.textContent).toBe('transfer_search_presets_add_button')
     expect(addPresetLink?.classList.contains('hte-mt-2')).toBe(false)
   })
 
-  test('renders existing presets', async () => {
+  it('renders existing presets', async () => {
     document.body.innerHTML = '<div id="sidebar"></div>'
     vi.mocked(storage).get.mockResolvedValue({ 'Test Preset': { foo: 'bar' } })
 
@@ -125,16 +127,19 @@ describe('transfer-search-presets module', () => {
     const box = document.querySelector('#sidebar .box')
     const presetRow = box?.querySelector('.hte-preset-row')
     const presetLink = presetRow?.querySelector('.hte-preset-link')
+
     expect(presetLink?.textContent).toBe('Test Preset')
 
     const deleteButton = presetRow?.querySelector('.hte-preset-delete')
+
     expect(deleteButton).not.toBeNull()
 
     const addPresetLink = box?.querySelector('.hte-preset-link.hte-mt-2')
+
     expect(addPresetLink?.textContent).toBe('transfer_search_presets_add_button')
   })
 
-  test('populates form fields when a preset is clicked', async () => {
+  it('populates form fields when a preset is clicked', async () => {
     document.body.innerHTML = buildHTML()
 
     const preset: Preset = {
@@ -186,24 +191,28 @@ describe('transfer-search-presets module', () => {
 
     const box = document.querySelector('#sidebar .box')
     const presetLink = box?.querySelector<HTMLAnchorElement>('.hte-preset-link')
+
     expect(presetLink?.textContent).toBe('My Preset')
 
     presetLink?.click()
 
     STRING_FIELD_IDS.forEach((id) => {
       const element = document.getElementById(id) as HTMLInputElement | HTMLSelectElement
-      expect({ [id]: element.value }).toEqual({ [id]: preset[id] })
+
+      expect({ [id]: element.value }).toStrictEqual({ [id]: preset[id] })
     })
 
     BOOLEAN_FIELD_IDS.forEach((id) => {
       const element = document.getElementById(id) as HTMLInputElement
-      expect({ [id]: element.hasAttribute('checked') }).toEqual({ [id]: preset[id] })
+
+      expect({ [id]: element.hasAttribute('checked') }).toStrictEqual({ [id]: preset[id] })
     })
 
     RADIO_FIELD_NAMES.forEach((name) => {
       const elements = document.getElementsByName(name) as NodeListOf<HTMLInputElement>
       const checkedElement = Array.from(elements).find((el) => el.hasAttribute('checked'))
-      expect({ [name]: checkedElement?.value }).toEqual({ [name]: preset[name] })
+
+      expect({ [name]: checkedElement?.value }).toStrictEqual({ [name]: preset[name] })
     })
   })
 })
