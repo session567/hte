@@ -113,6 +113,10 @@ All pnpm scripts are located in [package.json](https://github.com/session567/hte
 - `pnpm test` - Run tests with vitest
 - `pnpm lint` - Run ESLint on the src/ folder
 
+## Code Style
+
+ESLint enforces most conventions automatically. Additional guidelines are documented in [CLAUDE.md](CLAUDE.md).
+
 ## Translations
 
 We currently don't support translations, but HTE is built in a way that it could support translations in the future if

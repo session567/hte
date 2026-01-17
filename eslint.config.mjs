@@ -65,6 +65,10 @@ export default defineConfig(
       'no-restricted-syntax': [
         'error',
         {
+          selector: 'TSEnumDeclaration',
+          message: 'Use literal unions instead of enums.',
+        },
+        {
           selector: 'CallExpression[callee.property.name="querySelector"]',
           message: 'Use querySelector or querySelectorIn from @common/utils/dom instead.',
         },
