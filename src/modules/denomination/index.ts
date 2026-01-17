@@ -2,9 +2,11 @@ import '@modules/denomination/index.css'
 
 import type { Module } from '@common/types/module'
 import { querySelectorAll } from '@common/utils/dom'
+import { getCurrentPathname } from '@common/utils/location'
+import { logger } from '@common/utils/logger'
 import { pages } from '@common/utils/pages'
-
-const PERSONALITY_TYPES = new Set(['gentleness', 'honesty', 'aggressiveness'])
+import { MAX_VALUES, PERSONALITY_TYPES } from '@modules/denomination/constants'
+import { adjustDenominationValue, isDenominationType } from '@modules/denomination/utils'
 
 /**
  * Display numeric values next to all team and player abilities.
@@ -16,22 +18,32 @@ const denomination: Module = {
     const links = querySelectorAll<HTMLAnchorElement>(`a.skill[href*="${pages.appDenominations.pathname}"]`, false)
 
     links.forEach((link) => {
-      // Check if a denomination number already exists right after the link
-      if (link.nextElementSibling?.classList.contains('denominationNumber')) return
-
       const url = new URL(link.href)
       const lt = url.searchParams.get('lt')
       const ll = url.searchParams.get('ll')
       if (!lt || !ll) return
 
+      if (!isDenominationType(lt)) {
+        logger.error(`Denomination type ${lt} (${getCurrentPathname()} not supported`)
+        return
+      }
+
+      // Remove existing denomination number if present to prevent duplicates
+      if (link.nextElementSibling?.classList.contains('denominationNumber')) {
+        link.nextElementSibling.remove()
+      }
+
       const span = document.createElement('span')
+      const value = adjustDenominationValue(lt, Number(ll))
+      const maxValue = MAX_VALUES[lt]
+      const displayValue = maxValue ? `${value}/${maxValue}` : `${value}`
 
       if (PERSONALITY_TYPES.has(lt)) {
         span.className = `hte-skill hte-${lt}-${ll}`
-        span.textContent = ll
+        span.textContent = displayValue
       } else {
         span.className = 'shy denominationNumber'
-        span.textContent = `(${ll})`
+        span.textContent = `(${displayValue})`
       }
 
       link.after(span)

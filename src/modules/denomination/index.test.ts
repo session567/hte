@@ -2,31 +2,29 @@ import denomination from '@modules/denomination'
 import { describe, expect, test } from 'vitest'
 
 describe('denomination module', () => {
-  test('adds denomination number after link', () => {
+  test('adds denomination number with max value after link', () => {
     document.body.innerHTML = `<a href="/Help/Rules/AppDenominations.aspx?lt=skill&amp;ll=6#skill" class="skill">passable</a>`
 
     denomination.run()
 
     const span = document.querySelector<HTMLSpanElement>('span.shy.denominationNumber')
-    expect(span?.textContent).toBe('(6)')
+    expect(span?.textContent).toBe('(6/20)')
   })
 
-  test("doesn't add denomination number after link if it already exists", () => {
+  test('replaces existing denomination number with updated format', () => {
     document.body.innerHTML = `
       <a href="/Help/Rules/AppDenominations.aspx?lt=skill&amp;ll=6#skill" class="skill">passable</a>
       <span class="shy denominationNumber">(6)</span>
     `
 
-    const spansBefore = document.querySelectorAll<HTMLSpanElement>('span.shy.denominationNumber')
-    expect(spansBefore).toHaveLength(1)
-
     denomination.run()
 
-    const spansAfter = document.querySelectorAll<HTMLSpanElement>('span.shy.denominationNumber')
-    expect(spansAfter).toHaveLength(1)
+    const spans = document.querySelectorAll<HTMLSpanElement>('span.shy.denominationNumber')
+    expect(spans).toHaveLength(1)
+    expect(spans[0].textContent).toBe('(6/20)')
   })
 
-  test('adds personality number after link for personality types', () => {
+  test('adds personality number with max value after link for personality types', () => {
     document.body.innerHTML = `
       A <a href="/Help/Rules/AppDenominations.aspx?lt=gentleness&amp;ll=2#gentleness" class="skill">pleasant guy</a>
       who is <a href="/Help/Rules/AppDenominations.aspx?lt=aggressiveness&amp;ll=4#aggressiveness" class="skill">balanced</a>
@@ -44,12 +42,21 @@ describe('denomination module', () => {
     const honestySpan = links[2].nextElementSibling
 
     expect(gentlenessSpan?.className).toBe('hte-skill hte-gentleness-2')
-    expect(gentlenessSpan?.textContent).toBe('2')
+    expect(gentlenessSpan?.textContent).toBe('2/6')
 
     expect(aggressivenessSpan?.className).toBe('hte-skill hte-aggressiveness-4')
-    expect(aggressivenessSpan?.textContent).toBe('4')
+    expect(aggressivenessSpan?.textContent).toBe('4/6')
 
     expect(honestySpan?.className).toBe('hte-skill hte-honesty-1')
-    expect(honestySpan?.textContent).toBe('1')
+    expect(honestySpan?.textContent).toBe('1/6')
+  })
+
+  test('skips unsupported denomination type', () => {
+    document.body.innerHTML = `<a href="/Help/Rules/AppDenominations.aspx?lt=unknown&amp;ll=5#unknown" class="skill">unknown</a>`
+
+    denomination.run()
+
+    const span = document.querySelector<HTMLSpanElement>('span.shy.denominationNumber')
+    expect(span).toBeNull()
   })
 })
