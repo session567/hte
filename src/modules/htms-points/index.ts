@@ -41,8 +41,12 @@ const createHTMSRow = (htms: HTMSPoints): HTMLTableRowElement => {
  * @param ageElement - Element containing player age
  */
 const processPlayer = (playerElement: Element, ageElement: Element): void => {
+  // Skills are only visible for your players and transfer-listed players
+  const playerSkillsElement = querySelectorIn(playerElement, '.transferPlayerSkills', false)
+  if (!playerSkillsElement) return
+
   const age = parsePlayerAge(ageElement)
-  const skills = parsePlayerSkills(playerElement)
+  const skills = parsePlayerSkills(playerSkillsElement)
   if (!age || !skills) return
 
   const htms = calcHTMSPoints(age, skills)
@@ -73,9 +77,9 @@ const processPlayers = (playerSelector: string, ageSelector: string): void => {
  */
 const htmsPoints: Module = {
   name: 'HTMS Points',
-  pages: [pages.playerDetailOwnTeam, pages.playerListOwnTeam, pages.transfersSearchResult],
+  pages: [pages.playerDetailOwnTeam, pages.playerDetailOtherTeam, pages.playerListOwnTeam, pages.transfersSearchResult],
   run: () => {
-    if (isPage(pages.playerDetailOwnTeam)) {
+    if (isPage(pages.playerDetailOwnTeam) || isPage(pages.playerDetailOtherTeam)) {
       const playerElement = querySelector('#mainBody .playerInfo')
       const ageElement = querySelector('#mainBody > .byline')
       if (playerElement && ageElement) processPlayer(playerElement, ageElement)

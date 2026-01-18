@@ -1,10 +1,10 @@
 import { getCurrentPathname } from '@common/utils/location'
 import { isOwnTeamPage } from '@common/utils/team/utils'
 
-export type Scope = 'ALL_TEAMS' | 'OWN_TEAM'
+type TeamContext = 'OWN_TEAM' | 'OTHER_TEAM'
 
 /**
- * Represents a specific page on the Hattrick.
+ * Represents a specific page on Hattrick.
  *
  * Used to determine which modules should run on the current page.
  */
@@ -16,15 +16,15 @@ export class Page {
 
   /**
    * @param pathname - The URL pathname of the Hattrick page (e.g., '/Club/Players/')
-   * @param scope - Whether this page applies to all teams or only the user's own team
+   * @param teamContext - If this page exists for both my team and other teams, specify which one it refers to
    */
   constructor(
     public readonly pathname: string,
-    public readonly scope: Scope = 'ALL_TEAMS',
+    public readonly teamContext?: TeamContext,
   ) {}
 
   toString(): string {
-    return `Page(pathname=${this.pathname}, scope=${this.scope})`
+    return `Page(pathname=${this.pathname}, teamContext=${this.teamContext})`
   }
 }
 
@@ -34,19 +34,27 @@ export class Page {
  * Modules reference these pages to determine where they should run.
  */
 export const pages = {
+  // Special case
   all: new Page(Page.__ALL__),
+
+  // Pages not related to the user's team
   appDenominations: new Page('/Help/Rules/AppDenominations.aspx'),
-  club: new Page('/Club/'),
-  matches: new Page('/Club/Matches/'),
-  playerDetailAllTeams: new Page('/Club/Players/Player.aspx'),
-  playerDetailOwnTeam: new Page('/Club/Players/Player.aspx', 'OWN_TEAM'),
-  playerListAllTeams: new Page('/Club/Players/'),
-  playerListOwnTeam: new Page('/Club/Players/', 'OWN_TEAM'),
   series: new Page('/World/Series/'),
-  specialists: new Page('/Club/Specialists/'),
-  stadium: new Page('/Club/Stadium/'),
   transfers: new Page('/World/Transfers/'),
   transfersSearchResult: new Page('/World/Transfers/TransfersSearchResult.aspx'),
+
+  // Pages accessible only to the user's own team
+  club: new Page('/Club/'),
+  matches: new Page('/Club/Matches/'),
+  specialists: new Page('/Club/Specialists/'),
+  stadium: new Page('/Club/Stadium/'),
+
+  // Pages accessible to both the user's own team and other teams
+  playerDetailOtherTeam: new Page('/Club/Players/Player.aspx', 'OTHER_TEAM'),
+  playerDetailOwnTeam: new Page('/Club/Players/Player.aspx', 'OWN_TEAM'),
+  playerListOtherTeam: new Page('/Club/Players/', 'OTHER_TEAM'),
+  playerListOwnTeam: new Page('/Club/Players/', 'OWN_TEAM'),
+  // Pages that don't need to distinguish between the user's own team and other teams yet
   youthPlayer: new Page('/Club/Players/YouthPlayer.aspx'),
   youthPlayers: new Page('/Club/Players/YouthPlayers.aspx'),
 } as const satisfies Record<string, Page>
@@ -56,8 +64,9 @@ export const pages = {
  */
 export const isPage = (page: Page): boolean => {
   if (page.pathname !== getCurrentPathname()) return false
-  if (isOwnTeamPage()) return page.scope === 'OWN_TEAM'
-  return page.scope === 'ALL_TEAMS'
+  if (page.teamContext === undefined) return true
+  if (page.teamContext === 'OWN_TEAM') return isOwnTeamPage()
+  return !isOwnTeamPage() // OTHER_TEAM
 }
 
 /**

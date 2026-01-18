@@ -9,32 +9,53 @@ vi.mock(import('@common/utils/team/utils'))
 describe(isPage, () => {
   it.each([
     {
-      desc: 'same path, different scope',
+      desc: 'different path',
       currentPathname: '/Foo',
-      page: new Page('/Foo', 'ALL_TEAMS'),
-      ownTeamPage: true,
+      page: new Page('/Bar'),
+      ownTeamPage: false,
       expected: false,
     },
     {
-      desc: 'same path, same (all teams) scope',
+      desc: 'no teamContext, own team page',
       currentPathname: '/Foo',
-      page: new Page('/Foo', 'ALL_TEAMS'),
+      page: new Page('/Foo'),
+      ownTeamPage: true,
+      expected: true,
+    },
+    {
+      desc: 'no teamContext, not own team page',
+      currentPathname: '/Foo',
+      page: new Page('/Foo'),
       ownTeamPage: false,
       expected: true,
     },
     {
-      desc: 'same path, same (own team) scope',
+      desc: 'OWN_TEAM, own team page',
       currentPathname: '/Foo',
       page: new Page('/Foo', 'OWN_TEAM'),
       ownTeamPage: true,
       expected: true,
     },
     {
-      desc: 'different path, same scope',
+      desc: 'OWN_TEAM, other team page',
       currentPathname: '/Foo',
-      page: new Page('/Bar', 'ALL_TEAMS'),
+      page: new Page('/Foo', 'OWN_TEAM'),
       ownTeamPage: false,
       expected: false,
+    },
+    {
+      desc: 'OTHER_TEAM, own team page',
+      currentPathname: '/Foo',
+      page: new Page('/Foo', 'OTHER_TEAM'),
+      ownTeamPage: true,
+      expected: false,
+    },
+    {
+      desc: 'OTHER_TEAM, other team page',
+      currentPathname: '/Foo',
+      page: new Page('/Foo', 'OTHER_TEAM'),
+      ownTeamPage: false,
+      expected: true,
     },
   ])('$desc', ({ currentPathname, page, ownTeamPage, expected }) => {
     vi.mocked(getCurrentPathname).mockReturnValue(currentPathname)
