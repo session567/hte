@@ -73,7 +73,7 @@ modules/example-module/
    For a simple module example,
    see [src/modules/denomination/index.ts](https://github.com/session567/hte/blob/main/src/modules/denomination/index.ts).
 
-2. Register your mudule in `src/index.ts`:
+2. Register your module in `src/index.ts`:
 
    ```typescript
    import exampleModule from '@modules/example';
@@ -89,12 +89,15 @@ Modules only run when the user is logged in to Hattrick.
 ## Local Development
 
 1. Fork the repository, then clone or download your fork.
-2. Run `nvm use` to switch to the Node version specified in `.nvmrc` file (
+2. Run `nvm use` to switch to the Node version specified in the `.nvmrc` file (
    install [nvm](https://github.com/nvm-sh/nvm)).
 3. Enable pnpm - `corepack enable pnpm`
 4. Install dependencies - `pnpm install`
 5. Build the extension and watch for changes - `pnpm watch`
-6. Open Firefox with the extension loaded - `pnpm dev`
+6. Load the extension in your browser
+    - **Firefox**: Run `pnpm dev` to open Firefox with the extension loaded. On changes, the extension will be reloaded automatically.
+    - **Chrome**: Go to `chrome://extensions`, enable "Developer mode", click "Load unpacked", and select this project's
+      folder. On changes, you have to manually refresh the extension by clicking the refresh icon next to the on/off toggle.
 
 ### pnpm Scripts
 
