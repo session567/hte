@@ -8,7 +8,6 @@ import { getCurrentPage, Page, pages } from '@common/utils/pages'
 import { createSidebarBox } from '@common/utils/sidebar/box'
 import { getOwnTeamData } from '@common/utils/team/utils'
 import {
-  ARENA_CALCULATOR,
   DHTH,
   HATTID_LEAGUE,
   HATTID_TEAM,
@@ -17,20 +16,16 @@ import {
   HATTRICK_YOUTHCLUB,
   Link,
   NICKARANA_LEAGUE_SIMULATOR,
-  PLAYER_INTO_COACH_CONVERSION_COST,
   SCOUTRICK,
-  TS_ORGANIZER,
 } from '@modules/links/constants'
 import { replacePlaceholders } from '@modules/links/utils'
 
 const linkMap = new Map<Page, Link[]>([
   [pages.club, [HATTID_TEAM]],
-  [pages.matches, [DHTH, TS_ORGANIZER]],
+  [pages.matches, [DHTH]],
   [pages.playerDetailOwnTeam, [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER]],
   [pages.playerListOwnTeam, [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER]],
   [pages.series, [HATTID_LEAGUE, NICKARANA_LEAGUE_SIMULATOR]],
-  [pages.specialists, [PLAYER_INTO_COACH_CONVERSION_COST]],
-  [pages.stadium, [ARENA_CALCULATOR]],
   [pages.youthPlayer, [HATTRICK_YOUTHCLUB, SCOUTRICK]],
   [pages.youthPlayers, [HATTRICK_YOUTHCLUB, SCOUTRICK]],
 ])

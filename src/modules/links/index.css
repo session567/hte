@@ -1,4 +1,4 @@
 .boxHead .hte-header-icon {
-  font-size: 0.8em;
+  font-size: 0.8em! important;
   font-weight: 500;
 }

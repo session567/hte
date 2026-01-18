@@ -5,11 +5,6 @@ export type Link = {
 
 export const ALLOWED_PLACEHOLDERS = ['teamId', 'seriesId']
 
-export const ARENA_CALCULATOR: Link = {
-  name: 'Arena Calculator',
-  url: 'https://ht.alergromania.ro/tools/arena-calculator',
-}
-
 export const DHTH: Link = {
   name: "DHTH - Danni's Hattrick Helper",
   url: 'https://dhth.net',
@@ -45,17 +40,7 @@ export const NICKARANA_LEAGUE_SIMULATOR: Link = {
   url: 'https://nickarana.pythonanywhere.com/seriespredict/?series_season={seriesId}',
 }
 
-export const PLAYER_INTO_COACH_CONVERSION_COST: Link = {
-  name: 'Player to Coach Conversion Cost',
-  url: 'https://ht.alergromania.ro/tools/player-into-coach-cost',
-}
-
 export const SCOUTRICK: Link = {
   name: 'Scoutrick',
   url: 'https://www.scoutrick.org/',
-}
-
-export const TS_ORGANIZER: Link = {
-  name: 'TS Organizer',
-  url: 'https://ht.alergromania.ro/tools/team-spirit-organizer',
 }
