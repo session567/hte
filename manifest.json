@@ -11,6 +11,16 @@
     "96": "icons/logo.svg",
     "128": "icons/logo.svg"
   },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{9a24700f-1585-42ce-85d1-e2189699151d}",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    }
+  },
   "content_scripts": [
     {
       "matches": [

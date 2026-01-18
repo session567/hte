@@ -7,8 +7,7 @@
   "main": "index.js",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "build:firefox": "node scripts/build-extension.mjs --browser=firefox",
-    "build:chrome": "node scripts/build-extension.mjs --browser=chrome",
+    "build:extension": "node scripts/build-extension.mjs",
     "watch": "node scripts/watch.mjs",
     "dev": "web-ext run --source-dir . --start-url https://www.hattrick.org --watch-files dist/index.js dist/index.css",
     "dev:stage": "web-ext run --source-dir . --start-url https://stage.hattrick.org --watch-files dist/index.js dist/index.css",
