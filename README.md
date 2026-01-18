@@ -9,11 +9,11 @@
 
 ## Features
 
-- Display relevant links to external tools in the sidebar
 - Extend player skill bars to include loyalty and homegrown bonuses
 - Display HTMS points for players
-- Display the player's yearly salary next to weekly salary on the player detail page
 - Save and reuse transfer search filters
+- Display the player's yearly salary next to weekly salary on the player detail page
+- Display relevant links to external tools in the sidebar
 - Display numeric values next to all team and player abilities
 - Display week numbers next to dates throughout Hattrick
 

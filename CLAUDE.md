@@ -2,14 +2,13 @@
 
 **HTE** is a browser extension that provides various enhancements for [Hattrick](https://www.hattrick.org).
 
-
 - Package manager: **pnpm**
 - Test framework: **Vitest** with jsdom
 - Build tool: **esbuild**
 
 ## General Guidelines
 
-- See [CONTRIBUTING.md](CONTRIBUTING.md) for additional context on project structure, module architecture, and contributor guidelines.
+- See [CONTRIBUTING.md](CONTRIBUTING.md) for additional context on the project structure and module architecture
 - Check `src/common/utils/` for existing utilities before reimplementing
 - Use TSDoc comments
 - Max line length: 120 characters (applies to both code and comments)
@@ -23,7 +22,8 @@
 
 ## Path Aliases
 
-**Always use absolute imports with path aliases** - never use relative imports (e.g., use `@common/utils/dom` instead of `../../common/utils/dom`)
+**Always use absolute imports with path aliases** - never use relative imports (e.g. use `@common/utils/dom` instead of
+`../../common/utils/dom`)
 
 - `@` → `src/`
 - `@common` → `src/common/`

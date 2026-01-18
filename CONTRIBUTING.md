@@ -23,7 +23,7 @@ hte/
 ├── _locales/                # Translation files
 ├── dist/                    # Build output (generated)
 ├── icons/                   # Extension icons
-├── scripts/                 # esbuild scripts
+├── scripts/                 # Build scripts
 ├── src/
 │   ├── common/              # Shared utilities
 │   │   ├── styles/          # Global CSS styles
@@ -88,16 +88,18 @@ Modules only run when the user is logged in to Hattrick.
 
 ## Local Development
 
-1. Fork the repository, then clone or download your fork.
-2. Run `nvm use` to switch to the Node version specified in the `.nvmrc` file (
-   install [nvm](https://github.com/nvm-sh/nvm)).
+1. Fork the repository, then clone or download your fork
+2. Run `nvm use` to switch to the Node version specified in the `.nvmrc` file
+   (install [nvm](https://github.com/nvm-sh/nvm))
 3. Enable pnpm - `corepack enable pnpm`
 4. Install dependencies - `pnpm install`
 5. Build the extension and watch for changes - `pnpm watch`
 6. Load the extension in your browser
-    - **Firefox**: Run `pnpm dev` to open Firefox with the extension loaded. On changes, the extension will be reloaded automatically.
+    - **Firefox**: Run `pnpm dev` to open Firefox with the extension loaded. On changes, the extension will be reloaded
+      automatically.
     - **Chrome**: Go to `chrome://extensions`, enable "Developer mode", click "Load unpacked", and select this project's
-      folder. On changes, you have to manually refresh the extension by clicking the refresh icon next to the on/off toggle.
+      folder. On changes, you have to manually refresh the extension by clicking the refresh icon next to the on/off
+      toggle.
 
 ### pnpm Scripts
 
@@ -105,7 +107,8 @@ All pnpm scripts are located in [package.json](https://github.com/session567/hte
 
 #### Development Scripts
 
-- `pnpm build` - Build the extension for production
+- `pnpm build` - Build the extension
+- `pnpm build:extension` - Build a production-ready zip archive for publishing to browser extension stores
 - `pnpm watch` - Build the extension and watch for changes
 - `pnpm dev` - Open Firefox with the extension loaded (Hattrick production)
 - `pnpm dev:stage` - Open Firefox with the extension loaded (Hattrick stage)
