@@ -2,7 +2,6 @@ import '@modules/denomination/index.css'
 
 import type { Module } from '@common/types/module'
 import { querySelectorAll } from '@common/utils/dom'
-import { getCurrentPathname } from '@common/utils/location'
 import { logger } from '@common/utils/logger'
 import { pages } from '@common/utils/pages'
 import { MAX_VALUES, PERSONALITY_TYPES } from '@modules/denomination/constants'
@@ -24,7 +23,7 @@ const denomination: Module = {
       if (!lt || !ll) return
 
       if (!isDenominationType(lt)) {
-        logger.error(`Denomination type ${lt} (${getCurrentPathname()} not supported`)
+        logger.error(`Denomination type ${lt} not supported`)
         return
       }
 
