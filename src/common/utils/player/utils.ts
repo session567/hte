@@ -37,6 +37,8 @@ export const parsePlayerAge = (element: Element): PlayerAge | null => {
 /**
  * Parse all player skills from a DOM element.
  *
+ * Player skills are expected to be contained within a `.transferPlayerSkills` element.
+ *
  * @param element - The DOM element containing the player's skills
  * @returns Object with all skill levels, or null if parsing fails or skills are incomplete
  */
@@ -44,14 +46,13 @@ export const parsePlayerSkills = (element: Element): PlayerSkills | null => {
   const skills: Partial<Record<Skill, number>> = {}
   const skillRows = querySelectorAllIn<HTMLTableRowElement>(
     element,
-    '.transferPlayerSkills table tr[id*="ucPlayerSkills_tr"], .transferPlayerSkills table tr[id*="TransferPlayer_tr"]',
+    'tr[id*="ucPlayerSkills_tr"], tr[id*="TransferPlayer_tr"]',
   )
 
   skillRows.forEach((row) => {
     const rowId = row.id.split('_').pop()
     const skill = rowId ? ROW_ID_TO_SKILL[rowId] : undefined
     const level = querySelectorIn<HTMLDivElement>(row, '.ht-bar')?.getAttribute('level')
-
     if (!skill || !level) return
 
     skills[skill] = parseInt(level, 10)
