@@ -31,7 +31,6 @@ describe(parsePlayerAge, () => {
 describe(parsePlayerSkills, () => {
   it('parses all skills from player detail page', () => {
     const element = createElement(`
-      <div class="transferPlayerSkills">
         <table>
           <tbody>
             <tr id="ctl00_ctl00_CPContent_CPMain_ucPlayerSkills_trKeeper">
@@ -55,7 +54,6 @@ describe(parsePlayerSkills, () => {
             <tr id="ctl00_ctl00_CPContent_CPMain_ucPlayerSkills_trKicker">
               <td><div class="ht-bar" level="2"></div></td>
             </tr>
-          </tbody>
         </table>
       </div>
     `)
@@ -75,15 +73,13 @@ describe(parsePlayerSkills, () => {
 
   it('returns null and logs warning when only one skill is found', () => {
     const element = createElement(`
-      <div class="transferPlayerSkills">
-        <table>
-          <tbody>
-            <tr id="ctl00_ctl00_CPContent_CPMain_ucPlayerSkills_trKeeper">
-              <td><div class="ht-bar" level="1"></div></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <table>
+        <tbody>
+          <tr id="ctl00_ctl00_CPContent_CPMain_ucPlayerSkills_trKeeper">
+            <td><div class="ht-bar" level="1"></div></td>
+          </tr>
+        </tbody>
+      </table>
     `)
 
     expect(parsePlayerSkills(element)).toBeNull()
