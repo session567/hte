@@ -41,7 +41,7 @@ export const parseDate = (element: Element): Date | null => {
 }
 
 /**
- * Calculate the Hattrick week number for a given date.
+ * Calculate Hattrick's week number for a given date.
  *
  * @param date - The date to calculate week number for
  * @returns Week number within the current season (1-16)

@@ -1,5 +1,4 @@
 import { querySelectorAllIn, querySelectorIn } from '@common/utils/dom'
-import { logger } from '@common/utils/logger'
 import { pages } from '@common/utils/pages'
 
 const MAX_LOYALTY = 20
@@ -13,11 +12,8 @@ const MAX_LOYALTY = 20
 export const calcBonus = (element: Element): number => {
   const loyaltyBonus = calcLoyaltyBonus(element)
   const homegrownBonus = calcHomegrownBonus(element)
-  const totalBonus = loyaltyBonus + homegrownBonus
 
-  logger.debug(`loyaltyBonus=${loyaltyBonus}, homegrownBonus=${homegrownBonus}, totalBonus=${totalBonus}`)
-
-  return totalBonus
+  return loyaltyBonus + homegrownBonus
 }
 
 /**

@@ -26,9 +26,6 @@ export const adjustDenominationValue = (lt: DenominationType, ll: number): numbe
 
 /**
  * Check if a string is a valid denomination type.
- *
- * @param value - The string to check
- * @returns True if the value is a valid DenominationType
  */
 export const isDenominationType = (value: string): value is DenominationType =>
   DENOMINATION_TYPES.includes(value as DenominationType)
