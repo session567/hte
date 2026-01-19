@@ -15,7 +15,7 @@ body:
     id: why
     attributes:
       label: Why is this feature useful?
-      description: A clear and concise description of why this feature useful. What problem does it solve?
+      description: A clear and concise description of why this feature is useful. What problem does it solve?
     validations:
       required: true
 

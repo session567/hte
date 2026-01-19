@@ -52,7 +52,7 @@ body:
     id: version
     attributes:
       label: HTE version
-      description: Extension version (visible in footer on the right side)
+      description: Extension version (visible in Hattrick's footer on the right side)
       placeholder: "0.1.0"
     validations:
       required: true
