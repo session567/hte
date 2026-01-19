@@ -23,22 +23,18 @@ vi.mock(import('@common/utils/team/utils'), async () => {
 
 describe('links module', () => {
   it('renders links box in sidebar', () => {
-    vi.mocked(getCurrentPage).mockReturnValue(pages.playerDetailOwnTeam)
+    vi.mocked(getCurrentPage).mockReturnValue(pages.club)
+    vi.mocked(getOwnTeamData).mockReturnValue({ teamId: '123', seriesId: '456' })
     document.body.innerHTML = '<div id="sidebar"></div>'
 
     links.run()
 
     const anchors = document.querySelectorAll<HTMLAnchorElement>('.boxBody a')
 
-    expect(anchors).toHaveLength(2)
-
-    expect(anchors[0].textContent).toBe('Hattrick Portal - Tracker')
-    expect(anchors[0].href).toBe('https://hattrickportal.online/Tracker')
+    expect(anchors).toHaveLength(1)
+    expect(anchors[0].textContent).toBe('Hattid')
+    expect(anchors[0].href).toBe('https://hattid.com/team/123')
     expect(anchors[0].target).toBe('_blank')
-
-    expect(anchors[1].textContent).toBe('Hattrick Cycle Planner')
-    expect(anchors[1].href).toBe('https://ht-cycle-planner.vercel.app/')
-    expect(anchors[1].target).toBe('_blank')
   })
 
   it('inserts box at the beginning of sidebar', () => {

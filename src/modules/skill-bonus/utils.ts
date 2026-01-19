@@ -10,10 +10,7 @@ const MAX_LOYALTY = 20
  * @returns Total skill bonus value
  */
 export const calcBonus = (element: Element): number => {
-  const loyaltyBonus = calcLoyaltyBonus(element)
-  const homegrownBonus = calcHomegrownBonus(element)
-
-  return loyaltyBonus + homegrownBonus
+  return calcLoyaltyBonus(element) + calcHomegrownBonus(element)
 }
 
 /**
@@ -31,7 +28,6 @@ const calcLoyaltyBonus = (element: Element): number => {
   if (skillLinks.length === 0) return 0
 
   const loyaltyLink = skillLinks[skillLinks.length - 1]
-
   const url = new URL(loyaltyLink.href)
   const loyalty = parseInt(url.searchParams.get('ll') ?? '0', 10)
 

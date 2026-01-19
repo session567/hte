@@ -23,6 +23,9 @@ export const parseSalaryAndCurency = (element: Element) => {
 /**
  * Format a number by using spaces as thousand separators.
  *
+ * @example
+ * formatThousands(1234567) // "1 234 567"
+ *
  * @param value - Number to format
  * @returns Formatted string
  */

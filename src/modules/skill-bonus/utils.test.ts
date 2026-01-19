@@ -14,10 +14,10 @@ describe(calcBonus, () => {
 
   it('calculates bonus for non-homegrown player', () => {
     const element = createElement(
-      `<p>Has <a href="/Help/Rules/AppDenominations.aspx?lt=skill&ll=20#skill" class="skill">divine</a> loyalty.</p>`,
+      `<p>Has <a href="/Help/Rules/AppDenominations.aspx?lt=skill&ll=18#skill" class="skill">divine</a> loyalty.</p>`,
     )
 
-    expect(calcBonus(element)).toBe(1.0)
+    expect(calcBonus(element)).toBe(0.9)
   })
 
   it('returns 0 when no loyalty link exists', () => {

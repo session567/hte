@@ -10,7 +10,7 @@ import eslintPluginTsdoc from 'eslint-plugin-tsdoc'
 import vitest from '@vitest/eslint-plugin'
 
 export default defineConfig(
-  globalIgnores(['coverage/**', 'dist/**', 'node_modules/**', 'scripts/**']),
+  globalIgnores(['build/**', 'coverage/**', 'dist/**', 'node_modules/**', 'scripts/**']),
   eslint.configs.recommended,
   tseslint.configs.strictTypeChecked,
   tseslint.configs.stylisticTypeChecked,

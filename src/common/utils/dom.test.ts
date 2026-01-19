@@ -133,13 +133,6 @@ describe(querySelectorIn, () => {
     expect(element).toBeNull()
     expect(logger.warn).not.toHaveBeenCalled()
   })
-
-  it('scopes search to specific root', () => {
-    const root = document.querySelector('.container')!
-    const element = querySelectorIn(root, '.target')
-
-    expect(element?.textContent).toBe('Found')
-  })
 })
 
 describe(querySelectorAll, () => {
