@@ -1,4 +1,4 @@
-import { beforeEach, vi } from 'vitest'
+import { afterEach, vi } from 'vitest'
 
 vi.stubGlobal('__VERSION__', '1.2.3')
 vi.stubGlobal('chrome', {
@@ -10,6 +10,6 @@ vi.stubGlobal('chrome', {
 vi.mock('@common/utils/logger')
 vi.mock('@common/utils/storage')
 
-beforeEach(() => {
+afterEach(() => {
   document.body.innerHTML = ''
 })
