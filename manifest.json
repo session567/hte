@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "HTE",
+  "name": "HTE - Hattrick Enhanced",
   "version": "0.1.0",
-  "description": "Various enhancements for Hattrick",
+  "description": "HTE is a browser extension that provides various enhancements for Hattrick.",
   "default_locale": "en",
   "icons": {
     "48": "icons/logo.svg",
@@ -15,26 +15,16 @@
     "gecko": {
       "id": "{d7e1035f-903c-4013-bc7a-59ad3c8a8194}",
       "data_collection_permissions": {
-        "required": [
-          "none"
-        ]
+        "required": ["none"]
       }
     }
   },
   "content_scripts": [
     {
-      "matches": [
-        "https://*.hattrick.org/*"
-      ],
-      "css": [
-        "dist/index.css"
-      ],
-      "js": [
-        "dist/index.js"
-      ]
+      "matches": ["https://*.hattrick.org/*"],
+      "css": ["dist/index.css"],
+      "js": ["dist/index.js"]
     }
   ],
-  "permissions": [
-    "storage"
-  ]
+  "permissions": ["storage"]
 }

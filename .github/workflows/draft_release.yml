@@ -1,0 +1,73 @@
+name: Draft release
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump_type:
+        description: 'Version bump type'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Enable Corepack
+        run: corepack enable pnpm
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Bump version
+        id: version
+        run: |
+          # Bump version in package.json
+          OLD_VERSION=$(pnpm pkg get version | tr -d '"')
+          NEW_VERSION=$(pnpm version ${{ github.event.inputs.bump_type }} --no-git-tag-version | sed 's/^v//')
+          
+          echo "Old version: v$OLD_VERSION, New version: v$NEW_VERSION"
+          
+          echo "old_version=v$OLD_VERSION" >> $GITHUB_OUTPUT
+          echo "new_version=v$NEW_VERSION" >> $GITHUB_OUTPUT
+          
+          # Bump version in manifest.json
+          jq --arg v "$NEW_VERSION" '.version = $v' manifest.json > manifest.tmp
+          mv manifest.tmp manifest.json
+          
+          # Ensure the version in package.json and manifest.json are the same 
+          jq -e '.version == "'"$NEW_VERSION"'"' manifest.json
+
+      - name: Commit and push the new version
+        run: |
+          git status
+          
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add package.json manifest.json
+          git commit -m "Bump version to ${{ steps.version.outputs.new_version }}"
+          git push
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.new_version }}
+          name: ${{ steps.version.outputs.new_version }}
+          generate_release_notes: true
+          draft: true

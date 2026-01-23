@@ -1,0 +1,97 @@
+name: Publish Extension on Firefox's and Chrome's extension marketplaces
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      extension-id: ${{ steps.extension.outputs.id }}
+      extension-version: ${{ steps.extension.outputs.version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Zip source code
+        run: |
+          zip -r source-code.zip . \
+            -x ".git/*" \
+            -x ".github/*"
+
+      - name: Enable Corepack
+        run: corepack enable pnpm
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build extension
+        run: pnpm build:extension
+
+      - name: Get extension data
+        id: extension
+        run: |
+          ID=$(jq -r '.browser_specific_settings.gecko.id' manifest.json)
+          VERSION=$(jq -r '.version' manifest.json)
+          
+          echo "ID: $ID"
+          echo "Version: $VERSION"
+
+          echo "id=$ID" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: extension-build
+          path: |
+            build/hte-${{ steps.extension.outputs.version }}.zip
+            source-code.zip
+
+  release-firefox:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: extension-build
+
+      - name: Release to Firefox
+        uses: session567/release-firefox-addon@temp
+        with:
+          addon-id: ${{ needs.build.outputs.extension-id }}
+          addon-path: build/hte-${{ needs.build.outputs.extension-version }}.zip
+          source-path: source-code.zip
+          approval-note: Automated release via GitHub Actions
+          release-note: "${{ github.event.release.body }}"
+          license: GPL-3.0-only
+          auth-api-issuer: ${{ secrets.FIREFOX_API_KEY }}
+          auth-api-secret: ${{ secrets.FIREFOX_API_SECRET }}
+
+  release-chrome:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: extension-build
+
+      - name: Release to Chrome
+        uses: browser-actions/release-chrome-extension@latest
+        with:
+          extension-id: bbpinjphilaocfmgllmgihlbmnooeglo
+          extension-path: build/hte-${{ needs.build.outputs.extension-version }}.zip
+          oauth-client-id: ${{ secrets.CHROME_CLIENT_ID }}
+          oauth-client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
+          oauth-refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
