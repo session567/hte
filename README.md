@@ -6,8 +6,7 @@
 </div>
 
 **HTE** is a browser extension that enhances your [Hattrick](https://www.hattrick.org) experience with deeper player and
-match insights, various visual tweaks throughout the site, and time-saving shortcuts for common tasks. 
-
+match insights, various visual tweaks throughout the site, and time-saving shortcuts for common tasks.
 
 - Extend player skill bars to include loyalty and homegrown bonuses
 - Display HTMS points for players
@@ -19,7 +18,10 @@ match insights, various visual tweaks throughout the site, and time-saving short
 
 ## Installation
 
-Coming soon to browser extension stores.
+HTE is available for Firefox and Chromium-based browsers.
+
+- [Add to Firefox](https://addons.mozilla.org/sl/firefox/addon/hte/)
+- [Add to Chrome](https://chromewebstore.google.com/detail/hte/bbpinjphilaocfmgllmgihlbmnooeglo)
 
 ## Contributing
 
