@@ -1,8 +1,15 @@
 .hte-skill-bonus-bar {
   color: #f7f8f7;
-  background-color: var(--hte-color-orange-5);
   position: absolute;
   top: 0;
   height: 100%;
   overflow: hidden;
+}
+
+.hte-skill-bonus-bar-loyalty {
+  background-color: var(--hte-color-orange-5);
+}
+
+.hte-skill-bonus-bar-homegrown {
+  background-color: var(--hte-color-red-5);
 }

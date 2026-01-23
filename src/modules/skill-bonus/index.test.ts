@@ -41,12 +41,15 @@ describe('skill-bonus module', () => {
 
     skillBonus.run()
 
-    const bonusBar = document.querySelector('.hte-skill-bonus-bar')
+    const loyaltyBar = document.querySelector('.hte-skill-bonus-bar-loyalty')
+    const homegrownBar = document.querySelector('.hte-skill-bonus-bar-homegrown')
 
-    expect(bonusBar).not.toBeNull()
+    expect(loyaltyBar).not.toBeNull()
     // Skill level: 10, Bonus: 0.55
-    expect(bonusBar?.getAttribute('style')).toContain('width: 53%') // (10 + 0.55) / 20 * 100
-    expect(bonusBar?.querySelector('.bar-denomination')).not.toBeNull()
+    expect(loyaltyBar?.getAttribute('style')).toContain('width: 53%') // (10 + 0.55) / 20 * 100
+    expect(loyaltyBar?.querySelector('.bar-denomination')).not.toBeNull()
+
+    expect(homegrownBar).toBeNull()
   })
 
   it('adds bonus bars to multiple skill bars', () => {
@@ -65,6 +68,17 @@ describe('skill-bonus module', () => {
                   <div class="ht-bar" level="5">
                     <div class="bar-max">
                       <span class="bar-denomination">inadequate</span>
+                    </div>
+                    <div class="bar-level"></div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Playmaking</td>
+                <td>
+                  <div class="ht-bar" level="10">
+                    <div class="bar-max">
+                      <span class="bar-denomination">outstanding</span>
                     </div>
                     <div class="bar-level"></div>
                   </div>
@@ -91,7 +105,7 @@ describe('skill-bonus module', () => {
 
     const bonusBars = document.querySelectorAll('.hte-skill-bonus-bar')
 
-    expect(bonusBars).toHaveLength(2)
+    expect(bonusBars).toHaveLength(3)
   })
 
   it("doesn't add bonus bars when bonus is 0", () => {
@@ -123,9 +137,9 @@ describe('skill-bonus module', () => {
 
     skillBonus.run()
 
-    const bonusBar = document.querySelector('.hte-skill-bonus-bar')
+    const bonusBars = document.querySelectorAll('.hte-skill-bonus-bar')
 
-    expect(bonusBar).toBeNull()
+    expect(bonusBars).toHaveLength(0)
   })
 
   it("doesn't add bonus bar when skill has no bar-level (non-existent skill)", () => {
@@ -211,14 +225,21 @@ describe('skill-bonus module', () => {
 
     const bonusBars = document.querySelectorAll('.hte-skill-bonus-bar')
 
-    expect(bonusBars).toHaveLength(2)
+    expect(bonusBars).toHaveLength(3)
 
     // Skill level: 7, Bonus: 1.0
     expect(bonusBars[0].getAttribute('style')).toContain('width: 40%') // (7 + 1.0) / 20 * 100
     expect(bonusBars[0].querySelector('.bar-denomination')).not.toBeNull()
+    expect(bonusBars[0].className).toContain('hte-skill-bonus-bar-loyalty')
 
-    // Skill level: 16, Bonus: 1.4
-    expect(bonusBars[1].getAttribute('style')).toContain('width: 87') // (16 + 1.4) / 20 * 100
+    // Skill level: 16, Bonus: 1.4 (loyalty + homegrown)
+    expect(bonusBars[1].getAttribute('style')).toContain('width: 87%') // (16 + 1.4) / 20 * 100
     expect(bonusBars[1].querySelector('.bar-denomination')).not.toBeNull()
+    expect(bonusBars[1].className).toContain('hte-skill-bonus-bar-homegrown')
+
+    // Skill level: 16, Bonus: 0.8
+    expect(bonusBars[2].getAttribute('style')).toContain('width: 85%') // (16 + 0.8) / 20 * 100
+    expect(bonusBars[2].querySelector('.bar-denomination')).not.toBeNull()
+    expect(bonusBars[2].className).toContain('hte-skill-bonus-bar-loyalty')
   })
 })

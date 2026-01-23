@@ -2,8 +2,11 @@
   "links_title": {
     "message": "Links"
   },
-  "skill_bonus_title": {
-    "message": "Loyalty and homegrown bonus: $1"
+  "skill_bonus_loyalty": {
+    "message": "Loyalty bonus: $1"
+  },
+  "skill_bonus_homegrown": {
+    "message": "Homegrown bonus: $1"
   },
   "htms_points_label": {
     "message": "HTMS"

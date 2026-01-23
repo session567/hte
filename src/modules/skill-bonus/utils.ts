@@ -3,14 +3,22 @@ import { pages } from '@common/utils/pages'
 
 const MAX_LOYALTY = 20
 
+export type SkillBonuses = {
+  loyalty: number
+  homegrown: number
+}
+
 /**
- * Calculate skill bonus from loyalty and homegrown status.
+ * Calculate skill bonuses from loyalty and homegrown status.
  *
  * @param element - Element containing player information
- * @returns Total skill bonus value
+ * @returns Object containing loyalty and homegrown bonus values
  */
-export const calcBonus = (element: Element): number => {
-  return calcLoyaltyBonus(element) + calcHomegrownBonus(element)
+export const calcBonuses = (element: Element): SkillBonuses => {
+  return {
+    loyalty: calcLoyaltyBonus(element),
+    homegrown: calcHomegrownBonus(element),
+  }
 }
 
 /**
