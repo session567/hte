@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "HTE - Hattrick Enhanced",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "HTE is a browser extension that provides various enhancements for Hattrick.",
   "default_locale": "en",
   "icons": {
