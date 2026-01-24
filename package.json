@@ -1,7 +1,7 @@
 {
   "name": "hte",
-  "version": "'0.2.1'",
-  "description": "Various enhancements for Hattrick",
+  "version": "0.2.1",
+  "description": "HTE is a browser extension that provides various enhancements for Hattrick.",
   "license": "GPL-3.0",
   "type": "module",
   "main": "index.js",

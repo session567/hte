@@ -39,6 +39,8 @@ jobs:
       - name: Bump version
         id: version
         run: |
+          set -eou pipefail
+          
           # Bump version in package.json
           OLD_VERSION=$(pnpm pkg get version | tr -d '"')
           NEW_VERSION=$(pnpm version ${{ github.event.inputs.bump_type }} --no-git-tag-version | sed 's/^v//')
@@ -51,9 +53,6 @@ jobs:
           # Bump version in manifest.json
           jq --arg v "$NEW_VERSION" '.version = $v' manifest.json > manifest.tmp
           mv manifest.tmp manifest.json
-          
-          # Ensure the version in package.json and manifest.json are the same 
-          jq -e '.version == "'"$NEW_VERSION"'"' manifest.json
 
       - name: Commit and push the new version
         run: |
