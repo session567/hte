@@ -23,15 +23,6 @@ describe(replacePlaceholders, () => {
     expect(replacePlaceholders(url, data)).toBe(url)
   })
 
-  it('throws error for invalid placeholder', () => {
-    const url = 'https://example.com/user/{userId}'
-    const data = { teamId: '123', seriesId: '456' }
-
-    expect(() => replacePlaceholders(url, data)).toThrowError(
-      'Invalid placeholder {userId} in https://example.com/user/{userId}',
-    )
-  })
-
   it('throws error when data is null', () => {
     const url = 'https://example.com/team/{teamId}'
     const data = { teamId: null, seriesId: '456' }

@@ -1,9 +1,16 @@
+import { Page, pages } from '@common/utils/pages'
+import { getPageSeriesId } from '@common/utils/series/utils'
+import { getOwnTeamData } from '@common/utils/team/utils'
+
 export type Link = {
   name: string
   url: string
 }
 
-export const ALLOWED_PLACEHOLDERS = ['teamId', 'seriesId']
+type LinkData = {
+  links: Link[]
+  getReplacements?: () => Record<string, string | null>
+}
 
 export const DHTH: Link = {
   name: "DHTH - Danni's Hattrick Helper",
@@ -44,3 +51,16 @@ export const SCOUTRICK: Link = {
   name: 'Scoutrick',
   url: 'https://www.scoutrick.org/',
 }
+
+export const linkMap = new Map<Page, LinkData>([
+  [pages.club, { links: [HATTID_TEAM], getReplacements: getOwnTeamData }],
+  [pages.matches, { links: [DHTH] }],
+  [pages.playerDetailOwnTeam, { links: [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER] }],
+  [pages.playerListOwnTeam, { links: [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER] }],
+  [
+    pages.series,
+    { links: [HATTID_LEAGUE, NICKARANA_LEAGUE_SIMULATOR], getReplacements: () => ({ seriesId: getPageSeriesId() }) },
+  ],
+  [pages.youthPlayer, { links: [HATTRICK_YOUTHCLUB, SCOUTRICK] }],
+  [pages.youthPlayers, { links: [HATTRICK_YOUTHCLUB, SCOUTRICK] }],
+])

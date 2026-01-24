@@ -4,31 +4,10 @@ import type { Module } from '@common/types/module'
 import { querySelector } from '@common/utils/dom'
 import { t } from '@common/utils/i18n'
 import { logger } from '@common/utils/logger'
-import { getCurrentPage, Page, pages } from '@common/utils/pages'
+import { getCurrentPage } from '@common/utils/pages'
 import { createSidebarBox } from '@common/utils/sidebar/box'
-import { getOwnTeamData } from '@common/utils/team/utils'
-import {
-  DHTH,
-  HATTID_LEAGUE,
-  HATTID_TEAM,
-  HATTRICK_CYCLE_PLANNER,
-  HATTRICK_PORTAL_TRACKER,
-  HATTRICK_YOUTHCLUB,
-  Link,
-  NICKARANA_LEAGUE_SIMULATOR,
-  SCOUTRICK,
-} from '@modules/links/constants'
+import { linkMap } from '@modules/links/constants'
 import { replacePlaceholders } from '@modules/links/utils'
-
-const linkMap = new Map<Page, Link[]>([
-  [pages.club, [HATTID_TEAM]],
-  [pages.matches, [DHTH]],
-  [pages.playerDetailOwnTeam, [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER]],
-  [pages.playerListOwnTeam, [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER]],
-  [pages.series, [HATTID_LEAGUE, NICKARANA_LEAGUE_SIMULATOR]],
-  [pages.youthPlayer, [HATTRICK_YOUTHCLUB, SCOUTRICK]],
-  [pages.youthPlayers, [HATTRICK_YOUTHCLUB, SCOUTRICK]],
-])
 
 /**
  * Display relevant links to external tools in the sidebar.
@@ -41,21 +20,21 @@ const links: Module = {
     if (!sidebar) return
 
     const currentPage = getCurrentPage()
-    const links = linkMap.get(currentPage)
+    const linkData = linkMap.get(currentPage)
 
-    if (!links) {
+    if (!linkData) {
       logger.warn(`${currentPage} does not have any links.`)
       return
     }
 
-    const placeholderReplacements = getOwnTeamData()
+    const replacements = linkData.getReplacements?.() ?? {}
     const { box, boxBody } = createSidebarBox(t('links_title'))
 
-    links.forEach((link) => {
+    linkData.links.forEach((link) => {
       const anchor = document.createElement('a')
 
       try {
-        anchor.href = replacePlaceholders(link.url, placeholderReplacements)
+        anchor.href = replacePlaceholders(link.url, replacements)
       } catch (err) {
         logger.error(err)
         return
