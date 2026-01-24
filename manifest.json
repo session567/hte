@@ -5,11 +5,11 @@
   "description": "HTE is a browser extension that provides various enhancements for Hattrick.",
   "default_locale": "en",
   "icons": {
-    "48": "icons/logo.svg",
-    "64": "icons/logo.svg",
-    "72": "icons/logo.svg",
-    "96": "icons/logo.svg",
-    "128": "icons/logo.svg"
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "96": "images/icon96.png",
+    "128": "images/icon128.png"
   },
   "browser_specific_settings": {
     "gecko": {

@@ -22,7 +22,7 @@ Project structure:
 hte/
 ├── _locales/                # Translation files
 ├── dist/                    # Build output (generated)
-├── icons/                   # Extension icons
+├── images/                  # Extension images
 ├── scripts/                 # Build scripts
 ├── src/
 │   ├── common/              # Shared utilities

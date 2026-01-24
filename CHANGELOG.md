@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.3] - 2026-01-24
+
+- Add PNG icons (Chrome doesn't support SVG icons)
+
 ## [0.2.2] - 2026-01-24
 
 - Update links module to allow different placeholder replacements per page
@@ -12,6 +16,7 @@
 
 - Initial version.
 
+[0.2.3]: https://github.com/session567/hte/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/session567/hte/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/session567/hte/compare/v0.1.0...v0.2.1
 [0.1.0]: https://github.com/session567/hte/commits/v0.1.0

@@ -4,7 +4,7 @@ import { join } from 'path'
 
 const buildDir = 'build/temp'
 const outputDir = 'build'
-const relevantPaths = ['_locales', 'dist', 'icons']
+const relevantPaths = ['_locales', 'dist', 'images']
 
 console.log('Building extension')
 
