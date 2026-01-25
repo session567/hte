@@ -1,9 +1,31 @@
 import '@modules/week-number/index.css'
 
 import type { Module } from '@common/types/module'
-import { querySelectorAll } from '@common/utils/dom'
-import { pages } from '@common/utils/pages'
+import { getElementById, observeElement, querySelectorAllIn } from '@common/utils/dom'
+import { isPage, pages } from '@common/utils/pages'
 import { calcWeekNumber, parseDate } from '@modules/week-number/utils'
+
+/**
+ * Add week numbers to all date elements within the given root element.
+ *
+ * @param root - The parent element to search for date elements within
+ */
+const addWeekNumbers = (root: Element) => {
+  const elements = querySelectorAllIn(root, '.date', false)
+
+  elements.forEach((element) => {
+    const date = parseDate(element)
+    if (!date) return
+
+    const weekNumber = calcWeekNumber(date)
+
+    const span = document.createElement('span')
+    span.className = 'hte-week-number shy'
+    span.textContent = ` (W${weekNumber})`
+
+    element.appendChild(span)
+  })
+}
 
 /**
  * Display week numbers next to dates throughout Hattrick.
@@ -13,20 +35,21 @@ const weekNumber: Module = {
   pages: [pages.all],
   excludePages: [pages.forum],
   run: () => {
-    const elements = querySelectorAll('#mainBody .date', false)
+    const mainBody = getElementById('mainBody')
+    if (!mainBody) return
 
-    elements.forEach((element) => {
-      const date = parseDate(element)
-      if (!date) return
+    addWeekNumbers(mainBody)
 
-      const weekNumber = calcWeekNumber(date)
+    // Watch for tab changes on the player detail page. Tab content is loaded asynchronously when clicked, so we need to
+    // re-apply week numbers after each update.
+    if (isPage(pages.playerDetailOwnTeam) || isPage(pages.playerDetailOtherTeam)) {
+      const playerTabs = getElementById('ctl00_ctl00_CPContent_CPMain_updPlayerTabs')
+      if (!playerTabs) return
 
-      const span = document.createElement('span')
-      span.className = 'hte-week-number shy'
-      span.textContent = ` (W${weekNumber})`
-
-      element.appendChild(span)
-    })
+      observeElement(playerTabs, () => {
+        addWeekNumbers(playerTabs)
+      })
+    }
   },
 }
 

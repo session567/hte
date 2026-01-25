@@ -117,3 +117,19 @@ export const querySelectorAllIn = <E extends Element = Element>(
 
   return elements
 }
+
+/**
+ * Observe an element for DOM changes and run a callback when mutations occur.
+ *
+ * @param element - The element to observe for changes
+ * @param callback - Function to execute when the element's children change
+ */
+export const observeElement = (element: Element, callback: () => void) => {
+  const observer = new MutationObserver(() => {
+    observer.disconnect()
+    callback()
+    observer.observe(element, { childList: true, subtree: true })
+  })
+
+  observer.observe(element, { childList: true, subtree: true })
+}

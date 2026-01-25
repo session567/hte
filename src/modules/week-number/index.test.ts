@@ -1,5 +1,15 @@
+import { isPage, pages } from '@common/utils/pages'
 import weekNumber from '@modules/week-number'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
+
+vi.mock(import('@common/utils/pages'), async () => {
+  const originalModule = await vi.importActual('@common/utils/pages')
+
+  return {
+    ...originalModule,
+    isPage: vi.fn<typeof isPage>(),
+  }
+})
 
 describe('week-number module', () => {
   it.each([
@@ -17,6 +27,30 @@ describe('week-number module', () => {
     const span = document.querySelector<HTMLSpanElement>('.date > span.hte-week-number')
 
     expect(span?.textContent).toBe(expected)
+  })
+
+  it.each([
+    { desc: 'own team', page: pages.playerDetailOwnTeam },
+    { desc: 'other team', page: pages.playerDetailOtherTeam },
+  ])('observes player tabs and adds week numbers on content change', async ({ page }) => {
+    vi.mocked(isPage).mockImplementation((p) => p === page)
+
+    document.body.innerHTML = `
+        <div id="mainBody">
+          <div id="ctl00_ctl00_CPContent_CPMain_updPlayerTabs"></div>
+        </div>
+      `
+    weekNumber.run()
+
+    // Simulate content update
+    const playerTabs = document.getElementById('ctl00_ctl00_CPContent_CPMain_updPlayerTabs')!
+    playerTabs.innerHTML = '<div class="date">15.05.2025</div>'
+
+    await vi.waitFor(() => {
+      const newWeekNumber = playerTabs.querySelector<HTMLSpanElement>('span.hte-week-number')
+
+      expect(newWeekNumber?.textContent).toBe(' (W3)')
+    })
   })
 
   it("doesn't add week number for invalid date", () => {
