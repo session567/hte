@@ -11,6 +11,7 @@ import { calcWeekNumber, parseDate } from '@modules/week-number/utils'
 const weekNumber: Module = {
   name: 'Week Number',
   pages: [pages.all],
+  excludePages: [pages.forum],
   run: () => {
     const elements = querySelectorAll('#mainBody .date', false)
 
