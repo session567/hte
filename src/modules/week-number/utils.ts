@@ -35,7 +35,8 @@ export const parseDate = (element: Element): Date | null => {
     return new Date(year, month - 1, day)
   }
 
-  logger.warn(`Unknown date format: ${value}`)
+  // On the series page, dates are replaced with the strings "Today" and "Yesterday", which don't need to be parsed
+  logger.debug(`Unknown date format: ${value}`)
 
   return null
 }

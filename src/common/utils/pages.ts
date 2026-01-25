@@ -39,6 +39,7 @@ export const pages = {
 
   // Pages not related to the user's team
   appDenominations: new Page('/Help/Rules/AppDenominations.aspx'),
+  forum: new Page('/Forum/'),
   series: new Page('/World/Series/'),
   transfers: new Page('/World/Transfers/'),
   transfersSearchResult: new Page('/World/Transfers/TransfersSearchResult.aspx'),

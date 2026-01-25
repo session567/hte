@@ -37,7 +37,10 @@ if (isLoggedIn()) {
   logger.debug(`Current pathname: ${getCurrentPathname()}`)
 
   modules.forEach((module) => {
-    if (!module.pages.some((page) => page === pages.all || isPage(page))) return
+    const isAll = module.pages.includes(pages.all)
+    const matchesPage = isAll || module.pages.some((page) => isPage(page))
+    const isExcluded = isAll && module.excludePages?.some((page) => isPage(page))
+    if (!matchesPage || isExcluded) return
 
     logger.debug(`Running module: ${module.name}`)
 
