@@ -1,13 +1,15 @@
+import { createElement } from '@common/test/utils'
 import {
   getElementById,
   getElementsByName,
+  observeElement,
   querySelector,
   querySelectorAll,
   querySelectorAllIn,
   querySelectorIn,
 } from '@common/utils/dom'
 import { logger } from '@common/utils/logger'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 describe(getElementById, () => {
   beforeEach(() => {
@@ -205,5 +207,43 @@ describe(querySelectorAllIn, () => {
 
     expect(elements).toHaveLength(0)
     expect(logger.warn).not.toHaveBeenCalled()
+  })
+})
+
+describe(observeElement, () => {
+  beforeEach(() => {
+    document.body.innerHTML = `
+      <div id="container">
+        <div class="content">Initial content</div>
+      </div>
+    `
+  })
+
+  it('calls callback when element children change', async () => {
+    const container = document.getElementById('container')!
+    const callback = vi.fn<() => void>()
+
+    observeElement(container, callback)
+
+    container.appendChild(createElement('New content'))
+
+    await vi.waitFor(() => {
+      expect(callback).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  it('calls callback when subtree changes', async () => {
+    const container = document.getElementById('container')!
+    const callback = vi.fn<() => void>()
+
+    observeElement(container, callback)
+
+    // Modify a nested element
+    const content = container.querySelector('.content')!
+    content.textContent = 'Modified content'
+
+    await vi.waitFor(() => {
+      expect(callback).toHaveBeenCalledTimes(1)
+    })
   })
 })
