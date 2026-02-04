@@ -4,7 +4,7 @@
 
 - Package manager: **pnpm**
 - Test framework: **Vitest** with jsdom
-- Build tool: **esbuild**
+- Build tool: **Vite**
 
 ## General Guidelines
 

@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="images/icon.svg" alt="HTE Logo" width="128" height="128">
+  <img src="public/icon/icon.svg" alt="HTE Logo" width="128" height="128">
   <h1>Hattrick Enhanced</h1>
 
 ![Build](https://github.com/session567/hte/actions/workflows/ci.yml/badge.svg?branch=main)

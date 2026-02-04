@@ -1,6 +1,6 @@
 @import './_colors.css';
-@import './_margins.css';
+@import './_spacing.css';
 
 .hte-help {
-  border-bottom: 1px dashed black;
+  border-bottom: 1px dashed var(--hte-color-black);
 }

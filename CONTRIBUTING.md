@@ -20,21 +20,19 @@ Project structure:
 
 ```
 hte/
-├── _locales/                # Translation files
 ├── dist/                    # Build output (generated)
-├── images/                  # Extension images
-├── scripts/                 # Build scripts
-├── src/
-│   ├── common/              # Shared utilities
-│   │   ├── styles/          # Global CSS styles
-│   │   ├── test/            # Test setup and utilities
-│   │   ├── types/           # TypeScript type definitions
-│   │   └── utils/           # Utility functions
-│   ├── modules/             # Modules
-│   └── index.ts             # Entry point - module registration and initialization
-├── manifest.json            # Browser extension manifest
-├── vitest.config.ts         # Test configuration
-└── tsconfig.json            # TypeScript configuration
+├── public/
+│   ├── _locales/            # Translation files
+│   └── images/              # Extension images
+└── src/
+    ├── common/              # Shared utilities
+    │   ├── styles/          # Global CSS styles
+    │   ├── test/            # Test setup and utilities
+    │   ├── types/           # TypeScript type definitions
+    │   └── utils/           # Utility functions
+    ├── modules/             # Modules
+    ├── index.ts             # Entry point - module registration and initialization
+    └── manifest.json        # Browser extension manifest
 ```
 
 Modules follow a consistent structure:
@@ -58,11 +56,12 @@ modules/example-module/
 4. Install dependencies - `pnpm install`
 5. Build the extension and watch for changes - `pnpm watch`
 6. Load the extension in your browser
-    - **Firefox**: Run `pnpm dev` to open Firefox with the extension loaded. On changes, the extension will be reloaded
-      automatically.
-    - **Chrome**: Go to `chrome://extensions`, enable "Developer mode", click "Load unpacked", and select this project's
-      folder. On changes, you have to manually refresh the extension by clicking the refresh icon next to the on/off
-      toggle.
+    - **Firefox**: Run `pnpm watch` to open Firefox with the extension loaded.
+    - **Chromium-based browser**: Copy `.webextrc.yml.sample` to `.webextrc.yml` and set your browser's binary location,
+      then run `pnpm watch:chrome` to open your Chromium-based browser with the extension loaded.
+    - The extension will reload automatically on changes for both browsers.
+    - See [Browser Startup Configuration](https://vite-plugin-web-extension.aklinker1.io/guide/configure-browser-startup.html)
+      for more configuration options.
 
 ### pnpm Scripts
 
@@ -71,16 +70,15 @@ All pnpm scripts are located in [package.json](https://github.com/session567/hte
 #### Development Scripts
 
 - `pnpm build` - Build the extension
-- `pnpm build:extension` - Build a production-ready zip archive for publishing to browser extension stores
-- `pnpm watch` - Build the extension and watch for changes
-- `pnpm dev` - Open Firefox with the extension loaded (Hattrick production)
-- `pnpm dev:stage` - Open Firefox with the extension loaded (Hattrick stage)
+- `pnpm watch` - Open Firefox with the extension loaded
+- `pnpm watch:chrome` - Open Chrome with the extension loaded
 - `pnpm clean` - Remove build output
+- `pnpm validate` - Validate the extension using web-ext
 
 #### Testing Scripts
 
-- `pnpm test` - Run tests with vitest
-- `pnpm lint` - Run ESLint on the src/ folder
+- `pnpm test` - Run tests with Vitest
+- `pnpm lint` - Run ESLint
 
 ## Creating a Module
 

@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       extension-id: ${{ steps.extension.outputs.id }}
-      extension-version: ${{ steps.extension.outputs.version }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -21,7 +20,7 @@ jobs:
 
       - name: Zip source code
         run: |
-          zip -r source-code.zip . \
+          zip -r source_code.zip . \
             -x ".git/*" \
             -x ".github/*"
 
@@ -38,27 +37,28 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build extension
-        run: pnpm build:extension
+        run: pnpm build
+
+      - name: Validate build
+        run: pnpm validate
+
+      - name: Zip build
+        run: cd dist && zip -r ../extension.zip .
 
       - name: Get extension data
         id: extension
         run: |
           ID=$(jq -r '.browser_specific_settings.gecko.id' manifest.json)
-          VERSION=$(jq -r '.version' manifest.json)
-          
           echo "ID: $ID"
-          echo "Version: $VERSION"
-
           echo "id=$ID" >> $GITHUB_OUTPUT
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: extension-build
           path: |
-            build/hte-${{ steps.extension.outputs.version }}.zip
-            source-code.zip
+            extension.zip
+            source_code.zip
 
   release-firefox:
     needs: build
@@ -73,8 +73,8 @@ jobs:
         uses: session567/release-firefox-addon@temp
         with:
           addon-id: ${{ needs.build.outputs.extension-id }}
-          addon-path: build/hte-${{ needs.build.outputs.extension-version }}.zip
-          source-path: source-code.zip
+          addon-path: extension.zip
+          source-path: source_code.zip
           approval-note: Automated release via GitHub Actions
           release-note: "${{ github.event.release.body }}"
           license: GPL-3.0-only
@@ -94,7 +94,7 @@ jobs:
         uses: browser-actions/release-chrome-extension@latest
         with:
           extension-id: bbpinjphilaocfmgllmgihlbmnooeglo
-          extension-path: build/hte-${{ needs.build.outputs.extension-version }}.zip
+          extension-path: extension.zip
           oauth-client-id: ${{ secrets.CHROME_CLIENT_ID }}
           oauth-client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
           oauth-refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}

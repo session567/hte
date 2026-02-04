@@ -1,0 +1,65 @@
+:root {
+  --hte-spacing: 0.25rem;
+}
+
+@for $i from 0 to 4 {
+  .hte-m-$(i) {
+    margin: calc(var(--hte-spacing) * $(i));
+  }
+
+  .hte-mt-$(i) {
+    margin-top: calc(var(--hte-spacing) * $(i));
+  }
+
+  .hte-mr-$(i) {
+    margin-right: calc(var(--hte-spacing) * $(i));
+  }
+
+  .hte-mb-$(i) {
+    margin-bottom: calc(var(--hte-spacing) * $(i));
+  }
+
+  .hte-ml-$(i) {
+    margin-left: calc(var(--hte-spacing) * $(i));
+  }
+
+  .hte-mx-$(i) {
+    margin-left: calc(var(--hte-spacing) * $(i));
+    margin-right: calc(var(--hte-spacing) * $(i));
+  }
+
+  .hte-my-$(i) {
+    margin-top: calc(var(--hte-spacing) * $(i));
+    margin-bottom: calc(var(--hte-spacing) * $(i));
+  }
+
+  .hte-p-$(i) {
+    padding: calc(var(--hte-spacing) * $(i));
+  }
+
+  .hte-pt-$(i) {
+    padding-top: calc(var(--hte-spacing) * $(i));
+  }
+
+  .hte-pr-$(i) {
+    padding-right: calc(var(--hte-spacing) * $(i));
+  }
+
+  .hte-pb-$(i) {
+    padding-bottom: calc(var(--hte-spacing) * $(i));
+  }
+
+  .hte-pl-$(i) {
+    padding-left: calc(var(--hte-spacing) * $(i));
+  }
+
+  .hte-px-$(i) {
+    padding-left: calc(var(--hte-spacing) * $(i));
+    padding-right: calc(var(--hte-spacing) * $(i));
+  }
+
+  .hte-py-$(i) {
+    padding-top: calc(var(--hte-spacing) * $(i));
+    padding-bottom: calc(var(--hte-spacing) * $(i));
+  }
+}
