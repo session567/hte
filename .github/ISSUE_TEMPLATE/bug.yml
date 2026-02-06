@@ -23,31 +23,6 @@ body:
     validations:
       required: true
 
-  - type: textarea
-    id: expected
-    attributes:
-      label: Expected behavior
-      description: A clear and concise description of what you expected to happen.
-    validations:
-      required: true
-
-  - type: textarea
-    id: actual
-    attributes:
-      label: Actual behavior
-      description: What actually happened? Include screenshots if applicable.
-    validations:
-      required: true
-
-  - type: input
-    id: browser
-    attributes:
-      label: Browser
-      description: Browser name and version
-      placeholder: "Firefox 146.0.1"
-    validations:
-      required: true
-
   - type: input
     id: version
     attributes:
