@@ -16,14 +16,5 @@
   },
   "salary_per_season": {
     "message": "year"
-  },
-  "transfer_search_presets_title": {
-    "message": "Transfer Search Presets"
-  },
-  "transfer_search_presets_add_button": {
-    "message": "Add Preset"
-  },
-  "transfer_search_presets_name_prompt": {
-    "message": "Preset name"
   }
 }

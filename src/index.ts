@@ -17,7 +17,6 @@ import htmsPoints from '@modules/htms-points'
 import links from '@modules/links'
 import salary from '@modules/salary'
 import skillBonus from '@modules/skill-bonus'
-import transferSearchPresets from '@modules/transfer-search-presets'
 import weekNumber from '@modules/week-number'
 
 if (isLoggedIn()) {
@@ -27,7 +26,6 @@ if (isLoggedIn()) {
     skillBonus,
     htmsPoints,
     salary,
-    transferSearchPresets,
     denomination,
     weekNumber,
     hteVersion,
