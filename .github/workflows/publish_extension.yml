@@ -8,21 +8,13 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  release-firefox:
     runs-on: ubuntu-latest
-    outputs:
-      extension-id: ${{ steps.extension.outputs.id }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
           ref: ${{ github.event.release.tag_name }}
-
-      - name: Zip source code
-        run: |
-          zip -r source_code.zip . \
-            -x ".git/*" \
-            -x ".github/*"
 
       - name: Enable Corepack
         run: corepack enable pnpm
@@ -36,59 +28,54 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build extension
-        run: pnpm build
-
-      - name: Validate build
-        run: pnpm validate
-
-      - name: Zip build
-        run: cd dist && zip -r ../extension.zip .
+      - name: Zip
+        run: pnpm zip:firefox
 
       - name: Get extension data
         id: extension
         run: |
-          ID=$(jq -r '.browser_specific_settings.gecko.id' manifest.json)
+          ID=$(jq -r '.browser_specific_settings.gecko.id' .output/firefox-mv2/manifest.json)
+          VERSION=$(jq -r '.version' .output/firefox-mv2/manifest.json)
+          
+          echo "VERSION: $VERSION"
           echo "ID: $ID"
+
           echo "id=$ID" >> $GITHUB_OUTPUT
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: extension-build
-          path: |
-            extension.zip
-            source_code.zip
-
-  release-firefox:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: extension-build
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Release to Firefox
         uses: session567/release-firefox-addon@temp
         with:
-          addon-id: ${{ needs.build.outputs.extension-id }}
-          addon-path: extension.zip
-          source-path: source_code.zip
-          approval-note: Automated release via GitHub Actions
+          addon-id: ${{ steps.extension.outputs.id }}
+          addon-path: .output/hte-${{ steps.extension.outputs.version }}-firefox.zip
+          source-path: .output/hte-${{ steps.extension.outputs.version }}-sources.zip
           release-note: "${{ github.event.release.body }}"
           license: GPL-3.0-only
           auth-api-issuer: ${{ secrets.FIREFOX_API_KEY }}
           auth-api-secret: ${{ secrets.FIREFOX_API_SECRET }}
 
   release-chrome:
-    needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
+      - name: Checkout code
+        uses: actions/checkout@v6
         with:
-          name: extension-build
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Enable Corepack
+        run: corepack enable pnpm
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Zip
+        run: pnpm zip
 
       - name: Release to Chrome
         uses: browser-actions/release-chrome-extension@latest

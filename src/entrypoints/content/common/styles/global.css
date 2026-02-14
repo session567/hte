@@ -1,0 +1,6 @@
+@import url('_colors.css');
+@import url('_spacing.css');
+
+.hte-help {
+  border-bottom: 1px dashed var(--hte-color-black);
+}
