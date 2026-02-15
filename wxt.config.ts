@@ -24,6 +24,7 @@ export default defineConfig({
     },
   },
   srcDir: 'src',
+  outDir: 'dist',
   vite: () => ({
     define: {
       __VERSION__: JSON.stringify(pkg.version),
