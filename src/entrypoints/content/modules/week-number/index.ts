@@ -32,8 +32,7 @@ const addWeekNumbers = (root: Element) => {
  */
 const weekNumber: Module = {
   name: 'Week Number',
-  pages: [pages.all],
-  excludePages: [pages.forum],
+  pages: [pages.matches, pages.playerDetailOwnTeam, pages.playerDetailOtherTeam],
   run: () => {
     const mainBody = getElementById('mainBody')
     if (!mainBody) return
