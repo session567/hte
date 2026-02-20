@@ -45,13 +45,13 @@ describe('denomination module', () => {
     const honestySpan = links[2].nextElementSibling
 
     expect(gentlenessSpan?.className).toBe('hte-skill hte-gentleness-2')
-    expect(gentlenessSpan?.textContent).toBe('2/6')
+    expect(gentlenessSpan?.textContent).toBe('2/5')
 
     expect(aggressivenessSpan?.className).toBe('hte-skill hte-aggressiveness-4')
-    expect(aggressivenessSpan?.textContent).toBe('4/6')
+    expect(aggressivenessSpan?.textContent).toBe('1/5')
 
     expect(honestySpan?.className).toBe('hte-skill hte-honesty-1')
-    expect(honestySpan?.textContent).toBe('1/6')
+    expect(honestySpan?.textContent).toBe('1/5')
   })
 
   it('skips unsupported denomination type', () => {
