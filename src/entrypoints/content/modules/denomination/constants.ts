@@ -16,13 +16,13 @@ export const DENOMINATION_TYPES = [
 export const PERSONALITY_TYPES = new Set<DenominationType>(['gentleness', 'honesty', 'aggressiveness'])
 
 export const MAX_VALUES: Record<DenominationType, number> = {
-  aggressiveness: 6,
+  aggressiveness: 5,
   confidence: 9,
   FanMatch: 10,
   FanMood: 11,
   FanSeason: 7,
-  gentleness: 6,
-  honesty: 6,
+  gentleness: 5,
+  honesty: 5,
   leadership: 7,
   morale: 10,
   skill: 20,

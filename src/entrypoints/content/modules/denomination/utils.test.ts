@@ -15,6 +15,8 @@ describe(adjustDenominationValue, () => {
     { lt: 'confidence', ll: 26, expected: 3 },
     { lt: 'confidence', ll: 31, expected: 8 },
     { lt: 'confidence', ll: 22, expected: 9 },
+    { lt: 'aggressiveness', ll: 0, expected: 5 },
+    { lt: 'aggressiveness', ll: 2, expected: 3 },
   ] as const)('adjusts $lt with ll=$ll to $expected', ({ lt, ll, expected }) => {
     expect(adjustDenominationValue(lt, ll)).toBe(expected)
   })
