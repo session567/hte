@@ -17,6 +17,11 @@ export const DHTH: Link = {
   url: 'https://dhth.net',
 }
 
+export const ENTERPRISE_CONSTRUCTION_ONLINE: Link = {
+  name: 'Enterprise Construction Online rev.II',
+  url: 'https://nrgjack.altervista.org/tools/eco',
+}
+
 export const HATTID_LEAGUE: Link = {
   name: 'Hattid',
   url: 'https://hattid.com/leagueUnit/{seriesId}',
@@ -61,6 +66,7 @@ export const linkMap = new Map<Page, LinkData>([
     pages.series,
     { links: [HATTID_LEAGUE, NICKARANA_LEAGUE_SIMULATOR], getReplacements: () => ({ seriesId: getPageSeriesId() }) },
   ],
+  [pages.stadium, { links: [ENTERPRISE_CONSTRUCTION_ONLINE] }],
   [pages.youthPlayer, { links: [HATTRICK_YOUTHCLUB, SCOUTRICK] }],
   [pages.youthPlayers, { links: [HATTRICK_YOUTHCLUB, SCOUTRICK] }],
 ])
