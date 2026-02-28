@@ -67,6 +67,6 @@ export const linkMap = new Map<Page, LinkData>([
     { links: [HATTID_LEAGUE, NICKARANA_LEAGUE_SIMULATOR], getReplacements: () => ({ seriesId: getPageSeriesId() }) },
   ],
   [pages.stadium, { links: [ENTERPRISE_CONSTRUCTION_ONLINE] }],
-  [pages.player.youth.detail, { links: [HATTRICK_YOUTHCLUB, SCOUTRICK] }],
-  [pages.player.youth.list, { links: [HATTRICK_YOUTHCLUB, SCOUTRICK] }],
+  [pages.player.youth.detail.own, { links: [HATTRICK_YOUTHCLUB, SCOUTRICK] }],
+  [pages.player.youth.list.own, { links: [HATTRICK_YOUTHCLUB, SCOUTRICK] }],
 ])

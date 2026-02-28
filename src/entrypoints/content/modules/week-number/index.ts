@@ -39,7 +39,8 @@ const weekNumber: Module = {
     pages.matches.youth.other,
     pages.player.senior.detail.own,
     pages.player.senior.detail.other,
-    pages.player.youth.detail,
+    pages.player.youth.detail.own,
+    pages.player.youth.detail.other,
     pages.stadium,
   ],
   run: () => {

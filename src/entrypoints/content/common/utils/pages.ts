@@ -13,7 +13,7 @@ type PageOptions = {
   queryParams?: QueryParam[]
 }
 
-type PageTree = Page | Page[] | { [key: string]: PageTree }
+type PageTree = Page | { [key: string]: PageTree }
 
 /**
  * Represents a specific page on Hattrick.
@@ -82,8 +82,8 @@ export const pages = {
       list: teamPages('/Club/Players/'),
     },
     youth: {
-      detail: new Page('/Club/Players/YouthPlayer.aspx'),
-      list: new Page('/Club/Players/YouthPlayers.aspx'),
+      detail: teamPages('/Club/Players/YouthPlayer.aspx'),
+      list: teamPages('/Club/Players/YouthPlayers.aspx'),
     },
   },
   stadium: new Page('/Club/Stadium/'),
