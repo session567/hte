@@ -59,14 +59,14 @@ export const SCOUTRICK: Link = {
 
 export const linkMap = new Map<Page, LinkData>([
   [pages.club, { links: [HATTID_TEAM], getReplacements: getOwnTeamData }],
-  [pages.matches, { links: [DHTH] }],
-  [pages.playerDetailOwnTeam, { links: [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER] }],
-  [pages.playerListOwnTeam, { links: [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER] }],
+  [pages.matches.senior.own, { links: [DHTH] }],
+  [pages.player.senior.detail.own, { links: [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER] }],
+  [pages.player.senior.list.own, { links: [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER] }],
   [
     pages.series,
     { links: [HATTID_LEAGUE, NICKARANA_LEAGUE_SIMULATOR], getReplacements: () => ({ seriesId: getPageSeriesId() }) },
   ],
   [pages.stadium, { links: [ENTERPRISE_CONSTRUCTION_ONLINE] }],
-  [pages.youthPlayer, { links: [HATTRICK_YOUTHCLUB, SCOUTRICK] }],
-  [pages.youthPlayers, { links: [HATTRICK_YOUTHCLUB, SCOUTRICK] }],
+  [pages.player.youth.detail, { links: [HATTRICK_YOUTHCLUB, SCOUTRICK] }],
+  [pages.player.youth.list, { links: [HATTRICK_YOUTHCLUB, SCOUTRICK] }],
 ])

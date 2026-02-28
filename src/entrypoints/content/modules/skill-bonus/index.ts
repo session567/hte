@@ -50,15 +50,15 @@ const createBonusBars = (skillBar: HTMLDivElement, bonuses: SkillBonuses): HTMLD
  */
 const skillBonus: Module = {
   name: 'Skill Bonus',
-  pages: [pages.playerDetailOwnTeam, pages.playerListOwnTeam],
+  pages: [pages.player.senior.detail.own, pages.player.senior.list.own],
   run: () => {
     const elements: Element[] = []
 
-    if (isPage(pages.playerDetailOwnTeam)) {
+    if (isPage(pages.player.senior.detail.own)) {
       const element = querySelector('#mainBody .playerInfo')
 
       if (element) elements.push(element)
-    } else if (isPage(pages.playerListOwnTeam)) {
+    } else if (isPage(pages.player.senior.list.own)) {
       elements.push(...Array.from(querySelectorAll('#mainBody > .playerList > .teamphoto-player')))
     }
 

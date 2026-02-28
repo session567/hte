@@ -77,17 +77,17 @@ const processPlayers = (playerSelector: string, ageSelector: string): void => {
  */
 const htmsPoints: Module = {
   name: 'HTMS Points',
-  pages: [pages.playerDetailOwnTeam, pages.playerDetailOtherTeam, pages.playerListOwnTeam, pages.transfersSearchResult],
+  pages: [pages.player.senior.detail.both, pages.player.senior.list.own, pages.transfers.searchResults],
   run: () => {
-    if (isPage(pages.playerDetailOwnTeam) || isPage(pages.playerDetailOtherTeam)) {
+    if (isPage(...pages.player.senior.detail.both)) {
       const playerElement = querySelector('#mainBody .playerInfo')
       const ageElement = querySelector('#mainBody > .byline')
       if (playerElement && ageElement) processPlayer(playerElement, ageElement)
-    } else if (isPage(pages.playerListOwnTeam)) {
+    } else if (isPage(pages.player.senior.list.own)) {
       const playerSelector = '#mainBody > .playerList > .teamphoto-player .playerInfo'
       const ageSelector = '.transferPlayerInformation table tbody tr:first-child td:nth-child(2)'
       processPlayers(playerSelector, ageSelector)
-    } else if (isPage(pages.transfersSearchResult)) {
+    } else if (isPage(pages.transfers.searchResults)) {
       const playerSelector = '#mainBody .playerListDetails'
       const ageSelector = '.transferPlayerInformation table tbody tr:nth-child(2) td:nth-child(2)'
       processPlayers(playerSelector, ageSelector)

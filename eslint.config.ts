@@ -7,7 +7,7 @@ import eslintPluginTsdoc from 'eslint-plugin-tsdoc'
 import tseslint from 'typescript-eslint'
 
 export default defineConfig(
-  globalIgnores(['.output/**', '.wxt/**', 'coverage/**', 'node_modules/**', 'public/**']),
+  globalIgnores(['.wxt/**', 'coverage/**', 'dist/**', 'node_modules/**', 'public/**']),
   eslint.configs.recommended,
   tseslint.configs.strictTypeChecked,
   tseslint.configs.stylisticTypeChecked,

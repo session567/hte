@@ -36,10 +36,10 @@ export default defineContentScript({
     logger.debug(`Current pathname: ${getCurrentPathname()}`)
 
     modules.forEach((module) => {
-      const isAll = module.pages.includes(pages.all)
-      const matchesPage = isAll || module.pages.some((page) => isPage(page))
-      const isExcluded = isAll && module.excludePages?.some((page) => isPage(page))
-      if (!matchesPage || isExcluded) return
+      const modulePages = module.pages.flat()
+      const isAll = modulePages.includes(pages.all)
+      const matchesPage = isAll || isPage(...modulePages)
+      if (!matchesPage) return
 
       logger.debug(`Running module: ${module.name}`)
 
