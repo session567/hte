@@ -33,9 +33,12 @@ const addWeekNumbers = (root: Element) => {
 const weekNumber: Module = {
   name: 'Week Number',
   pages: [
-    pages.matches.senior.both,
-    pages.matches.youth.both,
-    pages.player.senior.detail.both,
+    pages.matches.senior.own,
+    pages.matches.senior.other,
+    pages.matches.youth.own,
+    pages.matches.youth.other,
+    pages.player.senior.detail.own,
+    pages.player.senior.detail.other,
     pages.player.youth.detail,
     pages.stadium,
   ],
@@ -47,7 +50,7 @@ const weekNumber: Module = {
 
     // Watch for tab changes on the player detail page. Tab content is loaded asynchronously when clicked, so we need to
     // re-apply week numbers after each update.
-    if (isPage(...pages.player.senior.detail.both)) {
+    if (isPage(pages.player.senior.detail.own, pages.player.senior.detail.other)) {
       const playerTabs = getElementById('ctl00_ctl00_CPContent_CPMain_updPlayerTabs')
       if (!playerTabs) return
 

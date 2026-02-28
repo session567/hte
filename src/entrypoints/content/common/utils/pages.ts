@@ -46,7 +46,7 @@ export class Page {
 const teamPages = (pathname: string, options?: Omit<PageOptions, 'teamContext'>) => {
   const own = new Page(pathname, { ...options, teamContext: 'OWN_TEAM' })
   const other = new Page(pathname, { ...options, teamContext: 'OTHER_TEAM' })
-  return { own, other, both: [own, other] }
+  return { own, other }
 }
 
 /**

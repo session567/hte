@@ -77,9 +77,14 @@ const processPlayers = (playerSelector: string, ageSelector: string): void => {
  */
 const htmsPoints: Module = {
   name: 'HTMS Points',
-  pages: [pages.player.senior.detail.both, pages.player.senior.list.own, pages.transfers.searchResults],
+  pages: [
+    pages.player.senior.detail.own,
+    pages.player.senior.detail.other,
+    pages.player.senior.list.own,
+    pages.transfers.searchResults,
+  ],
   run: () => {
-    if (isPage(...pages.player.senior.detail.both)) {
+    if (isPage(pages.player.senior.detail.own, pages.player.senior.detail.other)) {
       const playerElement = querySelector('#mainBody .playerInfo')
       const ageElement = querySelector('#mainBody > .byline')
       if (playerElement && ageElement) processPlayer(playerElement, ageElement)
