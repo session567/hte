@@ -56,6 +56,7 @@ export const pages = {
   all: new Page(Page.__ALL__),
   appDenominations: new Page('/Help/Rules/AppDenominations.aspx'),
   club: new Page('/Club/'),
+  fans: new Page('/Club/Fans/'),
   forum: new Page('/Forum/'),
   matchList: {
     senior: teamPages('/Club/Matches/'),
