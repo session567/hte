@@ -8,6 +8,7 @@ import '@/common/styles/common.css'
 
 import { defineContentScript } from 'wxt/utils/define-content-script'
 
+import { getConfig } from '@/common/config'
 import type { Module } from '@/entrypoints/content/common/types/module'
 import { getCurrentPathname } from '@/entrypoints/content/common/utils/location'
 import { logger } from '@/entrypoints/content/common/utils/logger'
@@ -23,12 +24,13 @@ import weekNumber from '@/entrypoints/content/modules/week-number'
 
 export default defineContentScript({
   matches: ['https://*.hattrick.org/*'],
-  main() {
+  async main() {
     if (!isLoggedIn()) {
       logger.debug('Not logged in, skipping all modules')
       return
     }
 
+    const config = await getConfig()
     // Modules are executed in the order they appear in this array
     const modules: Module[] = [links, skillBonus, htmsPoints, salary, denomination, weekNumber, hteVersion]
 
@@ -36,6 +38,11 @@ export default defineContentScript({
     logger.debug(`Current pathname: ${getCurrentPathname()}`)
 
     modules.forEach((module) => {
+      if (config.disabledModules.includes(module.metadata.id)) {
+        logger.debug(`Skipping disabled module: ${module.metadata.name}`)
+        return
+      }
+
       const isAll = module.pages.includes(pages.all)
       const matchesPage = isAll || isPage(...module.pages)
       if (!matchesPage) return

@@ -22,6 +22,7 @@ export default defineConfig({
         },
       },
     },
+    permissions: ['storage'],
   },
   srcDir: 'src',
   outDir: 'dist',
@@ -29,6 +30,9 @@ export default defineConfig({
     define: {
       __VERSION__: JSON.stringify(pkg.version),
       __DEV__: import.meta.env.DEV_MODE ?? false,
+    },
+    build: {
+      minify: false,
     },
   }),
 })
