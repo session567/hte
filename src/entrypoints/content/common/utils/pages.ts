@@ -51,42 +51,29 @@ const teamPages = (pathname: string, options?: Omit<PageOptions, 'teamContext'>)
 
 /**
  * Dictionary of all supported Hattrick pages.
- *
- * IMPORTANT: For any given pathname, either all {@link Page} instances must have `teamContext`, or none should.
  */
 export const pages = {
-  // Special case
   all: new Page(Page.__ALL__),
-
-  // Pages not related to the user's team
   appDenominations: new Page('/Help/Rules/AppDenominations.aspx'),
-  forum: new Page('/Forum/'),
-  series: new Page('/World/Series/'),
-  transfers: {
-    search: new Page('/World/Transfers/'),
-    searchResults: new Page('/World/Transfers/TransfersSearchResult.aspx'),
-  },
-
-  // Pages accessible only to the user's own team
   club: new Page('/Club/'),
-  matches: {
+  forum: new Page('/Forum/'),
+  matchList: {
     senior: teamPages('/Club/Matches/'),
     youth: teamPages('/Club/Matches/', { queryParams: [{ name: 'YouthTeamId' }] }),
   },
-  specialists: new Page('/Club/Specialists/'),
-
-  // Pages accessible to both the user's own team and other teams
-  player: {
-    senior: {
-      detail: teamPages('/Club/Players/Player.aspx'),
-      list: teamPages('/Club/Players/'),
-    },
-    youth: {
-      detail: teamPages('/Club/Players/YouthPlayer.aspx'),
-      list: teamPages('/Club/Players/YouthPlayers.aspx'),
-    },
+  playerDetail: {
+    senior: teamPages('/Club/Players/Player.aspx'),
+    youth: teamPages('/Club/Players/YouthPlayer.aspx'),
   },
+  playerList: {
+    senior: teamPages('/Club/Players/'),
+    youth: teamPages('/Club/Players/YouthPlayers.aspx'),
+  },
+  series: new Page('/World/Series/'),
+  specialists: new Page('/Club/Specialists/'),
   stadium: new Page('/Club/Stadium/'),
+  transferSearch: new Page('/World/Transfers/'),
+  transferSearchResults: new Page('/World/Transfers/TransfersSearchResult.aspx'),
 } as const satisfies Record<string, PageTree>
 
 /**
@@ -124,7 +111,6 @@ export const isPage = (...pages: Page[]): boolean => {
  */
 const flattenPages = (tree: PageTree): Page[] => {
   if (tree instanceof Page) return [tree]
-  if (Array.isArray(tree)) return tree.flatMap(flattenPages)
   return Object.values(tree).flatMap(flattenPages)
 }
 
@@ -132,16 +118,15 @@ const flattenPages = (tree: PageTree): Page[] => {
  * Returns the current page based on the browser's location.
  */
 export const getCurrentPage = (): Page => {
-  const allPages = [...new Set(flattenPages(pages))]
-  const matchingPages = allPages.filter((page) => isPage(page))
+  const matchingPages = flattenPages(pages).filter((page) => isPage(page))
 
   if (matchingPages.length === 0) throw new Error('The current page is not supported')
   if (matchingPages.length === 1) return matchingPages[0]
 
   // Multiple pages can match the same URL when one page is a more specific variant of another. For example,
-  // `pages.matches.senior` and `pages.matches.youth` share the same pathname, but `pages.matches.youth` requires an
-  // additional query param 'YouthTeamId'. Both pass `isPage()`, so we score the pages to pick the most specific match;
-  // more query params = higher score.
+  // `pages.matchList.senior` and `pages.matchList.youth` share the same pathname, but `pages.matchList.youth` requires
+  // an additional query param 'YouthTeamId'. Both pass `isPage()`, so we score the pages to pick the most specific
+  // match; more query params = higher score.
   let topPages: Page[] = []
   let topScore = -Infinity
 

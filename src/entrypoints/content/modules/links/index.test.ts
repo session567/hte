@@ -35,7 +35,7 @@ describe('links module', () => {
   })
 
   it('inserts box at the beginning of sidebar', () => {
-    vi.mocked(getCurrentPage).mockReturnValue(pages.matches.senior.own)
+    vi.mocked(getCurrentPage).mockReturnValue(pages.matchList.senior.own)
     document.body.innerHTML = `
       <div id="sidebar">
         <div class="existing-box">Existing content</div>

@@ -21,7 +21,7 @@ vi.mock(import('@/entrypoints/content/modules/htms-points/utils'), async (import
 
 describe('htms-points module', () => {
   it('adds HTMS points to the player detail page', () => {
-    mockIsPage(pages.player.senior.detail.own)
+    mockIsPage(pages.playerDetail.senior.own)
     vi.mocked(calcHTMSPoints).mockReturnValue({ ability: 1234, potential: 5678 })
 
     document.body.innerHTML = `
@@ -83,7 +83,7 @@ describe('htms-points module', () => {
   })
 
   it('adds HTMS points to the player list page', () => {
-    vi.mocked(isPage).mockImplementation((page) => page === pages.player.senior.list.own)
+    vi.mocked(isPage).mockImplementation((page) => page === pages.playerList.senior.own)
     vi.mocked(calcHTMSPoints)
       .mockReturnValueOnce({ ability: 1234, potential: 5678 })
       .mockReturnValueOnce({ ability: 2345, potential: 6789 })
@@ -201,7 +201,7 @@ describe('htms-points module', () => {
   })
 
   it('adds HTMS points to the transfers search result page', () => {
-    vi.mocked(isPage).mockImplementation((page) => page === pages.transfers.searchResults)
+    vi.mocked(isPage).mockImplementation((page) => page === pages.transferSearchResults)
     vi.mocked(calcHTMSPoints)
       .mockReturnValueOnce({ ability: 1234, potential: 5678 })
       .mockReturnValueOnce({ ability: 2345, potential: 6789 })

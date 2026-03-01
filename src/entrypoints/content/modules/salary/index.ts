@@ -9,7 +9,7 @@ import { formatThousands, parseSalaryAndCurency } from '@/entrypoints/content/mo
  */
 const salary: Module = {
   name: 'Salary',
-  pages: [pages.player.senior.detail.own, pages.player.senior.detail.other],
+  pages: [pages.playerDetail.senior.own, pages.playerDetail.senior.other],
   run: () => {
     const salaryCell = querySelector('.transferPlayerInformation table tr:nth-child(2) td:nth-child(2)')
     if (!salaryCell) return

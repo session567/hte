@@ -30,8 +30,8 @@ describe('week-number module', () => {
   })
 
   it.each([
-    { desc: 'own team', page: pages.player.senior.detail.own },
-    { desc: 'other team', page: pages.player.senior.detail.other },
+    { desc: 'own team', page: pages.playerDetail.senior.own },
+    { desc: 'other team', page: pages.playerDetail.senior.other },
   ])('observes player tabs on $desc page and adds week numbers on content change', async ({ page }) => {
     mockIsPage(page)
 

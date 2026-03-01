@@ -141,35 +141,35 @@ describe(getCurrentPage, () => {
   })
 
   it('distinguishes own team player list from other team player list', () => {
-    vi.mocked(getCurrentPathname).mockReturnValue(pages.player.senior.list.own.pathname)
+    vi.mocked(getCurrentPathname).mockReturnValue(pages.playerList.senior.own.pathname)
     vi.mocked(getCurrentSearchParams).mockReturnValue(new URLSearchParams())
     vi.mocked(isOwnTeamPage).mockReturnValue(true)
 
-    expect(getCurrentPage()).toBe(pages.player.senior.list.own)
+    expect(getCurrentPage()).toBe(pages.playerList.senior.own)
   })
 
   it('distinguishes other team player list from own team player list', () => {
-    vi.mocked(getCurrentPathname).mockReturnValue(pages.player.senior.list.other.pathname)
+    vi.mocked(getCurrentPathname).mockReturnValue(pages.playerList.senior.other.pathname)
     vi.mocked(getCurrentSearchParams).mockReturnValue(new URLSearchParams())
     vi.mocked(isOwnTeamPage).mockReturnValue(false)
 
-    expect(getCurrentPage()).toBe(pages.player.senior.list.other)
+    expect(getCurrentPage()).toBe(pages.playerList.senior.other)
   })
 
   it('distinguishes youth matches from senior matches by query param', () => {
-    vi.mocked(getCurrentPathname).mockReturnValue(pages.matches.youth.own.pathname)
+    vi.mocked(getCurrentPathname).mockReturnValue(pages.matchList.youth.own.pathname)
     vi.mocked(getCurrentSearchParams).mockReturnValue(new URLSearchParams('?YouthTeamId=123'))
     vi.mocked(isOwnTeamPage).mockReturnValue(true)
 
-    expect(getCurrentPage()).toBe(pages.matches.youth.own)
+    expect(getCurrentPage()).toBe(pages.matchList.youth.own)
   })
 
   it('returns senior matches when YouthTeamId param is absent', () => {
-    vi.mocked(getCurrentPathname).mockReturnValue(pages.matches.senior.own.pathname)
+    vi.mocked(getCurrentPathname).mockReturnValue(pages.matchList.senior.own.pathname)
     vi.mocked(getCurrentSearchParams).mockReturnValue(new URLSearchParams())
     vi.mocked(isOwnTeamPage).mockReturnValue(true)
 
-    expect(getCurrentPage()).toBe(pages.matches.senior.own)
+    expect(getCurrentPage()).toBe(pages.matchList.senior.own)
   })
 
   it('throws error when no page matches', () => {

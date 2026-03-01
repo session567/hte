@@ -13,7 +13,7 @@ vi.mock(import('@/entrypoints/content/common/utils/pages'), async (importOrigina
 
 describe('skill-bonus module', () => {
   it('adds bonus bars to skill bars on the player detail page', () => {
-    mockIsPage(pages.player.senior.detail.own)
+    mockIsPage(pages.playerDetail.senior.own)
     document.body.innerHTML = `
       <div id="mainBody">
         <div class="playerInfo">
@@ -53,7 +53,7 @@ describe('skill-bonus module', () => {
   })
 
   it('adds bonus bars to multiple skill bars', () => {
-    mockIsPage(pages.player.senior.detail.own)
+    mockIsPage(pages.playerDetail.senior.own)
     document.body.innerHTML = `
       <div id="mainBody">
         <div class="playerInfo">
@@ -109,7 +109,7 @@ describe('skill-bonus module', () => {
   })
 
   it("doesn't add bonus bars when bonus is 0", () => {
-    mockIsPage(pages.player.senior.detail.own)
+    mockIsPage(pages.playerDetail.senior.own)
     document.body.innerHTML = `
       <div id="mainBody">
         <div class="playerInfo">
@@ -143,7 +143,7 @@ describe('skill-bonus module', () => {
   })
 
   it("doesn't add bonus bar when skill has no bar-level (non-existent skill)", () => {
-    mockIsPage(pages.player.senior.detail.own)
+    mockIsPage(pages.playerDetail.senior.own)
     document.body.innerHTML = `
       <div id="mainBody">
         <div class="playerInfo">
@@ -176,7 +176,7 @@ describe('skill-bonus module', () => {
   })
 
   it('adds bonus bars to multiple players on the player list', () => {
-    mockIsPage(pages.player.senior.list.own)
+    mockIsPage(pages.playerList.senior.own)
     document.body.innerHTML = `
       <div id="mainBody">
         <div class="playerList">

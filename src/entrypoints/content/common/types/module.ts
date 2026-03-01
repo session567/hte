@@ -1,8 +1,5 @@
 import { Page } from '@/entrypoints/content/common/utils/pages'
 
-type PageOrPageArray = Page | Page[]
-type PageList = PageOrPageArray[]
-
 /**
  * Base type for every module.
  *
@@ -13,7 +10,7 @@ export type Module = {
   // The module's name
   name: string
   // Pages where the module should run (see @common/utils/pages.ts for a list of pages)
-  pages: PageList
+  pages: Page[]
   // Function containing the module's logic
   run: () => void
 }

@@ -36,9 +36,8 @@ export default defineContentScript({
     logger.debug(`Current pathname: ${getCurrentPathname()}`)
 
     modules.forEach((module) => {
-      const modulePages = module.pages.flat()
-      const isAll = modulePages.includes(pages.all)
-      const matchesPage = isAll || isPage(...modulePages)
+      const isAll = module.pages.includes(pages.all)
+      const matchesPage = isAll || isPage(...module.pages)
       if (!matchesPage) return
 
       logger.debug(`Running module: ${module.name}`)
