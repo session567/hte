@@ -2,7 +2,7 @@
   --hte-spacing: 0.25rem;
 }
 
-@for $i from 0 to 4 {
+@for $i from 0 to 5 {
   .hte-m-$(i) {
     margin: calc(var(--hte-spacing) * $(i));
   }

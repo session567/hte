@@ -5,13 +5,14 @@ import { querySelectorAll } from '@/entrypoints/content/common/utils/dom'
 import { logger } from '@/entrypoints/content/common/utils/logger'
 import { pages } from '@/entrypoints/content/common/utils/pages'
 import { MAX_VALUES, PERSONALITY_TYPES } from '@/entrypoints/content/modules/denomination/constants'
+import metadata from '@/entrypoints/content/modules/denomination/metadata'
 import { adjustDenominationValue, isDenominationType } from '@/entrypoints/content/modules/denomination/utils'
 
 /**
  * Display numeric values next to all team and player abilities.
  */
 const denomination: Module = {
-  name: 'Denomination',
+  metadata,
   pages: [pages.all],
   run: () => {
     const links = querySelectorAll<HTMLAnchorElement>(`a.skill[href*="${pages.appDenominations.pathname}"]`, false)

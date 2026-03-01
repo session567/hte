@@ -4,7 +4,7 @@
  * Initializes and runs registered modules on applicable pages.
  */
 
-import '@/entrypoints/content/common/styles/global.css'
+import '@/common/styles/common.css'
 
 import { defineContentScript } from 'wxt/utils/define-content-script'
 
@@ -40,12 +40,12 @@ export default defineContentScript({
       const matchesPage = isAll || isPage(...module.pages)
       if (!matchesPage) return
 
-      logger.debug(`Running module: ${module.name}`)
+      logger.debug(`Running module: ${module.metadata.name}`)
 
       try {
         module.run()
       } catch (err) {
-        logger.error(`Module ${module.name} failed`, err)
+        logger.error(`Module ${module.metadata.name} failed`, err)
       }
     })
   },

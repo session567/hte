@@ -6,13 +6,14 @@ import { logger } from '@/entrypoints/content/common/utils/logger'
 import { getCurrentPage } from '@/entrypoints/content/common/utils/pages'
 import { createSidebarBox } from '@/entrypoints/content/common/utils/sidebar/box'
 import { linkMap } from '@/entrypoints/content/modules/links/constants'
+import metadata from '@/entrypoints/content/modules/links/metadata'
 import { replacePlaceholders } from '@/entrypoints/content/modules/links/utils'
 
 /**
  * Display relevant links to external tools in the sidebar.
  */
 const links: Module = {
-  name: 'Links',
+  metadata,
   pages: [...linkMap.keys()],
   run: () => {
     const sidebar = querySelector<HTMLDivElement>('#sidebar')

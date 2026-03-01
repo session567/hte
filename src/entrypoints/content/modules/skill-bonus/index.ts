@@ -8,6 +8,7 @@ import {
   querySelectorIn,
 } from '@/entrypoints/content/common/utils/dom'
 import { isPage, pages } from '@/entrypoints/content/common/utils/pages'
+import metadata from '@/entrypoints/content/modules/skill-bonus/metadata'
 import { calcBonuses, SkillBonuses } from '@/entrypoints/content/modules/skill-bonus/utils'
 import { i18n } from '#i18n'
 
@@ -49,7 +50,7 @@ const createBonusBars = (skillBar: HTMLDivElement, bonuses: SkillBonuses): HTMLD
  * Extend player skill bars to include loyalty and homegrown bonuses.
  */
 const skillBonus: Module = {
-  name: 'Skill Bonus',
+  metadata,
   pages: [pages.playerDetail.senior.own, pages.playerList.senior.own],
   run: () => {
     const elements: Element[] = []

@@ -154,4 +154,11 @@ export default defineConfig(
       '@typescript-eslint/no-unnecessary-type-parameters': 'off',
     },
   },
+  {
+    files: ['./src/entrypoints/popup/index.ts'],
+    rules: {
+      'no-restricted-properties': 'off',
+      'no-restricted-syntax': 'off',
+    },
+  },
 )
