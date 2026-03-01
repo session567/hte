@@ -33,6 +33,7 @@ const addWeekNumbers = (root: Element) => {
 const weekNumber: Module = {
   name: 'Week Number',
   pages: [
+    pages.fans,
     pages.matchList.senior.own,
     pages.matchList.senior.other,
     pages.matchList.youth.own,
