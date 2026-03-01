@@ -11,9 +11,6 @@ export type Module = {
   name: string
   // Pages where the module should run (see @common/utils/pages.ts for a list of pages)
   pages: Page[]
-  // Pages where the module should not run
-  // This is only evaluated when `pages: [pages.all]`, otherwise it is ignored
-  excludePages?: Page[]
   // Function containing the module's logic
   run: () => void
 }

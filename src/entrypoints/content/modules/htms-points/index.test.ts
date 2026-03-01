@@ -1,30 +1,27 @@
 import { describe, expect, it, vi } from 'vitest'
 
+import { mockIsPage } from '@/entrypoints/content/common/test/utils'
 import { isPage, pages } from '@/entrypoints/content/common/utils/pages'
 import htmsPoints from '@/entrypoints/content/modules/htms-points/index'
 import { calcHTMSPoints } from '@/entrypoints/content/modules/htms-points/utils'
 
-vi.mock(import('@/entrypoints/content/common/utils/pages'), async () => {
-  const originalModule = await vi.importActual('@/entrypoints/content/common/utils/pages')
-
+vi.mock(import('@/entrypoints/content/common/utils/pages'), async (importOriginal) => {
   return {
-    ...originalModule,
+    ...(await importOriginal()),
     isPage: vi.fn<typeof isPage>(),
   }
 })
 
-vi.mock(import('@/entrypoints/content/modules/htms-points/utils'), async () => {
-  const originalModule = await vi.importActual('@/entrypoints/content/modules/htms-points/utils')
-
+vi.mock(import('@/entrypoints/content/modules/htms-points/utils'), async (importOriginal) => {
   return {
-    ...originalModule,
+    ...(await importOriginal()),
     calcHTMSPoints: vi.fn<typeof calcHTMSPoints>(),
   }
 })
 
 describe('htms-points module', () => {
   it('adds HTMS points to the player detail page', () => {
-    vi.mocked(isPage).mockImplementation((page) => page === pages.playerDetailOwnTeam)
+    mockIsPage(pages.playerDetail.senior.own)
     vi.mocked(calcHTMSPoints).mockReturnValue({ ability: 1234, potential: 5678 })
 
     document.body.innerHTML = `
@@ -86,7 +83,7 @@ describe('htms-points module', () => {
   })
 
   it('adds HTMS points to the player list page', () => {
-    vi.mocked(isPage).mockImplementation((page) => page === pages.playerListOwnTeam)
+    vi.mocked(isPage).mockImplementation((page) => page === pages.playerList.senior.own)
     vi.mocked(calcHTMSPoints)
       .mockReturnValueOnce({ ability: 1234, potential: 5678 })
       .mockReturnValueOnce({ ability: 2345, potential: 6789 })
@@ -204,7 +201,7 @@ describe('htms-points module', () => {
   })
 
   it('adds HTMS points to the transfers search result page', () => {
-    vi.mocked(isPage).mockImplementation((page) => page === pages.transfersSearchResult)
+    vi.mocked(isPage).mockImplementation((page) => page === pages.transferSearchResults)
     vi.mocked(calcHTMSPoints)
       .mockReturnValueOnce({ ability: 1234, potential: 5678 })
       .mockReturnValueOnce({ ability: 2345, potential: 6789 })

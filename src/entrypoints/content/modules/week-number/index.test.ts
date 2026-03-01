@@ -1,13 +1,12 @@
 import { describe, expect, it, vi } from 'vitest'
 
+import { mockIsPage } from '@/entrypoints/content/common/test/utils'
 import { isPage, pages } from '@/entrypoints/content/common/utils/pages'
 import weekNumber from '@/entrypoints/content/modules/week-number/index'
 
-vi.mock(import('@/entrypoints/content/common/utils/pages'), async () => {
-  const originalModule = await vi.importActual('@/entrypoints/content/common/utils/pages')
-
+vi.mock(import('@/entrypoints/content/common/utils/pages'), async (importOriginal) => {
   return {
-    ...originalModule,
+    ...(await importOriginal()),
     isPage: vi.fn<typeof isPage>(),
   }
 })
@@ -31,10 +30,10 @@ describe('week-number module', () => {
   })
 
   it.each([
-    { desc: 'own team', page: pages.playerDetailOwnTeam },
-    { desc: 'other team', page: pages.playerDetailOtherTeam },
-  ])('observes player tabs and adds week numbers on content change', async ({ page }) => {
-    vi.mocked(isPage).mockImplementation((p) => p === page)
+    { desc: 'own team', page: pages.playerDetail.senior.own },
+    { desc: 'other team', page: pages.playerDetail.senior.other },
+  ])('observes player tabs on $desc page and adds week numbers on content change', async ({ page }) => {
+    mockIsPage(page)
 
     document.body.innerHTML = `
         <div id="mainBody">

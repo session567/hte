@@ -1,20 +1,19 @@
 import { describe, expect, it, vi } from 'vitest'
 
+import { mockIsPage } from '@/entrypoints/content/common/test/utils'
 import { isPage, pages } from '@/entrypoints/content/common/utils/pages'
 import skillBonus from '@/entrypoints/content/modules/skill-bonus/index'
 
-vi.mock(import('@/entrypoints/content/common/utils/pages'), async () => {
-  const originalModule = await vi.importActual('@/entrypoints/content/common/utils/pages')
-
+vi.mock(import('@/entrypoints/content/common/utils/pages'), async (importOriginal) => {
   return {
-    ...originalModule,
+    ...(await importOriginal()),
     isPage: vi.fn<typeof isPage>(),
   }
 })
 
 describe('skill-bonus module', () => {
   it('adds bonus bars to skill bars on the player detail page', () => {
-    vi.mocked(isPage).mockImplementation((page) => page === pages.playerDetailOwnTeam)
+    mockIsPage(pages.playerDetail.senior.own)
     document.body.innerHTML = `
       <div id="mainBody">
         <div class="playerInfo">
@@ -54,7 +53,7 @@ describe('skill-bonus module', () => {
   })
 
   it('adds bonus bars to multiple skill bars', () => {
-    vi.mocked(isPage).mockImplementation((page) => page === pages.playerDetailOwnTeam)
+    mockIsPage(pages.playerDetail.senior.own)
     document.body.innerHTML = `
       <div id="mainBody">
         <div class="playerInfo">
@@ -110,7 +109,7 @@ describe('skill-bonus module', () => {
   })
 
   it("doesn't add bonus bars when bonus is 0", () => {
-    vi.mocked(isPage).mockImplementation((page) => page === pages.playerDetailOwnTeam)
+    mockIsPage(pages.playerDetail.senior.own)
     document.body.innerHTML = `
       <div id="mainBody">
         <div class="playerInfo">
@@ -144,7 +143,7 @@ describe('skill-bonus module', () => {
   })
 
   it("doesn't add bonus bar when skill has no bar-level (non-existent skill)", () => {
-    vi.mocked(isPage).mockImplementation((page) => page === pages.playerDetailOwnTeam)
+    mockIsPage(pages.playerDetail.senior.own)
     document.body.innerHTML = `
       <div id="mainBody">
         <div class="playerInfo">
@@ -177,7 +176,7 @@ describe('skill-bonus module', () => {
   })
 
   it('adds bonus bars to multiple players on the player list', () => {
-    vi.mocked(isPage).mockImplementation((page) => page === pages.playerListOwnTeam)
+    mockIsPage(pages.playerList.senior.own)
     document.body.innerHTML = `
       <div id="mainBody">
         <div class="playerList">

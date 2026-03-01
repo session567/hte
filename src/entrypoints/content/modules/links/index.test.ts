@@ -4,20 +4,16 @@ import { getCurrentPage, pages } from '@/entrypoints/content/common/utils/pages'
 import { getOwnTeamData } from '@/entrypoints/content/common/utils/team/utils'
 import links from '@/entrypoints/content/modules/links/index'
 
-vi.mock(import('@/entrypoints/content/common/utils/pages'), async () => {
-  const originalModule = await vi.importActual('@/entrypoints/content/common/utils/pages')
-
+vi.mock(import('@/entrypoints/content/common/utils/pages'), async (importOriginal) => {
   return {
-    ...originalModule,
+    ...(await importOriginal()),
     getCurrentPage: vi.fn<typeof getCurrentPage>(),
   }
 })
 
-vi.mock(import('@/entrypoints/content/common/utils/team/utils'), async () => {
-  const originalModule = await vi.importActual('@/entrypoints/content/common/utils/team/utils')
-
+vi.mock(import('@/entrypoints/content/common/utils/team/utils'), async (importOriginal) => {
   return {
-    ...originalModule,
+    ...(await importOriginal()),
     getOwnTeamData: vi.fn<typeof getOwnTeamData>(),
   }
 })
@@ -39,7 +35,7 @@ describe('links module', () => {
   })
 
   it('inserts box at the beginning of sidebar', () => {
-    vi.mocked(getCurrentPage).mockReturnValue(pages.matches)
+    vi.mocked(getCurrentPage).mockReturnValue(pages.matchList.senior.own)
     document.body.innerHTML = `
       <div id="sidebar">
         <div class="existing-box">Existing content</div>
