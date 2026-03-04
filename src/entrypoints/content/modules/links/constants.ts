@@ -47,9 +47,9 @@ export const HATTRICK_YOUTHCLUB: Link = {
   url: 'https://www.hattrick-youthclub.org',
 }
 
-export const NICKARANA_LEAGUE_SIMULATOR: Link = {
-  name: "Nickarana's League & Match Simulator",
-  url: 'https://nickarana.pythonanywhere.com/seriespredict/?series_season={seriesId}',
+export const HT_SCORE: Link = {
+  name: 'HT Score',
+  url: 'https://htscore.org/seriespredict/?series_season={seriesId}',
 }
 
 export const SCOUTRICK: Link = {
@@ -62,10 +62,7 @@ export const linkMap = new Map<Page, LinkData>([
   [pages.matchList.senior.own, { links: [DHTH] }],
   [pages.playerDetail.senior.own, { links: [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER] }],
   [pages.playerList.senior.own, { links: [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER] }],
-  [
-    pages.series,
-    { links: [HATTID_LEAGUE, NICKARANA_LEAGUE_SIMULATOR], getReplacements: () => ({ seriesId: getPageSeriesId() }) },
-  ],
+  [pages.series, { links: [HATTID_LEAGUE, HT_SCORE], getReplacements: () => ({ seriesId: getPageSeriesId() }) }],
   [pages.stadium, { links: [ENTERPRISE_CONSTRUCTION_ONLINE] }],
   [pages.playerDetail.youth.own, { links: [HATTRICK_YOUTHCLUB, SCOUTRICK] }],
   [pages.playerList.youth.own, { links: [HATTRICK_YOUTHCLUB, SCOUTRICK] }],
