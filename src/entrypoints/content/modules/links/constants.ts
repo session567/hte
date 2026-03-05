@@ -49,7 +49,7 @@ export const HATTRICK_YOUTHCLUB: Link = {
 
 export const HT_SCORE: Link = {
   name: 'HT Score',
-  url: 'https://htscore.org/seriespredict/?series_season={seriesId}',
+  url: 'https://www.htscore.org/seriespredict/?series_season={seriesId}',
 }
 
 export const SCOUTRICK: Link = {
