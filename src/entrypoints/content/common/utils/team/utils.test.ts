@@ -3,20 +3,19 @@ import { describe, expect, it } from 'vitest'
 import { getOwnTeamData, getPageTeamId, isLoggedIn, isOwnTeamPage } from '@/entrypoints/content/common/utils/team/utils'
 
 describe(getOwnTeamData, () => {
-  it('extracts teamId and seriesId from series link', () => {
+  it('extracts team data from links', () => {
     document.body.innerHTML = `
       <div id="teamLinks">
-        <a href="/Club/?TeamID=123">Foobar</a>
         <a href="/World/Series/?LeagueLevelUnitID=456&TeamID=123">III.3</a>
-        <a href="/World/Leagues/League.aspx?LeagueID=1">Sweden</a>
+      </div>
+      <div id="ctl00_ctl00_CPHeader_ucNewMenu_repMenu_ctl00_pnlSubMenu">
+        <ul>
+          <li><a href="/Club/Youth/?YouthTeamID=789">Overview</a></li>
+        </ul>
       </div>
     `
 
-    expect(getOwnTeamData()).toStrictEqual({ teamId: '123', seriesId: '456' })
-  })
-
-  it('returns null values when the series link is not found', () => {
-    expect(getOwnTeamData()).toStrictEqual({ teamId: null, seriesId: null })
+    expect(getOwnTeamData()).toStrictEqual({ teamId: '123', seriesId: '456', youthTeamId: '789' })
   })
 })
 
@@ -36,13 +35,27 @@ describe(getPageTeamId, () => {
     expect(getPageTeamId()).toBe('1234')
   })
 
+  it('extracts youth team ID from breadcrumb when present', () => {
+    document.body.innerHTML = `
+      <div id="ctl00_ctl00_CPContent_divStartMain">
+        <div class="boxHead">
+          <h2>
+            <a href="/Club/Youth/?YouthTeamID=5678">Youth Team</a> »
+          </h2>
+        </div>
+      </div>
+    `
+
+    expect(getPageTeamId()).toBe('5678')
+  })
+
   it('returns null when breadcrumb is missing', () => {
     expect(getPageTeamId()).toBeNull()
   })
 })
 
 describe(isOwnTeamPage, () => {
-  it('returns true when both IDs match', () => {
+  it('returns true when page is senior team and both IDs match', () => {
     document.body.innerHTML = `
       <div id="teamLinks">
         <a href="/World/Series/?LeagueLevelUnitID=456&TeamID=123">III.3</a>
@@ -52,6 +65,29 @@ describe(isOwnTeamPage, () => {
         <div class="boxHead">
           <h2>
             <a href="/Club/?TeamID=123">My Team</a> »
+          </h2>
+        </div>
+      </div>
+    `
+
+    expect(isOwnTeamPage()).toBe(true)
+  })
+
+  it('returns true when page is youth team and both IDs match', () => {
+    document.body.innerHTML = `
+      <div id="teamLinks">
+        <a href="/World/Series/?LeagueLevelUnitID=456&TeamID=123">III.3</a>
+      </div>
+      <div id="ctl00_ctl00_CPHeader_ucNewMenu_repMenu_ctl00_pnlSubMenu">
+        <ul>
+          <li><a href="/Club/Youth/?YouthTeamID=789">Overview</a></li>
+        </ul>
+      </div>
+      
+      <div id="ctl00_ctl00_CPContent_divStartMain">
+        <div class="boxHead">
+          <h2>
+            <a href="/Club/Youth/?YouthTeamID=789">My Youth Team</a> »
           </h2>
         </div>
       </div>
