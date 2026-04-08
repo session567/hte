@@ -31,8 +31,5 @@ export default defineConfig({
       __VERSION__: JSON.stringify(pkg.version),
       __DEV__: import.meta.env.DEV_MODE ?? false,
     },
-    build: {
-      minify: false,
-    },
   }),
 })
