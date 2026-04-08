@@ -20,7 +20,7 @@ vi.mock(import('@/entrypoints/content/modules/htms-points/utils'), async (import
 })
 
 describe('htms-points module', () => {
-  it('adds HTMS points to the player detail page', () => {
+  it('adds HTMS points to the player detail page', async () => {
     mockIsPage(pages.playerDetail.senior.own)
     vi.mocked(calcHTMSPoints).mockReturnValue({ ability: 1234, potential: 5678 })
 
@@ -71,7 +71,7 @@ describe('htms-points module', () => {
       </div>
     `
 
-    htmsPoints.run()
+    await htmsPoints.run()
 
     const htmsRow = document.querySelector('.transferPlayerInformation table tbody tr:last-child')
     const labelCell = htmsRow?.querySelector('td.right')
@@ -82,7 +82,7 @@ describe('htms-points module', () => {
     expect(valueCell?.title).toBe('htms_points_help')
   })
 
-  it('adds HTMS points to the player list page', () => {
+  it('adds HTMS points to the player list page', async () => {
     vi.mocked(isPage).mockImplementation((page) => page === pages.playerList.senior.own)
     vi.mocked(calcHTMSPoints)
       .mockReturnValueOnce({ ability: 1234, potential: 5678 })
@@ -177,7 +177,7 @@ describe('htms-points module', () => {
       </div>
     `
 
-    htmsPoints.run()
+    await htmsPoints.run()
 
     const players = document.querySelectorAll('.teamphoto-player .playerInfo')
 
@@ -200,7 +200,7 @@ describe('htms-points module', () => {
     expect(valueCell2?.title).toBe('htms_points_help')
   })
 
-  it('adds HTMS points to the transfers search result page', () => {
+  it('adds HTMS points to the transfers search result page', async () => {
     vi.mocked(isPage).mockImplementation((page) => page === pages.transferSearchResults)
     vi.mocked(calcHTMSPoints)
       .mockReturnValueOnce({ ability: 1234, potential: 5678 })
@@ -297,7 +297,7 @@ describe('htms-points module', () => {
       </div>
     `
 
-    htmsPoints.run()
+    await htmsPoints.run()
 
     const players = document.querySelectorAll('.playerListDetails')
 
