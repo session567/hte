@@ -85,14 +85,16 @@ All pnpm scripts are located in [package.json](https://github.com/session567/hte
 
 1. Create a `metadata.ts` file under `src/entrypoints/content/modules/example-module/`:
 
+   The file is used to display the module's name, description, and settings in the popup.
+
     ```typescript
     import type { ModuleMetadata } from '@/entrypoints/content/common/types/module'
-
+    
     const metadata = {
       id: 'example-module',
       name: 'Example Module',
       description: 'What this module does.',
-      settings: { // Module-specific settings
+      settings: {
         myOption: { label: 'Enable my option', default: true },
       },
     } as const satisfies ModuleMetadata
