@@ -19,12 +19,12 @@ vi.mock(import('@/entrypoints/content/common/utils/team/utils'), async (importOr
 })
 
 describe('links module', () => {
-  it('renders links box in sidebar', () => {
+  it('renders links box in sidebar', async () => {
     vi.mocked(getCurrentPage).mockReturnValue(pages.club)
     vi.mocked(getOwnTeamData).mockReturnValue({ teamId: '123', seriesId: '456' })
     document.body.innerHTML = '<div id="sidebar"></div>'
 
-    links.run()
+    await links.run()
 
     const anchors = document.querySelectorAll<HTMLAnchorElement>('.boxBody a')
 
@@ -34,7 +34,7 @@ describe('links module', () => {
     expect(anchors[0].target).toBe('_blank')
   })
 
-  it('inserts box at the beginning of sidebar', () => {
+  it('inserts box at the beginning of sidebar', async () => {
     vi.mocked(getCurrentPage).mockReturnValue(pages.matchList.senior.own)
     document.body.innerHTML = `
       <div id="sidebar">
@@ -42,7 +42,7 @@ describe('links module', () => {
       </div>
     `
 
-    links.run()
+    await links.run()
 
     const sidebar = document.querySelector('#sidebar')
     const firstChild = sidebar?.firstChild

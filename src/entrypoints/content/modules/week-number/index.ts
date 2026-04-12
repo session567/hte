@@ -3,6 +3,7 @@ import '@/entrypoints/content/modules/week-number/index.css'
 import type { Module } from '@/entrypoints/content/common/types/module'
 import { getElementById, observeElement, querySelectorAllIn } from '@/entrypoints/content/common/utils/dom'
 import { isPage, pages } from '@/entrypoints/content/common/utils/pages'
+import metadata from '@/entrypoints/content/modules/week-number/metadata'
 import { calcWeekNumber, parseDate } from '@/entrypoints/content/modules/week-number/utils'
 
 /**
@@ -31,7 +32,7 @@ const addWeekNumbers = (root: Element) => {
  * Display week numbers next to dates throughout Hattrick.
  */
 const weekNumber: Module = {
-  name: 'Week Number',
+  metadata,
   pages: [
     pages.fans,
     pages.matchList.senior.own,

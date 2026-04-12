@@ -12,7 +12,7 @@ vi.mock(import('@/entrypoints/content/common/utils/pages'), async (importOrigina
 })
 
 describe('skill-bonus module', () => {
-  it('adds bonus bars to skill bars on the player detail page', () => {
+  it('adds bonus bars to skill bars on the player detail page', async () => {
     mockIsPage(pages.playerDetail.senior.own)
     document.body.innerHTML = `
       <div id="mainBody">
@@ -39,7 +39,7 @@ describe('skill-bonus module', () => {
       </div>
     `
 
-    skillBonus.run()
+    await skillBonus.run()
 
     const loyaltyBar = document.querySelector('.hte-skill-bonus-bar-loyalty')
     const homegrownBar = document.querySelector('.hte-skill-bonus-bar-homegrown')
@@ -52,7 +52,7 @@ describe('skill-bonus module', () => {
     expect(homegrownBar).toBeNull()
   })
 
-  it('adds bonus bars to multiple skill bars', () => {
+  it('adds bonus bars to multiple skill bars', async () => {
     mockIsPage(pages.playerDetail.senior.own)
     document.body.innerHTML = `
       <div id="mainBody">
@@ -101,14 +101,14 @@ describe('skill-bonus module', () => {
       </div>
     `
 
-    skillBonus.run()
+    await skillBonus.run()
 
     const bonusBars = document.querySelectorAll('.hte-skill-bonus-bar')
 
     expect(bonusBars).toHaveLength(3)
   })
 
-  it("doesn't add bonus bars when bonus is 0", () => {
+  it("doesn't add bonus bars when bonus is 0", async () => {
     mockIsPage(pages.playerDetail.senior.own)
     document.body.innerHTML = `
       <div id="mainBody">
@@ -135,14 +135,14 @@ describe('skill-bonus module', () => {
       </div>
     `
 
-    skillBonus.run()
+    await skillBonus.run()
 
     const bonusBars = document.querySelectorAll('.hte-skill-bonus-bar')
 
     expect(bonusBars).toHaveLength(0)
   })
 
-  it("doesn't add bonus bar when skill has no bar-level (non-existent skill)", () => {
+  it("doesn't add bonus bar when skill has no bar-level (non-existent skill)", async () => {
     mockIsPage(pages.playerDetail.senior.own)
     document.body.innerHTML = `
       <div id="mainBody">
@@ -168,14 +168,14 @@ describe('skill-bonus module', () => {
       </div>
     `
 
-    skillBonus.run()
+    await skillBonus.run()
 
     const bonusBar = document.querySelector('.hte-skill-bonus-bar')
 
     expect(bonusBar).toBeNull()
   })
 
-  it('adds bonus bars to multiple players on the player list', () => {
+  it('adds bonus bars to multiple players on the player list', async () => {
     mockIsPage(pages.playerList.senior.own)
     document.body.innerHTML = `
       <div id="mainBody">
@@ -221,7 +221,7 @@ describe('skill-bonus module', () => {
       </div>
     `
 
-    skillBonus.run()
+    await skillBonus.run()
 
     const bonusBars = document.querySelectorAll('.hte-skill-bonus-bar')
 

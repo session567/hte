@@ -22,6 +22,7 @@ export default defineConfig({
         },
       },
     },
+    permissions: ['storage'],
   },
   srcDir: 'src',
   outDir: 'dist',

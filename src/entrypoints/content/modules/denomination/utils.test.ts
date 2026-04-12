@@ -1,6 +1,14 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
+import { getSetting } from '@/common/utils/settings'
 import { adjustDenominationValue, isDenominationType } from '@/entrypoints/content/modules/denomination/utils'
+
+vi.mock(import('@/common/utils/settings'), async (importOriginal) => {
+  return {
+    ...(await importOriginal()),
+    getSetting: vi.fn<typeof getSetting>().mockResolvedValue(true),
+  }
+})
 
 describe(adjustDenominationValue, () => {
   it.each([
@@ -17,8 +25,14 @@ describe(adjustDenominationValue, () => {
     { lt: 'confidence', ll: 22, expected: 9 },
     { lt: 'aggressiveness', ll: 0, expected: 5 },
     { lt: 'aggressiveness', ll: 2, expected: 3 },
-  ] as const)('adjusts $lt with ll=$ll to $expected', ({ lt, ll, expected }) => {
-    expect(adjustDenominationValue(lt, ll)).toBe(expected)
+  ] as const)('adjusts $lt with ll=$ll to $expected (reverseAggressiveness=true)', async ({ lt, ll, expected }) => {
+    await expect(adjustDenominationValue(lt, ll)).resolves.toBe(expected)
+  })
+
+  it('returns raw aggressiveness value when reverseAggressiveness is false', async () => {
+    vi.mocked(getSetting).mockResolvedValueOnce(false)
+
+    await expect(adjustDenominationValue('aggressiveness', 3)).resolves.toBe(3)
   })
 })
 

@@ -27,13 +27,14 @@ hte/
 │   ├── common/                  # Shared utilities
 │   │   └── test/                # Test setup (global mocks)
 │   ├── entrypoints/             # Contains all the entrypoints that get bundled into the extension
-│   │   └── content/             # The extension's content script
-│   │       ├── common/          # Shared content script utilities
-│   │       │   ├── styles/      # Global CSS styles
-│   │       │   ├── types/       # TypeScript type definitions
-│   │       │   └── utils/       # Utility functions
-│   │       ├── modules/         # Modules
-│   │       └── index.ts         # Content script entry point
+│   │   ├── content/             # The extension's content script
+│   │   │   ├── common/          # Shared content script utilities
+│   │   │   │   ├── styles/      # Global CSS styles
+│   │   │   │   ├── types/       # TypeScript type definitions
+│   │   │   │   └── utils/       # Utility functions
+│   │   │   ├── modules/         # Modules
+│   │   │   └── index.ts         # Content script entry point
+│   │   └── popup/               # Extension popup UI
 │   └── locales/                 # Translation files
 ```
 
@@ -45,6 +46,7 @@ src/entrypoints/content/modules/example-module/
 ├── index.css        # Module-specific styles (optional)
 ├── index.test.ts    # Tests for the module (required)
 ├── index.ts         # Module definition and main logic (required)
+├── metadata.ts      # Module metadata (required)
 ├── utils.test.ts    # Tests for utilities (optional)
 └── utils.ts         # Helper functions (optional)
 ```
@@ -81,42 +83,76 @@ All pnpm scripts are located in [package.json](https://github.com/session567/hte
 
 ## Creating a Module
 
-1. Create a new module under `src/entrypoints/content/modules/`.
+1. Create a `metadata.ts` file under `src/entrypoints/content/modules/example-module/`:
 
-   ```typescript
-   import type { Module } from '@/entrypoints/content/common/types/module'
-   import { pages } from '@/entrypoints/content/common/utils/pages'
+    ```typescript
+    import type { ModuleMetadata } from '@/entrypoints/content/common/types/module'
+    
+    const metadata = {
+      id: 'example-module',
+      name: 'Example Module',
+      description: 'What this module does.',
+      settings: {
+        myOption: { label: 'Enable my option', default: true },
+      },
+    } as const satisfies ModuleMetadata
 
-   const exampleModule: Module = {
-     name: 'Example Module', // The module's name
-     pages: [pages.club], // Pages where this module runs
-     run: () => {
-       // Module logic here
-     },
-   }
+    export default metadata
+    ```
 
-   export default exampleModule
-   ```
+   The file is used to display the module's name, description, and settings in the popup.
+
+   Each module automatically gets an `enabled` setting; users can toggle any module on or off via the popup without any
+   extra code. Any additional settings defined in `metadata.ts` are also shown in the popup automatically.
+
+   Use `getSetting()` to access settings at runtime:
+
+    ```typescript
+    import { getSetting } from '@/common/utils/settings'
+
+    const myOption = await getSetting('example-module', 'myOption')
+    ```
+
+2. Create `index.ts` in the same directory:
+
+    ```typescript
+    import type { Module } from '@/entrypoints/content/common/types/module'
+    import { pages } from '@/entrypoints/content/common/utils/pages'
+    import metadata from '@/entrypoints/content/modules/example-module/metadata'
+
+    const exampleModule: Module = {
+      metadata,
+      pages: [pages.club], // Pages where this module runs
+      run: () => {
+        // Module logic here
+      },
+    }
+
+    export default exampleModule
+    ```
+
+   This is the main module file. It defines which pages the module runs on and contains the logic executed on those
+   pages.
 
    For a simple module example, see
    [src/entrypoints/content/modules/hte-version/index.ts](https://github.com/session567/hte/blob/main/src/entrypoints/content/modules/hte-version/index.ts).
 
-2. Register your module in `src/entrypoints/content/index.ts`:
+3. Register your module in `src/entrypoints/content/index.ts`:
 
-   ```typescript
-   import exampleModule from '@/entrypoints/content/modules/example'
+    ```typescript
+    import exampleModule from '@/entrypoints/content/modules/example-module'
 
-   export const modules: Module[] = [
-     // ... other modules
-     exampleModule,
-   ]
-   ```
+    const modules: Module[] = [
+      // ... other modules
+      exampleModule,
+    ]
+    ```
 
 Modules only run when the user is logged in to Hattrick.
 
 ## Code Style
 
-ESLint enforces most conventions automatically. Additional guidelines are documented in [AGENTS.md](AGENTS.md).
+ESLint enforces most conventions automatically. Additional guidelines are documented in [CLAUDE.md](CLAUDE.md).
 
 ## Translations
 
