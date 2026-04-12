@@ -22,6 +22,12 @@ describe(isPage, () => {
         page: new Page('/Foo'),
         expected: true,
       },
+      {
+        desc: 'returns true when pathnames match case-insensitively',
+        currentPathname: '/foo',
+        page: new Page('/Foo'),
+        expected: true,
+      },
     ])('$desc', ({ currentPathname, page, expected }) => {
       vi.mocked(getCurrentPathname).mockReturnValue(currentPathname)
       vi.mocked(getCurrentSearchParams).mockReturnValue(new URLSearchParams())
