@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 import salary from '@/entrypoints/content/modules/salary/index'
 
 describe('salary module', () => {
-  it('adds yearly salary to the player page', () => {
+  it('adds yearly salary to the player page', async () => {
     document.body.innerHTML = `
       <div class="transferPlayerInformation">
         <table>
@@ -21,7 +21,7 @@ describe('salary module', () => {
       </div>
     `
 
-    salary.run()
+    await salary.run()
 
     const salaryCell = document.querySelector('.transferPlayerInformation table tr:nth-child(2) td:nth-child(2)')
     const yearlyDiv = salaryCell?.querySelector('div.shy')

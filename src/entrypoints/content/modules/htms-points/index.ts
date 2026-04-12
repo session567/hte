@@ -3,6 +3,7 @@ import { querySelector, querySelectorAll, querySelectorIn } from '@/entrypoints/
 import { isPage, pages } from '@/entrypoints/content/common/utils/pages'
 import { parsePlayerAge, parsePlayerSkills } from '@/entrypoints/content/common/utils/player/utils'
 import { HTMSPoints } from '@/entrypoints/content/modules/htms-points/constants'
+import metadata from '@/entrypoints/content/modules/htms-points/metadata'
 import { calcHTMSPoints } from '@/entrypoints/content/modules/htms-points/utils'
 import { i18n } from '#i18n'
 
@@ -76,7 +77,7 @@ const processPlayers = (playerSelector: string, ageSelector: string): void => {
  * Display HTMS points (ability and potential) for players.
  */
 const htmsPoints: Module = {
-  name: 'HTMS Points',
+  metadata,
   pages: [
     pages.playerDetail.senior.own,
     pages.playerDetail.senior.other,

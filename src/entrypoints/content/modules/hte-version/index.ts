@@ -2,12 +2,13 @@ import type { Module } from '@/entrypoints/content/common/types/module'
 import { VERSION } from '@/entrypoints/content/common/utils/constants'
 import { querySelector } from '@/entrypoints/content/common/utils/dom'
 import { pages } from '@/entrypoints/content/common/utils/pages'
+import metadata from '@/entrypoints/content/modules/hte-version/metadata'
 
 /**
  * Display the HTE version in the page footer.
  */
 const hteVersion: Module = {
-  name: 'HTE Version',
+  metadata,
   pages: [pages.all],
   run: () => {
     const currentServer = querySelector('#bottom .currentServer')

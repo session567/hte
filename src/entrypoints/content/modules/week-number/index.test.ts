@@ -15,14 +15,14 @@ describe('week-number module', () => {
   it.each([
     { dateString: '16.12.2025 19:30', expected: ' (W2)' },
     { dateString: '23.12.2025', expected: ' (W3)' },
-  ])('adds week number after date: $dateString', ({ dateString, expected }) => {
+  ])('adds week number after date: $dateString', async ({ dateString, expected }) => {
     document.body.innerHTML = `
       <div id="mainBody">
         <div class="date">${dateString}</div>
       </div>
     `
 
-    weekNumber.run()
+    await weekNumber.run()
 
     const span = document.querySelector<HTMLSpanElement>('.date > span.hte-week-number')
 
@@ -40,7 +40,7 @@ describe('week-number module', () => {
           <div id="ctl00_ctl00_CPContent_CPMain_updPlayerTabs"></div>
         </div>
       `
-    weekNumber.run()
+    await weekNumber.run()
 
     // Simulate content update
     const playerTabs = document.getElementById('ctl00_ctl00_CPContent_CPMain_updPlayerTabs')!
@@ -53,7 +53,7 @@ describe('week-number module', () => {
     })
   })
 
-  it("doesn't add week number for invalid date", () => {
+  it("doesn't add week number for invalid date", async () => {
     document.body.innerHTML = `
       <div id="mainBody">
         <div class="date">invalid date</div>
@@ -61,7 +61,7 @@ describe('week-number module', () => {
     `
     const originalHTML = document.body.innerHTML
 
-    weekNumber.run()
+    await weekNumber.run()
 
     expect(document.body.innerHTML).toBe(originalHTML)
   })

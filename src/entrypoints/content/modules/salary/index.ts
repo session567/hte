@@ -2,13 +2,14 @@ import type { Module } from '@/entrypoints/content/common/types/module'
 import { WEEKS_PER_SEASON } from '@/entrypoints/content/common/utils/constants'
 import { querySelector } from '@/entrypoints/content/common/utils/dom'
 import { pages } from '@/entrypoints/content/common/utils/pages'
+import metadata from '@/entrypoints/content/modules/salary/metadata'
 import { formatThousands, parseSalaryAndCurency } from '@/entrypoints/content/modules/salary/utils'
 
 /**
  * Display the player's yearly salary next to weekly salary on the player detail page.
  */
 const salary: Module = {
-  name: 'Salary',
+  metadata,
   pages: [pages.playerDetail.senior.own, pages.playerDetail.senior.other],
   run: () => {
     const salaryCell = querySelector('.transferPlayerInformation table tr:nth-child(2) td:nth-child(2)')
