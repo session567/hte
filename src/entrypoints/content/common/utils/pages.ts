@@ -83,7 +83,7 @@ export const pages = {
  */
 export const isPage = (...pages: Page[]): boolean => {
   return pages.some((page) => {
-    if (page.pathname !== getCurrentPathname()) return false
+    if (page.pathname.toLowerCase() !== getCurrentPathname().toLowerCase()) return false
 
     const { options } = page
     if (!options) return true
