@@ -85,8 +85,6 @@ All pnpm scripts are located in [package.json](https://github.com/session567/hte
 
 1. Create a `metadata.ts` file under `src/entrypoints/content/modules/example-module/`:
 
-   The file is used to display the module's name, description, and settings in the popup.
-
     ```typescript
     import type { ModuleMetadata } from '@/entrypoints/content/common/types/module'
     
@@ -101,6 +99,8 @@ All pnpm scripts are located in [package.json](https://github.com/session567/hte
 
     export default metadata
     ```
+
+   The file is used to display the module's name, description, and settings in the popup.
 
    Each module automatically gets an `enabled` setting; users can toggle any module on or off via the popup without any
    extra code. Any additional settings defined in `metadata.ts` are also shown in the popup automatically.
@@ -130,6 +130,9 @@ All pnpm scripts are located in [package.json](https://github.com/session567/hte
 
     export default exampleModule
     ```
+
+   This is the main module file. It defines which pages the module runs on and contains the logic executed on those
+   pages.
 
    For a simple module example, see
    [src/entrypoints/content/modules/hte-version/index.ts](https://github.com/session567/hte/blob/main/src/entrypoints/content/modules/hte-version/index.ts).
