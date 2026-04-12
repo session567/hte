@@ -100,8 +100,16 @@ All pnpm scripts are located in [package.json](https://github.com/session567/hte
     export default metadata
     ```
 
-   Each module gets an `enabled` setting automatically — users can toggle any module on or off via the popup without any
-   extra code.
+   Each module automatically gets an `enabled` setting; users can toggle any module on or off via the popup without any
+   extra code. Any additional settings defined in `metadata.ts` are also shown in the popup automatically.
+
+   Use `getSetting()` to access settings at runtime:
+
+    ```typescript
+    import { getSetting } from '@/common/utils/settings'
+
+    const myOption = await getSetting('example-module', 'myOption')
+    ```
 
 2. Create `index.ts` in the same directory:
 
