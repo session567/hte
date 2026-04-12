@@ -59,8 +59,8 @@ src/entrypoints/content/modules/example-module/
 3. Enable pnpm - `corepack enable pnpm`
 4. Install dependencies - `pnpm install`
 5. Run the extension in development mode (supports hot-reloading):
-  - `pnpm dev` - Opens Chromium with the extension loaded
-  - `pnpm dev:firefox` - Opens Firefox with the extension loaded
+    - `pnpm dev` - Opens Chromium with the extension loaded
+    - `pnpm dev:firefox` - Opens Firefox with the extension loaded
 
 ### pnpm Scripts
 
@@ -85,55 +85,55 @@ All pnpm scripts are located in [package.json](https://github.com/session567/hte
 
 1. Create a `metadata.ts` file under `src/entrypoints/content/modules/example-module/`:
 
-  ```typescript
-  import type { ModuleMetadata } from '@/entrypoints/content/common/types/module'
+    ```typescript
+    import type { ModuleMetadata } from '@/entrypoints/content/common/types/module'
 
-  const metadata = {
-    id: 'example-module',
-    name: 'Example Module',
-    description: 'What this module does.',
-    settings: { // Module-specific settings
-      myOption: { label: 'Enable my option', default: true },
-    },
-  } as const satisfies ModuleMetadata
+    const metadata = {
+      id: 'example-module',
+      name: 'Example Module',
+      description: 'What this module does.',
+      settings: { // Module-specific settings
+        myOption: { label: 'Enable my option', default: true },
+      },
+    } as const satisfies ModuleMetadata
 
-  export default metadata
-  ```
+    export default metadata
+    ```
 
-  Each module gets an `enabled` setting automatically — users can toggle any module on or off via the popup without any
-  extra code.
+   Each module gets an `enabled` setting automatically — users can toggle any module on or off via the popup without any
+   extra code.
 
 2. Create `index.ts` in the same directory:
 
-  ```typescript
-  import type { Module } from '@/entrypoints/content/common/types/module'
-  import { pages } from '@/entrypoints/content/common/utils/pages'
-  import metadata from '@/entrypoints/content/modules/example-module/metadata'
+    ```typescript
+    import type { Module } from '@/entrypoints/content/common/types/module'
+    import { pages } from '@/entrypoints/content/common/utils/pages'
+    import metadata from '@/entrypoints/content/modules/example-module/metadata'
 
-  const exampleModule: Module = {
-    metadata,
-    pages: [pages.club], // Pages where this module runs
-    run: () => {
-      // Module logic here
-    },
-  }
+    const exampleModule: Module = {
+      metadata,
+      pages: [pages.club], // Pages where this module runs
+      run: () => {
+        // Module logic here
+      },
+    }
 
-  export default exampleModule
-  ```
+    export default exampleModule
+    ```
 
-  For a simple module example, see
-  [src/entrypoints/content/modules/hte-version/index.ts](https://github.com/session567/hte/blob/main/src/entrypoints/content/modules/hte-version/index.ts).
+   For a simple module example, see
+   [src/entrypoints/content/modules/hte-version/index.ts](https://github.com/session567/hte/blob/main/src/entrypoints/content/modules/hte-version/index.ts).
 
 3. Register your module in `src/entrypoints/content/index.ts`:
 
-  ```typescript
-  import exampleModule from '@/entrypoints/content/modules/example-module'
+    ```typescript
+    import exampleModule from '@/entrypoints/content/modules/example-module'
 
-  const modules: Module[] = [
-    // ... other modules
-    exampleModule,
-  ]
-  ```
+    const modules: Module[] = [
+      // ... other modules
+      exampleModule,
+    ]
+    ```
 
 Modules only run when the user is logged in to Hattrick.
 
