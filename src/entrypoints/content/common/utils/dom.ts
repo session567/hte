@@ -123,13 +123,52 @@ export const querySelectorAllIn = <E extends Element = Element>(
  *
  * @param element - The element to observe for changes
  * @param callback - Function to execute when the element's children change
+ * @param options - MutationObserver options controlling which DOM changes trigger the callback
  */
-export const observeElement = (element: Element, callback: () => void) => {
+export const observeElement = (element: Element, callback: () => void, options: MutationObserverInit) => {
   const observer = new MutationObserver(() => {
     observer.disconnect()
     callback()
-    observer.observe(element, { childList: true, subtree: true })
+    observer.observe(element, options)
   })
 
-  observer.observe(element, { childList: true, subtree: true })
+  observer.observe(element, options)
+}
+
+/**
+ * Waits for an element matching the selector to appear in the DOM.
+ *
+ * Resolves immediately if the element already exists.
+ *
+ * @param selector - CSS selector string
+ * @param timeout - Maximum time to wait in milliseconds (default: 5000)
+ * @returns The element, or null if not found within the timeout
+ */
+export const waitForElement = <T extends Element>(selector: string, timeout = 5000): Promise<T | null> => {
+  return new Promise((resolve) => {
+    const element = querySelector<T>(selector, false)
+
+    if (element) {
+      resolve(element)
+      return
+    }
+
+    const observer = new MutationObserver(() => {
+      const element = querySelector<T>(selector, false)
+
+      if (element) {
+        observer.disconnect()
+        clearTimeout(timeoutId)
+        resolve(element)
+      }
+    })
+
+    observer.observe(document.body, { childList: true, subtree: true })
+
+    const timeoutId = setTimeout(() => {
+      observer.disconnect()
+      logger.warn(`Element not found after ${timeout}ms: ${selector}`)
+      resolve(null)
+    }, timeout)
+  })
 }

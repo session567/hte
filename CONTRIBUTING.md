@@ -43,13 +43,21 @@ Modules follow a consistent structure:
 ```
 src/entrypoints/content/modules/example-module/
 ├── constants.ts     # Module constants (optional)
+├── handlers/        # Page-specific handlers (optional, see below)
 ├── index.css        # Module-specific styles (optional)
 ├── index.test.ts    # Tests for the module (required)
-├── index.ts         # Module definition and main logic (required)
+├── index.ts         # Module definition and page dispatch (required)
 ├── metadata.ts      # Module metadata (required)
 ├── utils.test.ts    # Tests for utilities (optional)
-└── utils.ts         # Helper functions (optional)
+└── utils.ts         # Pure helper functions (optional)
 ```
+
+**`utils.ts`** contains pure functions: they take inputs and return outputs with no observable side effects (no DOM
+mutation, no network calls, no logging). Because they're pure, they're straightforward to unit-test.
+
+**`handlers/`** contains page-specific orchestration: code that reads and mutates the DOM, sets up observers, or makes
+async calls. One file per page (e.g. `handlers/match-detail.ts`). These are not unit-tested directly. Use this folder
+when a module runs on multiple pages and each page's handler is large enough to warrant its own file.
 
 ## Local Development
 

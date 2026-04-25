@@ -1,13 +1,13 @@
 import { describe, expect, it, vi } from 'vitest'
 
 import { mockIsPage } from '@/entrypoints/content/common/test/utils'
-import { isPage, pages } from '@/entrypoints/content/common/utils/pages'
+import { isCurrentPage, pages } from '@/entrypoints/content/common/utils/pages'
 import skillBonus from '@/entrypoints/content/modules/skill-bonus/index'
 
 vi.mock(import('@/entrypoints/content/common/utils/pages'), async (importOriginal) => {
   return {
     ...(await importOriginal()),
-    isPage: vi.fn<typeof isPage>(),
+    isCurrentPage: vi.fn<typeof isCurrentPage>(),
   }
 })
 

@@ -1,14 +1,14 @@
 import { describe, expect, it, vi } from 'vitest'
 
 import { mockIsPage } from '@/entrypoints/content/common/test/utils'
-import { isPage, pages } from '@/entrypoints/content/common/utils/pages'
+import { isCurrentPage, pages } from '@/entrypoints/content/common/utils/pages'
 import htmsPoints from '@/entrypoints/content/modules/htms-points/index'
 import { calcHTMSPoints } from '@/entrypoints/content/modules/htms-points/utils'
 
 vi.mock(import('@/entrypoints/content/common/utils/pages'), async (importOriginal) => {
   return {
     ...(await importOriginal()),
-    isPage: vi.fn<typeof isPage>(),
+    isCurrentPage: vi.fn<typeof isCurrentPage>(),
   }
 })
 
@@ -83,7 +83,7 @@ describe('htms-points module', () => {
   })
 
   it('adds HTMS points to the player list page', async () => {
-    vi.mocked(isPage).mockImplementation((page) => page === pages.playerList.senior.own)
+    vi.mocked(isCurrentPage).mockImplementation((page) => page === pages.playerList.senior.own)
     vi.mocked(calcHTMSPoints)
       .mockReturnValueOnce({ ability: 1234, potential: 5678 })
       .mockReturnValueOnce({ ability: 2345, potential: 6789 })
@@ -201,7 +201,7 @@ describe('htms-points module', () => {
   })
 
   it('adds HTMS points to the transfers search result page', async () => {
-    vi.mocked(isPage).mockImplementation((page) => page === pages.transferSearchResults)
+    vi.mocked(isCurrentPage).mockImplementation((page) => page === pages.transferSearchResults)
     vi.mocked(calcHTMSPoints)
       .mockReturnValueOnce({ ability: 1234, potential: 5678 })
       .mockReturnValueOnce({ ability: 2345, potential: 6789 })

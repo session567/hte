@@ -2,7 +2,7 @@ import '@/entrypoints/content/modules/week-number/index.css'
 
 import type { Module } from '@/entrypoints/content/common/types/module'
 import { getElementById, observeElement, querySelectorAllIn } from '@/entrypoints/content/common/utils/dom'
-import { isPage, pages } from '@/entrypoints/content/common/utils/pages'
+import { isCurrentPage, pages } from '@/entrypoints/content/common/utils/pages'
 import metadata from '@/entrypoints/content/modules/week-number/metadata'
 import { calcWeekNumber, parseDate } from '@/entrypoints/content/modules/week-number/utils'
 
@@ -53,13 +53,17 @@ const weekNumber: Module = {
 
     // Watch for tab changes on the player detail page. Tab content is loaded asynchronously when clicked, so we need to
     // re-apply week numbers after each update.
-    if (isPage(pages.playerDetail.senior.own, pages.playerDetail.senior.other)) {
+    if (isCurrentPage(pages.playerDetail.senior.own, pages.playerDetail.senior.other)) {
       const playerTabs = getElementById('ctl00_ctl00_CPContent_CPMain_updPlayerTabs')
       if (!playerTabs) return
 
-      observeElement(playerTabs, () => {
-        addWeekNumbers(playerTabs)
-      })
+      observeElement(
+        playerTabs,
+        () => {
+          addWeekNumbers(playerTabs)
+        },
+        { childList: true, subtree: true },
+      )
     }
   },
 }
