@@ -4,6 +4,8 @@ import { isOwnTeamPage } from '@/entrypoints/content/common/utils/team/utils'
 
 export { Page } from '@/entrypoints/content/common/utils/pages/page'
 
+class PageNotSupportedError extends Error {}
+
 /**
  * Create a pair of {@link Page} instances for a pathname available for both own and other teams.
  */
@@ -117,7 +119,7 @@ export const getCurrentPage = (): Page => {
   if (_currentPage) return _currentPage
 
   const candidates = flattenPages(pages).filter(matchesCurrentLocation)
-  if (candidates.length === 0) throw new Error('The current page is not supported')
+  if (candidates.length === 0) throw new PageNotSupportedError('The current page is not supported')
 
   _currentPage = candidates.length === 1 ? candidates[0] : mostSpecificPage(candidates)
 
@@ -131,7 +133,8 @@ export const isCurrentPage = (...pagesToCheck: Page[]): boolean => {
   if (pagesToCheck.includes(pages.all)) return true
   try {
     return pagesToCheck.includes(getCurrentPage())
-  } catch {
-    return false
+  } catch (err) {
+    if (err instanceof PageNotSupportedError) return false
+    throw err
   }
 }
