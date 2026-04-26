@@ -26,7 +26,7 @@ const getDenominationConfig = async (lt: DenominationType): Promise<Denomination
  *
  * Handles three types of transformations:
  * - Reverse: inverts the scale (e.g. aggressiveness).
- * - Offset: adjusts values that don't start at 0 (e.g. morale: 12-21 -> 0-9).
+ * - Offset: adjusts values that don't start at 0 (e.g. morale: 12-21 → 0-9).
  * - Max: maps -1 to the maximum display value (e.g. morale starts at 12 and increases to 21, but the raw max is stored
  *   as -1. We first apply the offset of -12, after which the max becomes -1, then remap it to the true max value).
  *
