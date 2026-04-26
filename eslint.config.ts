@@ -147,6 +147,12 @@ export default defineConfig(
 
   // Specific files
   {
+    files: ['./src/entrypoints/content/modules/hatstats/index.test.ts'],
+    rules: {
+      'vitest/expect-expect': ['error', { assertFunctionNames: ['expect', 'expectHatStats'] }],
+    },
+  },
+  {
     files: ['./src/entrypoints/content/common/utils/dom.ts'],
     rules: {
       'no-restricted-properties': 'off',

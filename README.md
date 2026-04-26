@@ -17,6 +17,7 @@ Features:
 - Display relevant links to external tools in the sidebar
 - Display numeric values next to all team and player abilities
 - Display week numbers next to dates throughout Hattrick
+- Display HatStats ratings on match detail and match order pages
 
 ## Installation
 

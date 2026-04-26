@@ -1,6 +1,6 @@
 import type { Module } from '@/entrypoints/content/common/types/module'
 import { querySelector, querySelectorAll, querySelectorIn } from '@/entrypoints/content/common/utils/dom'
-import { isPage, pages } from '@/entrypoints/content/common/utils/pages'
+import { isCurrentPage, pages } from '@/entrypoints/content/common/utils/pages'
 import { parsePlayerAge, parsePlayerSkills } from '@/entrypoints/content/common/utils/player/utils'
 import { HTMSPoints } from '@/entrypoints/content/modules/htms-points/constants'
 import metadata from '@/entrypoints/content/modules/htms-points/metadata'
@@ -85,15 +85,15 @@ const htmsPoints: Module = {
     pages.transferSearchResults,
   ],
   run: () => {
-    if (isPage(pages.playerDetail.senior.own, pages.playerDetail.senior.other)) {
+    if (isCurrentPage(pages.playerDetail.senior.own, pages.playerDetail.senior.other)) {
       const playerElement = querySelector('#mainBody .playerInfo')
       const ageElement = querySelector('#mainBody > .byline')
       if (playerElement && ageElement) processPlayer(playerElement, ageElement)
-    } else if (isPage(pages.playerList.senior.own)) {
+    } else if (isCurrentPage(pages.playerList.senior.own)) {
       const playerSelector = '#mainBody > .playerList > .teamphoto-player .playerInfo'
       const ageSelector = '.transferPlayerInformation table tbody tr:first-child td:nth-child(2)'
       processPlayers(playerSelector, ageSelector)
-    } else if (isPage(pages.transferSearchResults)) {
+    } else if (isCurrentPage(pages.transferSearchResults)) {
       const playerSelector = '#mainBody .playerListDetails'
       const ageSelector = '.transferPlayerInformation table tbody tr:nth-child(2) td:nth-child(2)'
       processPlayers(playerSelector, ageSelector)

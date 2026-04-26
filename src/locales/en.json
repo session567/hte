@@ -16,5 +16,20 @@
   },
   "salary_per_season": {
     "message": "year"
+  },
+  "hatstats_title": {
+    "message": "HatStats"
+  },
+  "hatstats_midfield": {
+    "message": "Midfield"
+  },
+  "hatstats_defence": {
+    "message": "Defence"
+  },
+  "hatstats_attack": {
+    "message": "Attack"
+  },
+  "hatstats_total": {
+    "message": "Total"
   }
 }

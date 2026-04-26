@@ -1,143 +1,129 @@
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { getCurrentPathname, getCurrentSearchParams } from '@/entrypoints/content/common/utils/location'
-import { getCurrentPage, isPage, Page, pages } from '@/entrypoints/content/common/utils/pages'
+import { getCurrentPage, isCurrentPage, pages, resetCurrentPageCache } from '@/entrypoints/content/common/utils/pages'
 import { isOwnTeamPage } from '@/entrypoints/content/common/utils/team/utils'
 
 vi.mock(import('@/entrypoints/content/common/utils/location'))
 vi.mock(import('@/entrypoints/content/common/utils/team/utils'))
 
-describe(isPage, () => {
-  describe('pathname matching', () => {
-    it.each([
-      {
-        desc: 'returns false when pathnames differ',
-        currentPathname: '/Foo',
-        page: new Page('/Bar'),
-        expected: false,
-      },
-      {
-        desc: 'returns true when pathnames match and there are no options',
-        currentPathname: '/Foo',
-        page: new Page('/Foo'),
-        expected: true,
-      },
-      {
-        desc: 'returns true when pathnames match case-insensitively',
-        currentPathname: '/foo',
-        page: new Page('/Foo'),
-        expected: true,
-      },
-    ])('$desc', ({ currentPathname, page, expected }) => {
-      vi.mocked(getCurrentPathname).mockReturnValue(currentPathname)
-      vi.mocked(getCurrentSearchParams).mockReturnValue(new URLSearchParams())
+describe(isCurrentPage, () => {
+  beforeEach(() => {
+    resetCurrentPageCache()
+  })
 
-      expect(isPage(page)).toBe(expected)
+  describe('pathname matching', () => {
+    it('returns false when pathnames differ', () => {
+      vi.mocked(getCurrentPathname).mockReturnValue(pages.series.pathname)
+      vi.mocked(getCurrentSearchParams).mockReturnValue(new URLSearchParams())
+      vi.mocked(isOwnTeamPage).mockReturnValue(false)
+
+      expect(isCurrentPage(pages.club)).toBe(false)
+    })
+
+    it('returns true when pathnames match', () => {
+      vi.mocked(getCurrentPathname).mockReturnValue(pages.club.pathname)
+      vi.mocked(getCurrentSearchParams).mockReturnValue(new URLSearchParams())
+      vi.mocked(isOwnTeamPage).mockReturnValue(false)
+
+      expect(isCurrentPage(pages.club)).toBe(true)
+    })
+
+    it('returns true when pathnames match case-insensitively', () => {
+      vi.mocked(getCurrentPathname).mockReturnValue(pages.club.pathname.toLowerCase())
+      vi.mocked(getCurrentSearchParams).mockReturnValue(new URLSearchParams())
+      vi.mocked(isOwnTeamPage).mockReturnValue(false)
+
+      expect(isCurrentPage(pages.club)).toBe(true)
     })
   })
 
   describe('teamContext', () => {
     it.each([
       {
-        desc: 'no teamContext, matches own team page',
-        page: new Page('/Foo'),
-        ownTeamPage: true,
-        expected: true,
-      },
-      {
-        desc: 'no teamContext, matches other team page',
-        page: new Page('/Foo'),
-        ownTeamPage: false,
-        expected: true,
-      },
-      {
         desc: 'OWN_TEAM, matches own team page',
-        page: new Page('/Foo', { teamContext: 'OWN_TEAM' }),
+        page: pages.playerList.senior.own,
         ownTeamPage: true,
         expected: true,
       },
       {
-        desc: 'OWN_TEAM, does not match own team page',
-        page: new Page('/Foo', { teamContext: 'OWN_TEAM' }),
+        desc: 'OWN_TEAM, does not match other team page',
+        page: pages.playerList.senior.own,
         ownTeamPage: false,
         expected: false,
       },
       {
         desc: 'OTHER_TEAM, does not match own team page',
-        page: new Page('/Foo', { teamContext: 'OTHER_TEAM' }),
+        page: pages.playerList.senior.other,
         ownTeamPage: true,
         expected: false,
       },
       {
         desc: 'OTHER_TEAM, matches other team page',
-        page: new Page('/Foo', { teamContext: 'OTHER_TEAM' }),
+        page: pages.playerList.senior.other,
         ownTeamPage: false,
         expected: true,
       },
     ])('$desc', ({ page, ownTeamPage, expected }) => {
-      vi.mocked(getCurrentPathname).mockReturnValue('/Foo')
+      vi.mocked(getCurrentPathname).mockReturnValue(pages.playerList.senior.own.pathname)
       vi.mocked(getCurrentSearchParams).mockReturnValue(new URLSearchParams())
       vi.mocked(isOwnTeamPage).mockReturnValue(ownTeamPage)
 
-      expect(isPage(page)).toBe(expected)
+      expect(isCurrentPage(page)).toBe(expected)
+    })
+  })
+
+  describe('multiple pages', () => {
+    it('returns true when any of the given pages matches', () => {
+      vi.mocked(getCurrentPathname).mockReturnValue(pages.club.pathname)
+      vi.mocked(getCurrentSearchParams).mockReturnValue(new URLSearchParams())
+      vi.mocked(isOwnTeamPage).mockReturnValue(false)
+
+      expect(isCurrentPage(pages.series, pages.club)).toBe(true)
     })
   })
 
   describe('queryParams', () => {
     it.each([
       {
-        desc: 'matches when required param is present (no value constraint)',
-        page: new Page('/Foo', { queryParams: [{ name: 'BarId' }] }),
-        search: '?BarId=123',
+        desc: 'matches youth match when YouthTeamId param is present',
+        page: pages.matchDetail.youth,
+        search: '?YouthTeamId=123',
         expected: true,
       },
       {
-        desc: 'does not match when required param is absent',
-        page: new Page('/Foo', { queryParams: [{ name: 'BarId' }] }),
+        desc: 'does not match youth match when YouthTeamId param is absent',
+        page: pages.matchDetail.youth,
         search: '',
         expected: false,
       },
       {
-        desc: 'matches when param has the required value',
-        page: new Page('/Foo', { queryParams: [{ name: 'BarId', value: '123' }] }),
-        search: '?BarId=123',
-        expected: true,
-      },
-      {
-        desc: 'does not match when param has a different value',
-        page: new Page('/Foo', { queryParams: [{ name: 'BarId', value: '123' }] }),
-        search: '?BarId=456',
-        expected: false,
-      },
-      {
-        desc: 'does not match when param with required value is absent',
-        page: new Page('/Foo', { queryParams: [{ name: 'BarId', value: '123' }] }),
+        desc: 'matches senior match when YouthTeamId param is absent',
+        page: pages.matchDetail.senior,
         search: '',
-        expected: false,
-      },
-      {
-        desc: 'matches when all required params are present',
-        page: new Page('/Foo', { queryParams: [{ name: 'foo' }, { name: 'bar' }] }),
-        search: '?foo=1&bar=2',
         expected: true,
       },
       {
-        desc: 'does not match when only some required params are present',
-        page: new Page('/Foo', { queryParams: [{ name: 'foo' }, { name: 'bar' }] }),
-        search: '?foo=1',
+        desc: 'does not match senior match when YouthTeamId param is present',
+        page: pages.matchDetail.senior,
+        search: '?YouthTeamId=123',
         expected: false,
       },
     ])('$desc', ({ page, search, expected }) => {
-      vi.mocked(getCurrentPathname).mockReturnValue('/Foo')
+      vi.mocked(getCurrentPathname).mockReturnValue(pages.matchDetail.senior.pathname)
       vi.mocked(getCurrentSearchParams).mockReturnValue(new URLSearchParams(search))
       vi.mocked(isOwnTeamPage).mockReturnValue(false)
 
-      expect(isPage(page)).toBe(expected)
+      expect(isCurrentPage(page)).toBe(expected)
     })
   })
 })
 
 describe(getCurrentPage, () => {
+  beforeEach(() => {
+    resetCurrentPageCache()
+  })
+
   it('returns the correct page for a simple pathname', () => {
     vi.mocked(getCurrentPathname).mockReturnValue(pages.club.pathname)
     vi.mocked(getCurrentSearchParams).mockReturnValue(new URLSearchParams())
@@ -183,6 +169,6 @@ describe(getCurrentPage, () => {
     vi.mocked(getCurrentSearchParams).mockReturnValue(new URLSearchParams())
     vi.mocked(isOwnTeamPage).mockReturnValue(false)
 
-    expect(() => getCurrentPage()).toThrowError('The current page is not supported')
+    expect(() => getCurrentPage()).toThrow('The current page is not supported')
   })
 })

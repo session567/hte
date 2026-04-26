@@ -1,0 +1,34 @@
+.hte-hatstats-mo {
+  display: block;
+
+  .hte-hatstats-mo-inner {
+    display: inline-flex;
+    align-items: center;
+    background: #40823c;
+    color: var(--hte-color-white);
+    line-height: 1.4;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 5%;
+
+    .hte-hatstats-mo-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-left: 1px solid var(--hte-hattrick-light-green);
+
+      &:first-child {
+        border-left: none;
+      }
+
+      &:last-child {
+        font-weight: bold;
+      }
+    }
+
+    .hte-hatstats-mo-value {
+      font-size: 12px;
+    }
+  }
+}
+

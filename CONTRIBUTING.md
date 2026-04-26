@@ -43,13 +43,20 @@ Modules follow a consistent structure:
 ```
 src/entrypoints/content/modules/example-module/
 ├── constants.ts     # Module constants (optional)
+├── handlers/        # Page-specific handlers (optional, see below)
 ├── index.css        # Module-specific styles (optional)
 ├── index.test.ts    # Tests for the module (required)
-├── index.ts         # Module definition and main logic (required)
+├── index.ts         # Module definition and page dispatch (required)
 ├── metadata.ts      # Module metadata (required)
 ├── utils.test.ts    # Tests for utilities (optional)
-└── utils.ts         # Helper functions (optional)
+└── utils.ts         # Computation and data transformation functions (optional)
 ```
+
+**`utils.ts`** contains logic that can be unit-tested in isolation: computations, data transformations, etc. (logic that
+doesn't mutate the DOM).
+
+**`handlers/`** splits `index.ts` into multiple files when a module runs on multiple pages, and all or some of them
+require a different implementation.
 
 ## Local Development
 
@@ -133,6 +140,8 @@ All pnpm scripts are located in [package.json](https://github.com/session567/hte
 
    This is the main module file. It defines which pages the module runs on and contains the logic executed on those
    pages.
+
+   All modules run concurrently, so `run()` must not depend on another module having already finished.
 
    For a simple module example, see
    [src/entrypoints/content/modules/hte-version/index.ts](https://github.com/session567/hte/blob/main/src/entrypoints/content/modules/hte-version/index.ts).

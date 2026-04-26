@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { createElement } from '@/entrypoints/content/common/test/utils'
 import {
@@ -9,6 +9,7 @@ import {
   querySelectorAll,
   querySelectorAllIn,
   querySelectorIn,
+  waitForElement,
 } from '@/entrypoints/content/common/utils/dom'
 import { logger } from '@/entrypoints/content/common/utils/logger'
 
@@ -224,7 +225,7 @@ describe(observeElement, () => {
     const container = document.getElementById('container')!
     const callback = vi.fn<() => void>()
 
-    observeElement(container, callback)
+    observeElement(container, callback, { childList: true })
 
     container.appendChild(createElement('New content'))
 
@@ -237,7 +238,7 @@ describe(observeElement, () => {
     const container = document.getElementById('container')!
     const callback = vi.fn<() => void>()
 
-    observeElement(container, callback)
+    observeElement(container, callback, { childList: true, subtree: true })
 
     // Modify a nested element
     const content = container.querySelector('.content')!
@@ -246,5 +247,52 @@ describe(observeElement, () => {
     await vi.waitFor(() => {
       expect(callback).toHaveBeenCalledTimes(1)
     })
+  })
+})
+
+describe(waitForElement, () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  it('resolves immediately when element already exists', async () => {
+    document.body.innerHTML = '<div class="target">Found</div>'
+
+    const promise = waitForElement('.target')
+    const element = await promise
+
+    expect(element?.textContent).toBe('Found')
+  })
+
+  it('resolves when element is added to DOM', async () => {
+    document.body.innerHTML = ''
+
+    const promise = waitForElement('.target')
+
+    setTimeout(() => {
+      document.body.innerHTML = '<div class="target">Added</div>'
+    }, 100)
+
+    vi.advanceTimersByTime(100)
+
+    const element = await promise
+
+    expect(element?.textContent).toBe('Added')
+  })
+
+  it('resolves with null after timeout when element not found', async () => {
+    document.body.innerHTML = ''
+
+    const promise = waitForElement('.target', 1000)
+
+    vi.advanceTimersByTime(1000)
+
+    const element = await promise
+
+    expect(element).toBeNull()
   })
 })

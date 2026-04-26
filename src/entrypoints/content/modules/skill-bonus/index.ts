@@ -7,7 +7,7 @@ import {
   querySelectorAllIn,
   querySelectorIn,
 } from '@/entrypoints/content/common/utils/dom'
-import { isPage, pages } from '@/entrypoints/content/common/utils/pages'
+import { isCurrentPage, pages } from '@/entrypoints/content/common/utils/pages'
 import metadata from '@/entrypoints/content/modules/skill-bonus/metadata'
 import { calcBonuses, SkillBonuses } from '@/entrypoints/content/modules/skill-bonus/utils'
 import { i18n } from '#i18n'
@@ -55,11 +55,11 @@ const skillBonus: Module = {
   run: () => {
     const elements: Element[] = []
 
-    if (isPage(pages.playerDetail.senior.own)) {
+    if (isCurrentPage(pages.playerDetail.senior.own)) {
       const element = querySelector('#mainBody .playerInfo')
 
       if (element) elements.push(element)
-    } else if (isPage(pages.playerList.senior.own)) {
+    } else if (isCurrentPage(pages.playerList.senior.own)) {
       elements.push(...Array.from(querySelectorAll('#mainBody > .playerList > .teamphoto-player')))
     }
 
