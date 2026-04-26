@@ -2,6 +2,7 @@ import { el } from '@/common/utils/dom'
 import { querySelectorAllIn, querySelectorIn } from '@/entrypoints/content/common/utils/dom'
 import { logger } from '@/entrypoints/content/common/utils/logger'
 import { getHtMatch, isLiveMatch, isPreMatch, isWalkoverMatch } from '@/entrypoints/content/common/utils/match/utils'
+import { createSidebarBox } from '@/entrypoints/content/common/utils/sidebar/box'
 import { HatStats, TeamRatings } from '@/entrypoints/content/modules/hatstats/types'
 import { calcHatStats } from '@/entrypoints/content/modules/hatstats/utils'
 import { i18n } from '#i18n'
@@ -31,33 +32,52 @@ const extractRatings = (tbody: HTMLTableSectionElement, column: number): TeamRat
   return ratings as TeamRatings
 }
 
-const createRow = (label: string, homeValue: number, awayValue: number): HTMLTableRowElement => {
+const makeRow = (label: string, home: number, away: number, isTotal = false) => {
+  const homeCell = el('td', { textContent: home.toString(), className: 'right' })
+  const awayCell = el('td', { textContent: away.toString(), className: 'right' })
+
+  if (home > away) {
+    homeCell.classList.add('hte-hatstats-winner')
+  } else if (home < away) {
+    awayCell.classList.add('hte-hatstats-winner')
+  }
+
   const row = el('tr')
-  row.append(
-    el('td', { textContent: label, className: 'nowrap' }),
-    el('td'),
-    el('td', { textContent: homeValue.toString(), className: 'right', colSpan: 2 }),
-    el('td'),
-    el('td', { textContent: awayValue.toString(), className: 'right', colSpan: 2 }),
-  )
+  row.append(el('td', { textContent: label, className: 'nowrap' }), homeCell, awayCell)
+  if (isTotal) row.classList.add('hte-hatstats-total', 'hte-font-bold')
 
   return row
 }
 
-const appendHatStatsToTable = (table: HTMLTableElement, homeStats: HatStats, awayStats: HatStats): void => {
-  const headerRow = el('tr')
-  headerRow.append(el('th', { textContent: i18n.t('hatstats_title'), colSpan: 99 }))
+const createHatStatsSidebar = (htMatch: Element, homeStats: HatStats, awayStats: HatStats): void => {
+  const container = querySelectorIn<HTMLDivElement>(htMatch, '.htbox-right.live-right-container')
+  if (!container) return
 
-  const tbody = el('tbody', { className: 'hte-hatstats' })
+  const { box, boxBody } = createSidebarBox(i18n.t('hatstats_title'))
+  box.classList.add('hte-hatstats-sidebar')
+
+  const table = el('table')
+
+  const thead = el('thead')
+  const headerRow = el('tr')
+  headerRow.append(
+    el('th'),
+    el('th', { textContent: i18n.t('hatstats_home'), className: 'right' }),
+    el('th', { textContent: i18n.t('hatstats_away'), className: 'right' }),
+  )
+  thead.append(headerRow)
+
+  const tbody = el('tbody')
   tbody.append(
-    headerRow,
-    createRow(i18n.t('hatstats_midfield'), homeStats.midfield, awayStats.midfield),
-    createRow(i18n.t('hatstats_defence'), homeStats.defence, awayStats.defence),
-    createRow(i18n.t('hatstats_attack'), homeStats.attack, awayStats.attack),
-    createRow(i18n.t('hatstats_total'), homeStats.total, awayStats.total),
+    makeRow(i18n.t('hatstats_midfield'), homeStats.midfield, awayStats.midfield),
+    makeRow(i18n.t('hatstats_defence'), homeStats.defence, awayStats.defence),
+    makeRow(i18n.t('hatstats_attack'), homeStats.attack, awayStats.attack),
+    makeRow(i18n.t('hatstats_total'), homeStats.total, awayStats.total, true),
   )
 
-  table.append(tbody)
+  table.append(thead, tbody)
+  boxBody.append(table)
+  container.insertBefore(box, container.firstChild)
 }
 
 const runMatchDetail = async (): Promise<void> => {
@@ -89,7 +109,7 @@ const runMatchDetail = async (): Promise<void> => {
   const ratingsAway = extractRatings(firstTbody, 6)
   if (!ratingsHome || !ratingsAway) return
 
-  appendHatStatsToTable(table, calcHatStats(ratingsHome), calcHatStats(ratingsAway))
+  createHatStatsSidebar(htMatch, calcHatStats(ratingsHome), calcHatStats(ratingsAway))
 }
 
 export default runMatchDetail

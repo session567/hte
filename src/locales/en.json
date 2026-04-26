@@ -31,5 +31,11 @@
   },
   "hatstats_total": {
     "message": "Total"
+  },
+  "hatstats_home": {
+    "message": "Home"
+  },
+  "hatstats_away": {
+    "message": "Away"
   }
 }

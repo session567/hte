@@ -1,3 +1,20 @@
+.hte-hatstats-sidebar {
+  thead th {
+    background: none !important;
+    border-width: 1px !important;
+    border-color: var(--hte-hattrick-separator-gray) !important;
+  }
+
+
+  .hte-hatstats-winner {
+    color: var(--hte-hattrick-green);
+  }
+
+  .hte-hatstats-total {
+    border-top: 1px solid var(--hte-hattrick-separator-gray);
+  }
+}
+
 .hte-hatstats-mo {
   display: block;
 
