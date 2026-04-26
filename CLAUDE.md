@@ -35,7 +35,6 @@ Each module lives in `src/entrypoints/content/modules/<name>/` and requires:
 
 - `metadata.ts` — id, name, description (and optional `settings`, `excludeFromPopup`)
 - `index.ts` — `Module` object referencing the metadata
-- `index.test.ts` — tests
 
 Modules are auto-discovered for the popup via `metadata.ts`. Each module gets a free `enabled` toggle; add a `settings` map to `metadata.ts` for extra boolean settings.
 

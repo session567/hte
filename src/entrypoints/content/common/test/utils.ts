@@ -1,7 +1,3 @@
-import { vi } from 'vitest'
-
-import { isCurrentPage, Page } from '@/entrypoints/content/common/utils/pages'
-
 /**
  * Helper for creating a DOM element with the HTML content for testing.
  *
@@ -13,8 +9,4 @@ export const createElement = (html: string): HTMLDivElement => {
   div.innerHTML = html
 
   return div
-}
-
-export const mockIsPage = (page: Page) => {
-  vi.mocked(isCurrentPage).mockImplementation((...pages: Page[]) => pages.includes(page))
 }
