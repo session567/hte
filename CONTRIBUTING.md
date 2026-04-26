@@ -49,15 +49,14 @@ src/entrypoints/content/modules/example-module/
 ├── index.ts         # Module definition and page dispatch (required)
 ├── metadata.ts      # Module metadata (required)
 ├── utils.test.ts    # Tests for utilities (optional)
-└── utils.ts         # Pure helper functions (optional)
+└── utils.ts         # Computation and data transformation functions (optional)
 ```
 
-**`utils.ts`** contains pure functions: they take inputs and return outputs with no observable side effects (no DOM
-mutation, no network calls, no logging). Because they're pure, they're straightforward to unit-test.
+**`utils.ts`** contains logic that can be unit-tested in isolation: computations, data transformations, etc. (logic that
+doesn't mutate the DOM).
 
-**`handlers/`** contains page-specific orchestration: code that reads and mutates the DOM, sets up observers, or makes
-async calls. One file per page (e.g. `handlers/match-detail.ts`). These are not unit-tested directly. Use this folder
-when a module runs on multiple pages and each page's handler is large enough to warrant its own file.
+**`handlers/`** splits `index.ts` into multiple files when a module runs on multiple pages, and all or some of them
+require a different implementation.
 
 ## Local Development
 
@@ -141,6 +140,8 @@ All pnpm scripts are located in [package.json](https://github.com/session567/hte
 
    This is the main module file. It defines which pages the module runs on and contains the logic executed on those
    pages.
+
+   All modules run concurrently, so `run()` must not depend on another module having already finished.
 
    For a simple module example, see
    [src/entrypoints/content/modules/hte-version/index.ts](https://github.com/session567/hte/blob/main/src/entrypoints/content/modules/hte-version/index.ts).
