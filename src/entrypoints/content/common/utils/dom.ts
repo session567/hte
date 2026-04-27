@@ -124,8 +124,9 @@ export const querySelectorAllIn = <E extends Element = Element>(
  * @param element - The element to observe for changes
  * @param callback - Function to execute when the element's children change
  * @param options - MutationObserver options controlling which DOM changes trigger the callback
+ * @returns A function that disconnects the observer
  */
-export const observeElement = (element: Element, callback: () => void, options: MutationObserverInit) => {
+export const observeElement = (element: Element, callback: () => void, options: MutationObserverInit): (() => void) => {
   const observer = new MutationObserver(() => {
     observer.disconnect()
     callback()
@@ -133,6 +134,10 @@ export const observeElement = (element: Element, callback: () => void, options: 
   })
 
   observer.observe(element, options)
+
+  return () => {
+    observer.disconnect()
+  }
 }
 
 /**
