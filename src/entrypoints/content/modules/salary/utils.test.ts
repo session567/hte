@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 
 import { createElement } from '@/entrypoints/content/common/test/utils'
-import { formatThousands, parseSalaryAndCurency } from '@/entrypoints/content/modules/salary/utils'
+import { formatThousands, parseSalaryAndCurrency } from '@/entrypoints/content/modules/salary/utils'
 
-describe(parseSalaryAndCurency, () => {
+describe(parseSalaryAndCurrency, () => {
   it.each([
     { text: '54 300 €/week', expected: { weeklySalary: 54_300, currency: '€' } },
     { text: '217 200 zł/week', expected: { weeklySalary: 217_200, currency: 'zł' } },
@@ -11,7 +11,7 @@ describe(parseSalaryAndCurency, () => {
   ])('parses weekly salary and currency for $text', ({ text, expected }) => {
     const element = createElement(text)
 
-    expect(parseSalaryAndCurency(element)).toStrictEqual(expected)
+    expect(parseSalaryAndCurrency(element)).toStrictEqual(expected)
   })
 })
 
