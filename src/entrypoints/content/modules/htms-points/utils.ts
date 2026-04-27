@@ -1,11 +1,14 @@
 import { DAYS_PER_SEASON, DAYS_PER_WEEK, WEEKS_PER_SEASON } from '@/entrypoints/content/common/utils/constants'
+import { querySelectorAll, querySelectorIn } from '@/entrypoints/content/common/utils/dom'
 import { PlayerAge, PlayerSkills, Skill } from '@/entrypoints/content/common/utils/player/constants'
+import { parsePlayerAge, parsePlayerSkills } from '@/entrypoints/content/common/utils/player/utils'
 import {
   HTMS_ABILITY_TABLE,
   HTMS_POINTS_PER_WEEK,
   HTMS_TARGET_AGE_YEARS,
   HTMSPoints,
 } from '@/entrypoints/content/modules/htms-points/constants'
+import { i18n } from '#i18n'
 
 /**
  * Calculates HTMS points for a player.
@@ -46,4 +49,48 @@ export const calcHTMSPoints = (age: PlayerAge, skills: PlayerSkills): HTMSPoints
   potential = Math.round(potential)
 
   return { ability, potential }
+}
+
+export const createHTMSRow = (htms: HTMSPoints): HTMLTableRowElement => {
+  const htmsRow = document.createElement('tr')
+
+  const labelCell = document.createElement('td')
+  labelCell.className = 'right'
+  labelCell.textContent = i18n.t('htms_points_label')
+
+  const valueCell = document.createElement('td')
+  valueCell.colSpan = 2
+
+  const helpSpan = document.createElement('span')
+  helpSpan.className = 'help hte-help'
+  helpSpan.title = i18n.t('htms_points_help')
+  helpSpan.textContent = `${htms.ability} / ${htms.potential}`
+
+  valueCell.appendChild(helpSpan)
+  htmsRow.appendChild(labelCell)
+  htmsRow.appendChild(valueCell)
+
+  return htmsRow
+}
+
+export const processPlayer = (playerElement: Element, ageElement: Element): void => {
+  const playerSkillsElement = querySelectorIn(playerElement, '.transferPlayerSkills', false)
+  if (!playerSkillsElement) return
+
+  const age = parsePlayerAge(ageElement)
+  const skills = parsePlayerSkills(playerSkillsElement)
+  if (!age || !skills) return
+
+  const htms = calcHTMSPoints(age, skills)
+  const tbody = querySelectorIn(playerElement, '.transferPlayerInformation table tbody')
+  if (!tbody) return
+
+  tbody.appendChild(createHTMSRow(htms))
+}
+
+export const processPlayers = (playerSelector: string, ageSelector: string): void => {
+  querySelectorAll(playerSelector).forEach((playerElement) => {
+    const ageElement = querySelectorIn(playerElement, ageSelector)
+    if (ageElement) processPlayer(playerElement, ageElement)
+  })
 }

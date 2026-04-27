@@ -1,4 +1,5 @@
 import { DAYS_PER_SEASON, DAYS_PER_WEEK } from '@/entrypoints/content/common/utils/constants'
+import { querySelectorAllIn, querySelectorIn } from '@/entrypoints/content/common/utils/dom'
 import { logger } from '@/entrypoints/content/common/utils/logger'
 
 const HATTRICK_START_DATE = new Date(1997, 8, 22)
@@ -52,4 +53,23 @@ export const calcWeekNumber = (date: Date): number => {
   const dayWithinSeason = daysSinceStart % DAYS_PER_SEASON
 
   return Math.floor(dayWithinSeason / DAYS_PER_WEEK) + 1
+}
+
+export const addWeekNumbers = (root: Element, selector = '.date') => {
+  const elements = querySelectorAllIn(root, selector, false)
+
+  elements.forEach((element) => {
+    if (querySelectorIn(element, '.hte-week-number', false)) return
+
+    const date = parseDate(element)
+    if (!date) return
+
+    const weekNumber = calcWeekNumber(date)
+
+    const span = document.createElement('span')
+    span.className = 'hte-week-number'
+    span.textContent = ` | ${weekNumber}`
+
+    element.appendChild(span)
+  })
 }

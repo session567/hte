@@ -1,5 +1,5 @@
 import { getElementById, observeElement, querySelectorIn } from '@/entrypoints/content/common/utils/dom'
-import { addWeekNumbers } from '@/entrypoints/content/modules/week-number/handlers/common'
+import { addWeekNumbers } from '@/entrypoints/content/modules/week-number/utils'
 
 const isMatchHistoryTabActive = (playerTabs: Element): boolean => {
   const tab = querySelectorIn(playerTabs, '#ctl00_ctl00_CPContent_CPMain_btnViewMatchHistory', false)
