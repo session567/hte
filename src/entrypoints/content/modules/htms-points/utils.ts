@@ -51,7 +51,7 @@ export const calcHTMSPoints = (age: PlayerAge, skills: PlayerSkills): HTMSPoints
   return { ability, potential }
 }
 
-export const createHTMSRow = (htms: HTMSPoints): HTMLTableRowElement => {
+const createHTMSRow = (htms: HTMSPoints): HTMLTableRowElement => {
   const htmsRow = document.createElement('tr')
 
   const labelCell = document.createElement('td')

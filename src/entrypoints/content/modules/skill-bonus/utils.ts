@@ -24,7 +24,7 @@ export const calcBonuses = (element: Element): SkillBonuses => {
   }
 }
 
-export const createBonusBars = (skillBar: HTMLDivElement, bonuses: SkillBonuses): HTMLDivElement[] => {
+const createBonusBars = (skillBar: HTMLDivElement, bonuses: SkillBonuses): HTMLDivElement[] => {
   const level = parseInt(skillBar.getAttribute('level') ?? '0', 10)
   const denominationBar = querySelectorIn<HTMLSpanElement>(skillBar, '.bar-max > .bar-denomination')
   if (!level || !denominationBar) return []
@@ -47,6 +47,26 @@ export const createBonusBars = (skillBar: HTMLDivElement, bonuses: SkillBonuses)
   })
 
   return bonusBars
+}
+
+export const applySkillBonuses = (elements: Element[]): void => {
+  elements.forEach((element) => {
+    const bonuses = calcBonuses(element)
+    const skillBars = querySelectorAllIn<HTMLDivElement>(element, '.transferPlayerSkills .ht-bar')
+
+    skillBars.forEach((skillBar) => {
+      const levelBar = querySelectorIn<HTMLDivElement>(skillBar, '.bar-level', false)
+      if (!levelBar) return
+
+      const bonusBars = createBonusBars(skillBar, bonuses)
+      let insertionPoint = levelBar
+
+      bonusBars.forEach((bonusBar) => {
+        skillBar.insertBefore(bonusBar, insertionPoint)
+        insertionPoint = bonusBar
+      })
+    })
+  })
 }
 
 /**
