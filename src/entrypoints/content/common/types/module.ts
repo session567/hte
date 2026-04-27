@@ -29,17 +29,30 @@ export type ModuleMetadata = {
   settings?: Record<string, ModuleSetting>
 }
 
+type BaseModule = { metadata: ModuleMetadata }
+
+export type Handler = () => void | Promise<void>
+
+// Use for modules that run the same logic on every page
+type SimpleModule = BaseModule & {
+  // Pages where the module should run (see src/entrypoints/content/common/utils/pages/pages.ts for a list of pages)
+  pages: Page[]
+  // Executed whenever the user is on any of the module's pages
+  run: Handler
+}
+
+// Use for modules that run different logic depending on the current page
+type DispatchedModule = BaseModule & {
+  // Each map entry associates a page with the handler to run on that page
+  pages: Map<Page, Handler>
+  run?: never
+}
+
 /**
  * Base type for every module.
  *
- * Each module represents a specific enhancement added to Hattrick. Modules are registered in src/index.ts and
- * automatically executed when the user navigates to a matching page.
+ * Each module represents a specific enhancement added to Hattrick.
+ * Modules are registered in src/entrypoints/content/index.ts and automatically executed when the user navigates to a
+ * matching page.
  */
-export type Module = {
-  // Module metadata
-  metadata: ModuleMetadata
-  // Pages where the module should run (see @common/utils/pages.ts for a list of pages)
-  pages: Page[]
-  // Function containing the module's logic
-  run: () => void | Promise<void>
-}
+export type Module = SimpleModule | DispatchedModule
