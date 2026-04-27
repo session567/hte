@@ -1,3 +1,4 @@
+import { el } from '@/common/utils/dom'
 import { querySelectorAllIn, querySelectorIn } from '@/entrypoints/content/common/utils/dom'
 import { pages } from '@/entrypoints/content/common/utils/pages'
 import { i18n } from '#i18n'
@@ -67,10 +68,11 @@ const createBonusBars = (skillBar: HTMLDivElement, bonuses: SkillBonuses): HTMLD
 
     accumulatedBonus += bonusValue
 
-    const bonusBar = document.createElement('div')
-    bonusBar.className = `hte-skill-bonus-bar hte-skill-bonus-bar-${bonusType}`
+    const bonusBar = el('div', {
+      className: `hte-skill-bonus-bar hte-skill-bonus-bar-${bonusType}`,
+      title: i18n.t(`skill_bonus_${bonusType}`, [bonusValue.toFixed(2)]),
+    })
     bonusBar.style.width = `${Math.round(((level + accumulatedBonus) / MAX_BAR_LENGTH) * 100)}%`
-    bonusBar.title = i18n.t(`skill_bonus_${bonusType}`, [bonusValue.toFixed(2)])
     bonusBar.appendChild(denominationBar.cloneNode(true))
 
     bonusBars.push(bonusBar)

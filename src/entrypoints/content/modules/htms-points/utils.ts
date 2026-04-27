@@ -1,3 +1,4 @@
+import { el } from '@/common/utils/dom'
 import { DAYS_PER_SEASON, DAYS_PER_WEEK, WEEKS_PER_SEASON } from '@/entrypoints/content/common/utils/constants'
 import { querySelectorAll, querySelectorIn } from '@/entrypoints/content/common/utils/dom'
 import { PlayerAge, PlayerSkills, Skill } from '@/entrypoints/content/common/utils/player/constants'
@@ -52,25 +53,20 @@ export const calcHTMSPoints = (age: PlayerAge, skills: PlayerSkills): HTMSPoints
 }
 
 const createHTMSRow = (htms: HTMSPoints): HTMLTableRowElement => {
-  const htmsRow = document.createElement('tr')
+  const labelCell = el('td', { className: 'right', textContent: i18n.t('htms_points_label') })
+  const valueCell = el('td', { colSpan: 2 })
+  valueCell.append(
+    el('span', {
+      className: 'help hte-help',
+      title: i18n.t('htms_points_help'),
+      textContent: `${htms.ability} / ${htms.potential}`,
+    }),
+  )
 
-  const labelCell = document.createElement('td')
-  labelCell.className = 'right'
-  labelCell.textContent = i18n.t('htms_points_label')
+  const row = el('tr')
+  row.append(labelCell, valueCell)
 
-  const valueCell = document.createElement('td')
-  valueCell.colSpan = 2
-
-  const helpSpan = document.createElement('span')
-  helpSpan.className = 'help hte-help'
-  helpSpan.title = i18n.t('htms_points_help')
-  helpSpan.textContent = `${htms.ability} / ${htms.potential}`
-
-  valueCell.appendChild(helpSpan)
-  htmsRow.appendChild(labelCell)
-  htmsRow.appendChild(valueCell)
-
-  return htmsRow
+  return row
 }
 
 export const processPlayer = (playerElement: Element, ageElement: Element): void => {

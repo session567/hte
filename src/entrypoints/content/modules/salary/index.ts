@@ -1,3 +1,4 @@
+import { el } from '@/common/utils/dom'
 import type { Module } from '@/entrypoints/content/common/types/module'
 import { WEEKS_PER_SEASON } from '@/entrypoints/content/common/utils/constants'
 import { querySelector } from '@/entrypoints/content/common/utils/dom'
@@ -19,11 +20,11 @@ const salary: Module = {
     if (!parsed) return
 
     const yearlySalary = parsed.weeklySalary * WEEKS_PER_SEASON
-    const div = document.createElement('div')
-    div.className = 'shy'
-    div.textContent = `${formatThousands(yearlySalary)} ${parsed.currency}/${i18n.t('salary_per_season')}`
-
-    salaryCell.appendChild(div)
+    const yearlySalaryCell = el('div', {
+      className: 'shy',
+      textContent: `${formatThousands(yearlySalary)} ${parsed.currency}/${i18n.t('salary_per_season')}`,
+    })
+    salaryCell.appendChild(yearlySalaryCell)
   },
 }
 
