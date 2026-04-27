@@ -1,12 +1,6 @@
 // Matches: [salary] [currency]/week
 const REGEX_WEEKLY_SALARY_AND_CURRENCY = /^([\d\s]+)\s([^/]+)/
 
-/**
- * Parse weekly salary and currency from an element.
- *
- * @param element - Element containing salary text
- * @returns Object with weeklySalary and currency, or null if parsing fails
- */
 export const parseSalaryAndCurrency = (element: Element) => {
   const value = element.textContent.trim()
   if (!value) return null

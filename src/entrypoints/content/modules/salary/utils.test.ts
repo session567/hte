@@ -15,7 +15,7 @@ describe(parseSalaryAndCurrency, () => {
   })
 })
 
-describe('numberWithSpaces', () => {
+describe(formatThousands, () => {
   it.each([
     { value: 123, expected: '123' },
     { value: 1234, expected: '1 234' },
