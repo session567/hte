@@ -9,7 +9,6 @@ import {
   HTMS_TARGET_AGE_YEARS,
   HTMSPoints,
 } from '@/entrypoints/content/modules/htms-points/constants'
-import { i18n } from '#i18n'
 
 /**
  * Calculates HTMS points for a player.

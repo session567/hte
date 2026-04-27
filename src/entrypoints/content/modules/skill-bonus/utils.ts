@@ -1,7 +1,6 @@
 import { el } from '@/common/utils/dom'
 import { querySelectorAllIn, querySelectorIn } from '@/entrypoints/content/common/utils/dom'
 import { pages } from '@/entrypoints/content/common/utils/pages'
-import { i18n } from '#i18n'
 
 const MAX_BAR_LENGTH = 20
 const MAX_LOYALTY = 20

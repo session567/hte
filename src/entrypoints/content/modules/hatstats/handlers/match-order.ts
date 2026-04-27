@@ -8,7 +8,6 @@ import {
 } from '@/entrypoints/content/common/utils/dom'
 import { HatStats, TeamRatings } from '@/entrypoints/content/modules/hatstats/types'
 import { calcHatStats } from '@/entrypoints/content/modules/hatstats/utils'
-import { i18n } from '#i18n'
 
 const extractRatings = (ratingPredictions: Element): TeamRatings | null => {
   const getRating = (span: Element | undefined): number | null => {
