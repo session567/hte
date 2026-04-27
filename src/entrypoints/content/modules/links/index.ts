@@ -1,5 +1,6 @@
 import '@/entrypoints/content/modules/links/index.css'
 
+import { el } from '@/common/utils/dom'
 import type { Module } from '@/entrypoints/content/common/types/module'
 import { querySelector } from '@/entrypoints/content/common/utils/dom'
 import { logger } from '@/entrypoints/content/common/utils/logger'
@@ -31,19 +32,14 @@ const links: Module = {
     const { box, boxBody } = createSidebarBox(i18n.t('links_title'))
 
     linkData.links.forEach((link) => {
-      const anchor = document.createElement('a')
-
       try {
-        anchor.href = replacePlaceholders(link.url, replacements)
+        const href = replacePlaceholders(link.url, replacements)
+        const anchor = el('a', { href, textContent: link.name, target: '_blank' })
+        boxBody.appendChild(anchor)
       } catch (err) {
         logger.error(err)
         return
       }
-
-      anchor.textContent = link.name
-      anchor.target = '_blank'
-
-      boxBody.appendChild(anchor)
     })
 
     sidebar.insertBefore(box, sidebar.firstChild)

@@ -1,3 +1,4 @@
+import { el } from '@/common/utils/dom'
 import { DAYS_PER_SEASON, DAYS_PER_WEEK } from '@/entrypoints/content/common/utils/constants'
 import { querySelectorAllIn, querySelectorIn } from '@/entrypoints/content/common/utils/dom'
 import { logger } from '@/entrypoints/content/common/utils/logger'
@@ -66,10 +67,6 @@ export const addWeekNumbers = (root: Element, selector = '.date') => {
 
     const weekNumber = calcWeekNumber(date)
 
-    const span = document.createElement('span')
-    span.className = 'hte-week-number'
-    span.textContent = ` | ${weekNumber}`
-
-    element.appendChild(span)
+    element.appendChild(el('span', { className: 'hte-week-number', textContent: ` | ${weekNumber}` }))
   })
 }
