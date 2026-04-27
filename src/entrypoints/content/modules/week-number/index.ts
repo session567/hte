@@ -1,40 +1,17 @@
 import '@/entrypoints/content/modules/week-number/index.css'
 
 import type { Module } from '@/entrypoints/content/common/types/module'
-import { getElementById, observeElement, querySelectorAllIn } from '@/entrypoints/content/common/utils/dom'
 import { isCurrentPage, pages } from '@/entrypoints/content/common/utils/pages'
+import runDefault from '@/entrypoints/content/modules/week-number/handlers/default'
+import runPlayerDetail from '@/entrypoints/content/modules/week-number/handlers/player-detail'
+import runStadiumUsage from '@/entrypoints/content/modules/week-number/handlers/stadium-usage'
 import metadata from '@/entrypoints/content/modules/week-number/metadata'
-import { calcWeekNumber, parseDate } from '@/entrypoints/content/modules/week-number/utils'
 
-/**
- * Add week numbers to all date elements within the given root element.
- *
- * @param root - The parent element to search for date elements within
- */
-const addWeekNumbers = (root: Element) => {
-  const elements = querySelectorAllIn(root, '.date', false)
-
-  elements.forEach((element) => {
-    const date = parseDate(element)
-    if (!date) return
-
-    const weekNumber = calcWeekNumber(date)
-
-    const span = document.createElement('span')
-    span.className = 'hte-week-number shy'
-    span.textContent = ` (W${weekNumber})`
-
-    element.appendChild(span)
-  })
-}
-
-/**
- * Display week numbers next to dates throughout Hattrick.
- */
 const weekNumber: Module = {
   metadata,
   pages: [
     pages.fans,
+    pages.matchArchive,
     pages.matchList.senior.own,
     pages.matchList.senior.other,
     pages.matchList.youth.own,
@@ -44,27 +21,18 @@ const weekNumber: Module = {
     pages.playerDetail.youth.own,
     pages.playerDetail.youth.other,
     pages.stadium,
+    pages.stadiumUsage,
   ],
   run: () => {
-    const mainBody = getElementById('mainBody')
-    if (!mainBody) return
-
-    addWeekNumbers(mainBody)
-
-    // Watch for tab changes on the player detail page. Tab content is loaded asynchronously when clicked, so we need to
-    // re-apply week numbers after each update.
     if (isCurrentPage(pages.playerDetail.senior.own, pages.playerDetail.senior.other)) {
-      const playerTabs = getElementById('ctl00_ctl00_CPContent_CPMain_updPlayerTabs')
-      if (!playerTabs) return
-
-      observeElement(
-        playerTabs,
-        () => {
-          addWeekNumbers(playerTabs)
-        },
-        { childList: true, subtree: true },
-      )
+      runPlayerDetail()
+      return
     }
+    if (isCurrentPage(pages.stadiumUsage)) {
+      runStadiumUsage()
+      return
+    }
+    runDefault()
   },
 }
 

@@ -45,7 +45,6 @@ src/entrypoints/content/modules/example-module/
 ├── constants.ts     # Module constants (optional)
 ├── handlers/        # Page-specific handlers (optional, see below)
 ├── index.css        # Module-specific styles (optional)
-├── index.test.ts    # Tests for the module (required)
 ├── index.ts         # Module definition and page dispatch (required)
 ├── metadata.ts      # Module metadata (required)
 ├── utils.test.ts    # Tests for utilities (optional)
@@ -57,6 +56,10 @@ doesn't mutate the DOM).
 
 **`handlers/`** splits `index.ts` into multiple files when a module runs on multiple pages, and all or some of them
 require a different implementation.
+
+Name the fallback handler (used when no page-specific handler matches) `handlers/default.ts`.
+When multiple handlers share DOM-mutating logic, extract it into `handlers/common.ts`, not `utils.ts`, which is reserved
+for computations and data transformations that don't mutate the DOM.
 
 ## Local Development
 

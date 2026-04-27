@@ -19,13 +19,14 @@ export const pages = {
   clubYouth: new Page('/Club/Youth/'),
   fans: new Page('/Club/Fans/'),
   forum: new Page('/Forum/'),
-  matchList: {
-    senior: teamPages('/Club/Matches/'),
-    youth: teamPages('/Club/Matches/', { queryParams: [{ name: 'YouthTeamId' }] }),
-  },
+  matchArchive: new Page('/Club/Matches/Archive.aspx'),
   matchDetail: {
     senior: new Page('/Club/Matches/Match.aspx'),
     youth: new Page('/Club/Matches/Match.aspx', { queryParams: [{ name: 'YouthTeamId' }] }),
+  },
+  matchList: {
+    senior: teamPages('/Club/Matches/'),
+    youth: teamPages('/Club/Matches/', { queryParams: [{ name: 'YouthTeamId' }] }),
   },
   matchOrder: new Page('/Club/Matches/MatchOrder/MatchOrder.aspx'),
   playerDetail: {
@@ -39,6 +40,7 @@ export const pages = {
   series: new Page('/World/Series/'),
   specialists: new Page('/Club/Specialists/'),
   stadium: new Page('/Club/Stadium/'),
+  stadiumUsage: new Page('/Club/Stadium/StadiumUsage.aspx'),
   transferSearch: new Page('/World/Transfers/'),
   transferSearchResults: new Page('/World/Transfers/TransfersSearchResult.aspx'),
 } as const satisfies Record<string, PageTree>
