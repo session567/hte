@@ -3,10 +3,9 @@ import { pages } from '@/entrypoints/content/common/utils/pages'
 import { i18n } from '#i18n'
 
 const MAX_BAR_LENGTH = 20
-
 const MAX_LOYALTY = 20
 
-export type SkillBonuses = {
+type SkillBonuses = {
   loyalty: number
   homegrown: number
 }
