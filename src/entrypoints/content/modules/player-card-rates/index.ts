@@ -14,33 +14,27 @@ const makeCardIcon = (rate: number, type: 'yellow' | 'red'): HTMLSpanElement =>
     title: i18n.t(`player_card_rates_${type}_title`),
   })
 
-const run = (): void => {
-  const playerInfo = getElementById<HTMLDivElement>('ctl00_ctl00_CPContent_CPMain_pnlplayerInfo')
-  const byline = querySelector('#mainBody > .byline')
-  if (!playerInfo || !byline) return
-
-  const aggressiveness = getPersonalityLevel(playerInfo, 'aggressiveness')
-  const honesty = getPersonalityLevel(playerInfo, 'honesty')
-  if (honesty === null || aggressiveness === null) return
-
-  const rates = getCardRates(aggressiveness, honesty)
-  if (!rates) return
-
-  const { yellow, red } = rates
-
-  const wrapper = el('span', { className: 'hte-card-icons' })
-  wrapper.append(makeCardIcon(yellow, 'yellow'), makeCardIcon(red, 'red'))
-  byline.append(wrapper)
-}
-
 const playerCardRates: Module = {
   metadata,
-  pages: new Map([
-    [pages.playerDetail.senior.own, run],
-    [pages.playerDetail.senior.other, run],
-    [pages.playerDetail.youth.own, run],
-    [pages.playerDetail.youth.other, run],
-  ]),
+  pages: [pages.playerDetail.senior.own, pages.playerDetail.senior.other],
+  run: () => {
+    const playerInfo = getElementById<HTMLDivElement>('ctl00_ctl00_CPContent_CPMain_pnlplayerInfo')
+    const byline = querySelector('#mainBody > .byline')
+    if (!playerInfo || !byline) return
+
+    const aggressiveness = getPersonalityLevel(playerInfo, 'aggressiveness')
+    const honesty = getPersonalityLevel(playerInfo, 'honesty')
+    if (honesty === null || aggressiveness === null) return
+
+    const rates = getCardRates(aggressiveness, honesty)
+    if (!rates) return
+
+    const { yellow, red } = rates
+
+    const wrapper = el('span', { className: 'hte-card-icons' })
+    wrapper.append(makeCardIcon(yellow, 'yellow'), makeCardIcon(red, 'red'))
+    byline.append(wrapper)
+  },
 }
 
 export default playerCardRates
