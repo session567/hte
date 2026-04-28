@@ -55,11 +55,7 @@ const createHTMSRow = (htms: HTMSPoints): HTMLTableRowElement => {
   const labelCell = el('td', { className: 'right', textContent: i18n.t('htms_points_label') })
   const valueCell = el('td', { colSpan: 2 })
   valueCell.append(
-    el('span', {
-      className: 'help hte-help',
-      title: i18n.t('htms_points_help'),
-      textContent: `${htms.ability} / ${htms.potential}`,
-    }),
+    el('span', { title: i18n.t('htms_points_help'), textContent: `${htms.ability} / ${htms.potential}` }),
   )
 
   const row = el('tr')
