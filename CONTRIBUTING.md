@@ -45,21 +45,11 @@ src/entrypoints/content/modules/example-module/
 ├── constants.ts     # Module constants (optional)
 ├── handlers/        # Page-specific handlers (optional, see below)
 ├── index.css        # Module-specific styles (optional)
-├── index.ts         # Module definition and page dispatch (required)
+├── index.ts         # Module definition (required)
 ├── metadata.ts      # Module metadata (required)
 ├── utils.test.ts    # Tests for utilities (optional)
-└── utils.ts         # Computation and data transformation functions (optional)
+└── utils.ts         # Shared logic and helpers (optional)
 ```
-
-**`utils.ts`** contains logic that can be unit-tested in isolation: computations, data transformations, etc. (logic that
-doesn't mutate the DOM).
-
-**`handlers/`** splits `index.ts` into multiple files when a module runs on multiple pages, and all or some of them
-require a different implementation.
-
-Name the fallback handler (used when no page-specific handler matches) `handlers/default.ts`.
-When multiple handlers share DOM-mutating logic, extract it into `handlers/common.ts`, not `utils.ts`, which is reserved
-for computations and data transformations that don't mutate the DOM.
 
 ## Local Development
 
@@ -123,7 +113,14 @@ All pnpm scripts are located in [package.json](https://github.com/session567/hte
     const myOption = await getSetting('example-module', 'myOption')
     ```
 
-2. Create `index.ts` in the same directory:
+2. Create `index.ts` in the same directory.
+
+   This is the main module file. It defines which pages the module runs on. All modules run concurrently, so `run()`
+   and handlers must not depend on another module having already finished.
+
+   There are two module shapes:
+
+   **Simple** — use when the module runs the same logic on every matching page:
 
     ```typescript
     import type { Module } from '@/entrypoints/content/common/types/module'
@@ -132,7 +129,7 @@ All pnpm scripts are located in [package.json](https://github.com/session567/hte
 
     const exampleModule: Module = {
       metadata,
-      pages: [pages.club], // Pages where this module runs
+      pages: [pages.club],
       run: () => {
         // Module logic here
       },
@@ -141,13 +138,40 @@ All pnpm scripts are located in [package.json](https://github.com/session567/hte
     export default exampleModule
     ```
 
-   This is the main module file. It defines which pages the module runs on and contains the logic executed on those
-   pages.
-
-   All modules run concurrently, so `run()` must not depend on another module having already finished.
-
    For a simple module example, see
    [src/entrypoints/content/modules/hte-version/index.ts](https://github.com/session567/hte/blob/main/src/entrypoints/content/modules/hte-version/index.ts).
+
+   **Dispatched** — use when the module needs different logic on different pages. Each page maps to a handler function.
+   Simple handlers (a few lines calling into `utils.ts`) can be defined inline in `index.ts`. Extract a handler to
+   `handlers/<page>.ts` when it has meaningful complexity of its own. Shared logic between handlers goes in `utils.ts`.
+
+    ```typescript
+    import type { Module } from '@/entrypoints/content/common/types/module'
+    import { pages } from '@/entrypoints/content/common/utils/pages'
+    import metadata from '@/entrypoints/content/modules/example-module/metadata'
+    import { processClub, processPlayers } from '@/entrypoints/content/modules/example-module/utils'
+
+    const runClub = (): void => {
+      // Handler logic here
+    }
+
+    const runPlayers = (): void => {
+      // Handler logic here
+    }
+
+    const exampleModule: Module = {
+      metadata,
+      pages: new Map([
+        [pages.club, runClub],
+        [pages.players, runPlayers],
+      ]),
+    }
+
+    export default exampleModule
+    ```
+
+   For a dispatched module example, see
+   [src/entrypoints/content/modules/hatstats/index.ts](https://github.com/session567/hte/blob/main/src/entrypoints/content/modules/hatstats/index.ts).
 
 3. Register your module in `src/entrypoints/content/index.ts`:
 
