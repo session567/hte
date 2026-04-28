@@ -1,5 +1,5 @@
 import { getElementById } from '@/entrypoints/content/common/utils/dom'
-import { addWeekNumbers } from '@/entrypoints/content/modules/week-number/handlers/common'
+import { addWeekNumbers } from '@/entrypoints/content/modules/week-number/utils'
 
 const runDefault = () => {
   const mainBody = getElementById('mainBody')

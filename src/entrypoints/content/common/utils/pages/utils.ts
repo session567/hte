@@ -6,8 +6,6 @@ export { Page } from '@/entrypoints/content/common/utils/pages/page'
 
 import { pages } from '@/entrypoints/content/common/utils/pages/pages'
 
-class PageNotSupportedError extends Error {}
-
 const flattenPages = (tree: PageTree): Page[] => {
   if (tree instanceof Page) return [tree]
   return Object.values(tree).flatMap(flattenPages)
@@ -78,7 +76,7 @@ export const getCurrentPage = (): Page => {
   if (_currentPage) return _currentPage
 
   const candidates = flattenPages(pages).filter(matchesCurrentLocation)
-  if (candidates.length === 0) throw new PageNotSupportedError('The current page is not supported')
+  if (candidates.length === 0) throw new Error('The current page is not supported')
 
   _currentPage = candidates.length === 1 ? candidates[0] : mostSpecificPage(candidates)
 
@@ -90,10 +88,5 @@ export const getCurrentPage = (): Page => {
  */
 export const isCurrentPage = (...pagesToCheck: Page[]): boolean => {
   if (pagesToCheck.includes(pages.all)) return true
-  try {
-    return pagesToCheck.includes(getCurrentPage())
-  } catch (err) {
-    if (err instanceof PageNotSupportedError) return false
-    throw err
-  }
+  return pagesToCheck.includes(getCurrentPage())
 }

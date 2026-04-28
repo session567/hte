@@ -5,7 +5,6 @@ import { getHtMatch, isLiveMatch, isPreMatch, isWalkoverMatch } from '@/entrypoi
 import { createSidebarBox } from '@/entrypoints/content/common/utils/sidebar/box'
 import { HatStats, TeamRatings } from '@/entrypoints/content/modules/hatstats/types'
 import { calcHatStats } from '@/entrypoints/content/modules/hatstats/utils'
-import { i18n } from '#i18n'
 
 const extractRatings = (tbody: HTMLTableSectionElement, column: number): TeamRatings | null => {
   const getRating = (htBar: Element): number | null => {

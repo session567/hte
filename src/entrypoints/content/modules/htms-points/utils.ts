@@ -1,5 +1,8 @@
+import { el } from '@/common/utils/dom'
 import { DAYS_PER_SEASON, DAYS_PER_WEEK, WEEKS_PER_SEASON } from '@/entrypoints/content/common/utils/constants'
+import { querySelectorAll, querySelectorIn } from '@/entrypoints/content/common/utils/dom'
 import { PlayerAge, PlayerSkills, Skill } from '@/entrypoints/content/common/utils/player/constants'
+import { parsePlayerAge, parsePlayerSkills } from '@/entrypoints/content/common/utils/player/utils'
 import {
   HTMS_ABILITY_TABLE,
   HTMS_POINTS_PER_WEEK,
@@ -46,4 +49,39 @@ export const calcHTMSPoints = (age: PlayerAge, skills: PlayerSkills): HTMSPoints
   potential = Math.round(potential)
 
   return { ability, potential }
+}
+
+const createHTMSRow = (htms: HTMSPoints): HTMLTableRowElement => {
+  const labelCell = el('td', { className: 'right', textContent: i18n.t('htms_points_label') })
+  const valueCell = el('td', { colSpan: 2 })
+  valueCell.append(
+    el('span', { title: i18n.t('htms_points_help'), textContent: `${htms.ability} / ${htms.potential}` }),
+  )
+
+  const row = el('tr')
+  row.append(labelCell, valueCell)
+
+  return row
+}
+
+export const processPlayer = (playerElement: Element, ageElement: Element): void => {
+  const playerSkillsElement = querySelectorIn(playerElement, '.transferPlayerSkills', false)
+  if (!playerSkillsElement) return
+
+  const age = parsePlayerAge(ageElement)
+  const skills = parsePlayerSkills(playerSkillsElement)
+  if (!age || !skills) return
+
+  const htms = calcHTMSPoints(age, skills)
+  const tbody = querySelectorIn(playerElement, '.transferPlayerInformation table tbody')
+  if (!tbody) return
+
+  tbody.appendChild(createHTMSRow(htms))
+}
+
+export const processPlayers = (playerSelector: string, ageSelector: string): void => {
+  querySelectorAll(playerSelector).forEach((playerElement) => {
+    const ageElement = querySelectorIn(playerElement, ageSelector)
+    if (ageElement) processPlayer(playerElement, ageElement)
+  })
 }

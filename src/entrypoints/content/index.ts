@@ -3,10 +3,10 @@ import '@/common/styles/common.css'
 import { defineContentScript } from 'wxt/utils/define-content-script'
 
 import { getSetting } from '@/common/utils/settings'
-import type { Module } from '@/entrypoints/content/common/types/module'
+import type { Handler, Module } from '@/entrypoints/content/common/types/module'
 import { getCurrentPathname } from '@/entrypoints/content/common/utils/location'
 import { logger } from '@/entrypoints/content/common/utils/logger'
-import { isCurrentPage } from '@/entrypoints/content/common/utils/pages'
+import { getCurrentPage, isCurrentPage } from '@/entrypoints/content/common/utils/pages'
 import { isLoggedIn } from '@/entrypoints/content/common/utils/team/utils'
 import denomination from '@/entrypoints/content/modules/denomination'
 import hatstats from '@/entrypoints/content/modules/hatstats'
@@ -19,18 +19,25 @@ import weekNumber from '@/entrypoints/content/modules/week-number'
 
 const modules: Module[] = [links, skillBonus, htmsPoints, salary, hatstats, denomination, weekNumber, hteVersion]
 
+const getHandler = (module: Module): Handler | undefined => {
+  if (module.pages instanceof Map) return module.pages.get(getCurrentPage())
+  if (isCurrentPage(...module.pages)) return module.run
+}
+
 const runModule = async (module: Module): Promise<void> => {
   const enabled = await getSetting(module.metadata.id, 'enabled')
   if (!enabled) {
     logger.debug(`Skipping disabled module: ${module.metadata.name}`)
     return
   }
-  if (!isCurrentPage(...module.pages)) return
+
+  const run = getHandler(module)
+  if (!run) return
 
   logger.debug(`Running module: ${module.metadata.name}`)
 
   try {
-    await module.run()
+    await run()
   } catch (err) {
     logger.error(`Module ${module.metadata.name} failed`, err)
   }

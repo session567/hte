@@ -8,7 +8,6 @@ import {
 } from '@/entrypoints/content/common/utils/dom'
 import { HatStats, TeamRatings } from '@/entrypoints/content/modules/hatstats/types'
 import { calcHatStats } from '@/entrypoints/content/modules/hatstats/utils'
-import { i18n } from '#i18n'
 
 const extractRatings = (ratingPredictions: Element): TeamRatings | null => {
   const getRating = (span: Element | undefined): number | null => {
@@ -76,9 +75,7 @@ const runMatchOrder = async (): Promise<void> => {
   const tabs = await waitForElement('.ht-tabs-wizard')
   if (!tabs) return
 
-  // Guards against attaching duplicate listeners when the same element instance is still in the DOM and the Lineup tab
-  // is clicked multiple times. Elements are recreated on each tab switch, so a new instance is never in the set.
-  const predictionHolders = new WeakSet<Element>()
+  let disconnectObserver: (() => void) | undefined
 
   const isLineupTabSelected = () =>
     querySelectorIn(tabs, 'li:nth-child(2)')?.classList.contains('ht-tabs-item-selected') ?? false
@@ -90,10 +87,10 @@ const runMatchOrder = async (): Promise<void> => {
     }
 
     const predictionsHolder = querySelector('.mo-field-rating-predicitons-holder')
-    if (!predictionsHolder || predictionHolders.has(predictionsHolder)) return
+    if (!predictionsHolder) return
 
-    predictionHolders.add(predictionsHolder)
-    observeElement(predictionsHolder, renderHatStats, { characterData: true, subtree: true })
+    disconnectObserver?.()
+    disconnectObserver = observeElement(predictionsHolder, renderHatStats, { characterData: true, subtree: true })
     renderHatStats()
   }
 

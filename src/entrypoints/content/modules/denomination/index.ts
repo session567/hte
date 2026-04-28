@@ -1,5 +1,6 @@
 import '@/entrypoints/content/modules/denomination/index.css'
 
+import { el } from '@/common/utils/dom'
 import type { Module } from '@/entrypoints/content/common/types/module'
 import { querySelectorAll } from '@/entrypoints/content/common/utils/dom'
 import { logger } from '@/entrypoints/content/common/utils/logger'
@@ -33,18 +34,13 @@ const denomination: Module = {
         link.nextElementSibling.remove()
       }
 
-      const span = document.createElement('span')
       const value = await adjustDenominationValue(lt, Number(ll))
       const maxValue = MAX_VALUES[lt]
       const displayValue = maxValue ? `${value}/${maxValue}` : `${value}`
 
-      if (PERSONALITY_TYPES.has(lt)) {
-        span.className = `hte-skill hte-${lt}-${ll}`
-        span.textContent = displayValue
-      } else {
-        span.className = 'shy denominationNumber'
-        span.textContent = `(${displayValue})`
-      }
+      const span = PERSONALITY_TYPES.has(lt)
+        ? el('span', { className: `hte-skill hte-${lt}-${ll}`, textContent: displayValue })
+        : el('span', { className: 'shy denominationNumber', textContent: `(${displayValue})` })
 
       link.after(span)
     }

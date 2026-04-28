@@ -1,7 +1,9 @@
+import { el } from '@/common/utils/dom'
 import { DAYS_PER_SEASON, DAYS_PER_WEEK } from '@/entrypoints/content/common/utils/constants'
+import { querySelectorAllIn, querySelectorIn } from '@/entrypoints/content/common/utils/dom'
 import { logger } from '@/entrypoints/content/common/utils/logger'
 
-const HATTRICK_START_DATE = new Date(1997, 8, 22)
+const HATTRICK_START_DATE = new Date(Date.UTC(1997, 8, 22))
 // Matches: DD.MM.YYYY HH:mm
 const REGEX_DATE_LONG = /(\d{2})\.(\d{2})\.(\d{4})\s+(\d{2}):(\d{2})/
 // Matches: DD.MM.YYYY
@@ -24,7 +26,7 @@ export const parseDate = (element: Element): Date | null => {
   if (longMatch) {
     const [, day, month, year, hour, minute] = longMatch.map((m) => parseInt(m, 10))
 
-    return new Date(year, month - 1, day, hour, minute)
+    return new Date(Date.UTC(year, month - 1, day, hour, minute))
   }
 
   const shortMatch = REGEX_DATE_SHORT.exec(value)
@@ -32,7 +34,7 @@ export const parseDate = (element: Element): Date | null => {
   if (shortMatch) {
     const [, day, month, year] = shortMatch.map((m) => parseInt(m, 10))
 
-    return new Date(year, month - 1, day)
+    return new Date(Date.UTC(year, month - 1, day))
   }
 
   // On the series page, dates are replaced with the strings "Today" and "Yesterday", which don't need to be parsed
@@ -52,4 +54,19 @@ export const calcWeekNumber = (date: Date): number => {
   const dayWithinSeason = daysSinceStart % DAYS_PER_SEASON
 
   return Math.floor(dayWithinSeason / DAYS_PER_WEEK) + 1
+}
+
+export const addWeekNumbers = (root: Element, selector = '.date') => {
+  const elements = querySelectorAllIn(root, selector, false)
+
+  elements.forEach((element) => {
+    if (querySelectorIn(element, '.hte-week-number', false)) return
+
+    const date = parseDate(element)
+    if (!date) return
+
+    const weekNumber = calcWeekNumber(date)
+
+    element.appendChild(el('span', { className: 'hte-week-number', textContent: ` | ${weekNumber}` }))
+  })
 }
