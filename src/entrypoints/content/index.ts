@@ -13,11 +13,22 @@ import hatstats from '@/entrypoints/content/modules/hatstats'
 import hteVersion from '@/entrypoints/content/modules/hte-version'
 import htmsPoints from '@/entrypoints/content/modules/htms-points'
 import links from '@/entrypoints/content/modules/links'
+import playerCardRates from '@/entrypoints/content/modules/player-card-rates'
 import salary from '@/entrypoints/content/modules/salary'
 import skillBonus from '@/entrypoints/content/modules/skill-bonus'
 import weekNumber from '@/entrypoints/content/modules/week-number'
 
-const modules: Module[] = [links, skillBonus, htmsPoints, salary, hatstats, denomination, weekNumber, hteVersion]
+const modules: Module[] = [
+  links,
+  denomination,
+  weekNumber,
+  skillBonus,
+  htmsPoints,
+  salary,
+  hatstats,
+  playerCardRates,
+  hteVersion,
+]
 
 const getHandler = (module: Module): Handler | undefined => {
   if (module.pages instanceof Map) return module.pages.get(getCurrentPage())

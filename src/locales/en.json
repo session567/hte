@@ -37,5 +37,11 @@
   },
   "hatstats_away": {
     "message": "Away"
+  },
+  "player_card_rates_yellow_title": {
+    "message": "Probability of a player receiving a yellow card, based on aggressiveness and honesty."
+  },
+  "player_card_rates_red_title": {
+    "message": "Probability of a player receiving a red card, based on aggressiveness and honesty."
   }
 }
