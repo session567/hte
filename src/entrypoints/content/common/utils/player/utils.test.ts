@@ -3,7 +3,27 @@ import { describe, expect, it } from 'vitest'
 import { createElement } from '@/entrypoints/content/common/test/utils'
 import { logger } from '@/entrypoints/content/common/utils/logger'
 import { PlayerSkills } from '@/entrypoints/content/common/utils/player/constants'
-import { parsePlayerAge, parsePlayerSkills } from '@/entrypoints/content/common/utils/player/utils'
+import { getPersonalityLevel, parsePlayerAge, parsePlayerSkills } from '@/entrypoints/content/common/utils/player/utils'
+
+describe(getPersonalityLevel, () => {
+  it('parses personality levels', () => {
+    document.body.innerHTML = `
+      <div id="ctl00_ctl00_CPContent_CPMain_pnlplayerInfo">
+        <a class="skill" href="/Help/Rules/AppDenominations.aspx?lt=gentleness&ll=2"></a>
+        <a class="skill" href="/Help/Rules/AppDenominations.aspx?lt=aggressiveness&ll=3"></a>
+        <a class="skill" href="/Help/Rules/AppDenominations.aspx?lt=honesty&ll=1"></a>
+      </div>
+    `
+
+    expect(getPersonalityLevel('aggressiveness')).toBe(3)
+    expect(getPersonalityLevel('honesty')).toBe(1)
+    expect(getPersonalityLevel('gentleness')).toBe(2)
+  })
+
+  it('returns null when player info element is absent', () => {
+    expect(getPersonalityLevel('aggressiveness')).toBeNull()
+  })
+})
 
 describe(parsePlayerAge, () => {
   it.each([

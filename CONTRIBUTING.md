@@ -115,8 +115,7 @@ All pnpm scripts are located in [package.json](https://github.com/session567/hte
 
 2. Create `index.ts` in the same directory.
 
-   This is the main module file. It defines which pages the module runs on. All modules run concurrently, so `run()`
-   and handlers must not depend on another module having already finished.
+   This is the main module file. It defines which pages the module runs on.
 
    There are two module shapes:
 
@@ -172,6 +171,20 @@ All pnpm scripts are located in [package.json](https://github.com/session567/hte
 
    For a dispatched module example, see
    [src/entrypoints/content/modules/hatstats/index.ts](https://github.com/session567/hte/blob/main/src/entrypoints/content/modules/hatstats/index.ts).
+
+   All modules run concurrently by default. If your module must run after another (e.g. because both append to the same
+   DOM element and the order matters), use `runAfter`:
+
+    ```typescript
+    import otherModule from '@/entrypoints/content/modules/other-module'
+
+    const exampleModule: Module = {
+      metadata,
+      runAfter: [otherModule],
+      pages: [...],
+      run: () => { ... },
+    }
+    ```
 
 3. Register your module in `src/entrypoints/content/index.ts`:
 
