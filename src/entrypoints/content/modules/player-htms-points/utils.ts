@@ -8,7 +8,7 @@ import {
   HTMS_POINTS_PER_WEEK,
   HTMS_TARGET_AGE_YEARS,
   HTMSPoints,
-} from '@/entrypoints/content/modules/htms-points/constants'
+} from '@/entrypoints/content/modules/player-htms-points/constants'
 
 /**
  * Calculates HTMS points for a player.

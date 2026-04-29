@@ -11,6 +11,8 @@ export type ModuleSetting = {
   default: boolean
 }
 
+export type ModuleGroup = 'general' | 'match' | 'player'
+
 /**
  * Metadata for a module.
  *
@@ -19,6 +21,8 @@ export type ModuleSetting = {
 export type ModuleMetadata = {
   // Unique identifier for the module
   id: string
+  // The group this module belongs to, used for grouping in the popup UI
+  group: ModuleGroup
   // The module's name
   name: string
   // The module's description

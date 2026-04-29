@@ -9,27 +9,27 @@ import { logger } from '@/entrypoints/content/common/utils/logger'
 import { getCurrentPage, isCurrentPage } from '@/entrypoints/content/common/utils/pages'
 import { isLoggedIn } from '@/entrypoints/content/common/utils/team/utils'
 import denomination from '@/entrypoints/content/modules/denomination'
-import hatstats from '@/entrypoints/content/modules/hatstats'
 import hteVersion from '@/entrypoints/content/modules/hte-version'
-import htmsPoints from '@/entrypoints/content/modules/htms-points'
 import links from '@/entrypoints/content/modules/links'
+import matchHatstats from '@/entrypoints/content/modules/match-hatstats'
 import playerCardRates from '@/entrypoints/content/modules/player-card-rates'
+import playerHtmsPoints from '@/entrypoints/content/modules/player-htms-points'
+import playerSalary from '@/entrypoints/content/modules/player-salary'
+import playerSkillBonus from '@/entrypoints/content/modules/player-skill-bonus'
 import playerTsDropRates from '@/entrypoints/content/modules/player-ts-drop-rates'
-import salary from '@/entrypoints/content/modules/salary'
-import skillBonus from '@/entrypoints/content/modules/skill-bonus'
 import weekNumber from '@/entrypoints/content/modules/week-number'
 
 const modules: Module[] = [
   links,
   weekNumber,
   denomination,
-  skillBonus,
-  htmsPoints,
-  salary,
+  playerSkillBonus,
+  playerHtmsPoints,
+  playerSalary,
   playerCardRates,
   playerTsDropRates,
   hteVersion,
-  hatstats,
+  matchHatstats,
 ]
 
 const getHandler = (module: Module): Handler | undefined => {

@@ -1,10 +1,10 @@
 import type { ModuleMetadata } from '@/entrypoints/content/common/types/module'
 
 const metadata = {
-  id: 'player-card-rates',
+  id: 'player-salary',
   group: 'player',
-  name: 'Card Rates',
-  description: 'Show the likelihood of a player receiving a yellow or red card based on their personality',
+  name: 'Salary',
+  description: "Display the player's yearly salary next to weekly salary on the player detail page.",
 } as const satisfies ModuleMetadata
 
 export default metadata

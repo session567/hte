@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { createElement } from '@/entrypoints/content/common/test/utils'
-import { formatThousands, parseSalaryAndCurrency } from '@/entrypoints/content/modules/salary/utils'
+import { formatThousands, parseSalaryAndCurrency } from '@/entrypoints/content/modules/player-salary/utils'
 
 describe(parseSalaryAndCurrency, () => {
   it.each([

@@ -2,6 +2,7 @@ import type { ModuleMetadata } from '@/entrypoints/content/common/types/module'
 
 const metadata = {
   id: 'week-number',
+  group: 'general',
   name: 'Week Number',
   description: 'Display week numbers next to dates throughout Hattrick.',
 } as const satisfies ModuleMetadata

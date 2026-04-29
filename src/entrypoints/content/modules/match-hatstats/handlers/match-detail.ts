@@ -3,8 +3,8 @@ import { querySelectorAllIn, querySelectorIn } from '@/entrypoints/content/commo
 import { logger } from '@/entrypoints/content/common/utils/logger'
 import { getHtMatch, isLiveMatch, isPreMatch, isWalkoverMatch } from '@/entrypoints/content/common/utils/match/utils'
 import { createSidebarBox } from '@/entrypoints/content/common/utils/sidebar/box'
-import { HatStats, TeamRatings } from '@/entrypoints/content/modules/hatstats/types'
-import { calcHatStats } from '@/entrypoints/content/modules/hatstats/utils'
+import { HatStats, TeamRatings } from '@/entrypoints/content/modules/match-hatstats/types'
+import { calcHatStats } from '@/entrypoints/content/modules/match-hatstats/utils'
 
 const extractRatings = (tbody: HTMLTableSectionElement, column: number): TeamRatings | null => {
   const getRating = (htBar: Element): number | null => {

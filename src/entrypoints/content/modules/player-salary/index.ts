@@ -3,8 +3,8 @@ import type { Module } from '@/entrypoints/content/common/types/module'
 import { WEEKS_PER_SEASON } from '@/entrypoints/content/common/utils/constants'
 import { querySelector } from '@/entrypoints/content/common/utils/dom'
 import { pages } from '@/entrypoints/content/common/utils/pages'
-import metadata from '@/entrypoints/content/modules/salary/metadata'
-import { formatThousands, parseSalaryAndCurrency } from '@/entrypoints/content/modules/salary/utils'
+import metadata from '@/entrypoints/content/modules/player-salary/metadata'
+import { formatThousands, parseSalaryAndCurrency } from '@/entrypoints/content/modules/player-salary/utils'
 
 /**
  * Display the player's yearly salary next to weekly salary on the player detail page.

@@ -1,4 +1,4 @@
-import { HatStats, TeamRatings } from '@/entrypoints/content/modules/hatstats/types'
+import { HatStats, TeamRatings } from '@/entrypoints/content/modules/match-hatstats/types'
 
 export const calcHatStats = (ratings: TeamRatings): HatStats => {
   const defenceSum = ratings.rightDefence + ratings.centralDefence + ratings.leftDefence

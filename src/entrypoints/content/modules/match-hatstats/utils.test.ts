@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { calcHatStats } from '@/entrypoints/content/modules/hatstats/utils'
+import { calcHatStats } from '@/entrypoints/content/modules/match-hatstats/utils'
 
 describe(calcHatStats, () => {
   it('calculates correct HatStats for given ratings', () => {

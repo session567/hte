@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { createElement } from '@/entrypoints/content/common/test/utils'
-import { calcBonuses } from '@/entrypoints/content/modules/skill-bonus/utils'
+import { calcBonuses } from '@/entrypoints/content/modules/player-skill-bonus/utils'
 
 describe(calcBonuses, () => {
   it('calculates bonus for homegrown player', () => {

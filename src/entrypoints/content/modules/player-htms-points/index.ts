@@ -1,8 +1,8 @@
 import type { Module } from '@/entrypoints/content/common/types/module'
 import { querySelector } from '@/entrypoints/content/common/utils/dom'
 import { pages } from '@/entrypoints/content/common/utils/pages'
-import metadata from '@/entrypoints/content/modules/htms-points/metadata'
-import { processPlayer, processPlayers } from '@/entrypoints/content/modules/htms-points/utils'
+import metadata from '@/entrypoints/content/modules/player-htms-points/metadata'
+import { processPlayer, processPlayers } from '@/entrypoints/content/modules/player-htms-points/utils'
 
 const runPlayerDetail = (): void => {
   const playerElement = querySelector('#mainBody .playerInfo')

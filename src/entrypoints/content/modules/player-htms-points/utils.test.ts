@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { calcHTMSPoints } from '@/entrypoints/content/modules/htms-points/utils'
+import { calcHTMSPoints } from '@/entrypoints/content/modules/player-htms-points/utils'
 
 describe(calcHTMSPoints, () => {
   it.each([

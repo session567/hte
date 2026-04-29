@@ -46,11 +46,27 @@ const renderModule = async ({ id: moduleId, name, description, settings }: Modul
   return card
 }
 
+const renderGroup = async (group: string, groupModules: ModuleMetadata[]): Promise<HTMLElement> => {
+  const section = el('div', { className: 'module-group' })
+  const heading = el('div', { className: 'module-group-heading', textContent: group })
+  const cards = await Promise.all(groupModules.map(renderModule))
+  section.append(heading, ...cards)
+
+  return section
+}
+
 const moduleList = document.getElementById('moduleList')
 
 if (moduleList) {
-  const cards = await Promise.all(modules.map(renderModule))
-  moduleList.append(...cards)
+  const groups = [...new Set(modules.map((m) => m.group))]
+    .sort((a, b) => a.localeCompare(b))
+    .map((group) => ({
+      group,
+      modules: modules.filter((m) => m.group === group),
+    }))
+
+  const sections = await Promise.all(groups.map(({ group, modules }) => renderGroup(group, modules)))
+  moduleList.append(...sections)
 
   moduleList.addEventListener('change', (e) => {
     const target = e.target as HTMLInputElement

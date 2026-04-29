@@ -2,6 +2,7 @@ import type { ModuleMetadata } from '@/entrypoints/content/common/types/module'
 
 const metadata = {
   id: 'hte-version',
+  group: 'general',
   name: 'HTE Version',
   description: 'Display the HTE version in the page footer.',
   excludeFromPopup: true,

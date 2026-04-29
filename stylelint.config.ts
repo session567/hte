@@ -10,6 +10,7 @@ export default {
     {
       files: ['src/entrypoints/popup/index.css'],
       rules: {
+        'selector-id-pattern': null,
         'selector-class-pattern': null,
         'custom-property-pattern': null,
       },

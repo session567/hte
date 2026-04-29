@@ -1,10 +1,10 @@
-import '@/entrypoints/content/modules/skill-bonus/index.css'
+import '@/entrypoints/content/modules/player-skill-bonus/index.css'
 
 import type { Module } from '@/entrypoints/content/common/types/module'
 import { querySelector, querySelectorAll } from '@/entrypoints/content/common/utils/dom'
 import { pages } from '@/entrypoints/content/common/utils/pages'
-import metadata from '@/entrypoints/content/modules/skill-bonus/metadata'
-import { applySkillBonuses } from '@/entrypoints/content/modules/skill-bonus/utils'
+import metadata from '@/entrypoints/content/modules/player-skill-bonus/metadata'
+import { applySkillBonuses } from '@/entrypoints/content/modules/player-skill-bonus/utils'
 
 const runPlayerDetail = (): void => {
   const element = querySelector('#mainBody .playerInfo')
