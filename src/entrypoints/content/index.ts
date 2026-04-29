@@ -14,20 +14,22 @@ import hteVersion from '@/entrypoints/content/modules/hte-version'
 import htmsPoints from '@/entrypoints/content/modules/htms-points'
 import links from '@/entrypoints/content/modules/links'
 import playerCardRates from '@/entrypoints/content/modules/player-card-rates'
+import playerTsDropRates from '@/entrypoints/content/modules/player-ts-drop-rates'
 import salary from '@/entrypoints/content/modules/salary'
 import skillBonus from '@/entrypoints/content/modules/skill-bonus'
 import weekNumber from '@/entrypoints/content/modules/week-number'
 
 const modules: Module[] = [
   links,
-  denomination,
   weekNumber,
+  denomination,
   skillBonus,
   htmsPoints,
   salary,
-  hatstats,
   playerCardRates,
+  playerTsDropRates,
   hteVersion,
+  hatstats,
 ]
 
 const getHandler = (module: Module): Handler | undefined => {
@@ -54,6 +56,22 @@ const runModule = async (module: Module): Promise<void> => {
   }
 }
 
+const runModules = async (modules: Module[]): Promise<void> => {
+  const promises = new Map<string, Promise<void>>()
+
+  const getPromise = (module: Module): Promise<void> => {
+    const cached = promises.get(module.metadata.id)
+    if (cached) return cached
+
+    const deps = (module.runAfter ?? []).map(getPromise)
+    const promise = Promise.all(deps).then(() => runModule(module))
+    promises.set(module.metadata.id, promise)
+    return promise
+  }
+
+  await Promise.all(modules.map(getPromise))
+}
+
 export default defineContentScript({
   matches: ['https://*.hattrick.org/*'],
   async main() {
@@ -65,6 +83,6 @@ export default defineContentScript({
     logger.debug('Running HTE')
     logger.debug(`Current pathname: ${getCurrentPathname()}`)
 
-    await Promise.all(modules.map(runModule))
+    await runModules(modules)
   },
 })

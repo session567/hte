@@ -29,7 +29,10 @@ export type ModuleMetadata = {
   settings?: Record<string, ModuleSetting>
 }
 
-type BaseModule = { metadata: ModuleMetadata }
+type BaseModule = {
+  metadata: ModuleMetadata
+  runAfter?: Module[]
+}
 
 export type Handler = () => void | Promise<void>
 

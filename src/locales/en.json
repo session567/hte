@@ -43,5 +43,11 @@
   },
   "player_card_rates_red_title": {
     "message": "Probability of a player receiving a red card, based on aggressiveness and honesty."
+  },
+  "player_ts_drop_rates_buy_title": {
+    "message": "Probability of a team spirit drop when buying this player, based on their personality."
+  },
+  "player_ts_drop_rates_sell_title": {
+    "message": "Probability of a team spirit drop when selling this player, based on their personality."
   }
 }

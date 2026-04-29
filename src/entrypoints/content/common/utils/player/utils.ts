@@ -1,4 +1,4 @@
-import { querySelectorAllIn, querySelectorIn } from '@/entrypoints/content/common/utils/dom'
+import { getElementById, querySelectorAllIn, querySelectorIn } from '@/entrypoints/content/common/utils/dom'
 import { logger } from '@/entrypoints/content/common/utils/logger'
 import { NUM_OF_SKILLS, PlayerAge, PlayerSkills, Skill } from '@/entrypoints/content/common/utils/player/constants'
 
@@ -64,4 +64,20 @@ export const parsePlayerSkills = (element: Element): PlayerSkills | null => {
   }
 
   return skills as PlayerSkills
+}
+
+/**
+ * Get a player's personality level by querying the denomination link for the given trait.
+ */
+export const getPersonalityLevel = (lt: 'gentleness' | 'aggressiveness' | 'honesty'): number | null => {
+  const playerInfo = getElementById<HTMLDivElement>('ctl00_ctl00_CPContent_CPMain_pnlplayerInfo')
+  if (!playerInfo) return null
+
+  const link = querySelectorIn<HTMLAnchorElement>(playerInfo, `a.skill[href*="lt=${lt}"]`, false)
+  if (!link) return null
+
+  const ll = new URLSearchParams(link.search).get('ll')
+  if (!ll) return null
+
+  return parseInt(ll, 10)
 }

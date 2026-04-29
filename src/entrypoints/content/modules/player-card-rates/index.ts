@@ -2,15 +2,17 @@ import '@/entrypoints/content/modules/player-card-rates/index.css'
 
 import { el } from '@/common/utils/dom'
 import type { Module } from '@/entrypoints/content/common/types/module'
-import { getElementById, querySelector } from '@/entrypoints/content/common/utils/dom'
+import { querySelector } from '@/entrypoints/content/common/utils/dom'
+import { formatPercentage } from '@/entrypoints/content/common/utils/format'
 import { pages } from '@/entrypoints/content/common/utils/pages'
+import { getPersonalityLevel } from '@/entrypoints/content/common/utils/player/utils'
 import metadata from '@/entrypoints/content/modules/player-card-rates/metadata'
-import { formatRate, getCardRates, getPersonalityLevel } from '@/entrypoints/content/modules/player-card-rates/utils'
+import { getCardRates } from '@/entrypoints/content/modules/player-card-rates/utils'
 
 const makeCardIcon = (rate: number, type: 'yellow' | 'red'): HTMLSpanElement =>
   el('span', {
     className: `hte-card-icon hte-card-icon-${type}`,
-    textContent: formatRate(rate),
+    textContent: formatPercentage(rate),
     title: i18n.t(`player_card_rates_${type}_title`),
   })
 
@@ -18,12 +20,11 @@ const playerCardRates: Module = {
   metadata,
   pages: [pages.playerDetail.senior.own, pages.playerDetail.senior.other],
   run: () => {
-    const playerInfo = getElementById<HTMLDivElement>('ctl00_ctl00_CPContent_CPMain_pnlplayerInfo')
     const byline = querySelector('#mainBody > .byline')
-    if (!playerInfo || !byline) return
+    if (!byline) return
 
-    const aggressiveness = getPersonalityLevel(playerInfo, 'aggressiveness')
-    const honesty = getPersonalityLevel(playerInfo, 'honesty')
+    const aggressiveness = getPersonalityLevel('aggressiveness')
+    const honesty = getPersonalityLevel('honesty')
     if (honesty === null || aggressiveness === null) return
 
     const rates = getCardRates(aggressiveness, honesty)
