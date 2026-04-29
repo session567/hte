@@ -34,6 +34,15 @@ const denomination: Module = {
         link.nextElementSibling.remove()
       }
 
+      // Remove existing denomination number if present near <ht-skill-link> to prevent duplicates
+      if (link.parentElement?.tagName.toLowerCase() === 'ht-skill-link') {
+        const nativeSpan = link.parentElement.nextElementSibling
+
+        if (nativeSpan?.classList.contains('denominationNumber')) {
+          nativeSpan.remove()
+        }
+      }
+
       const value = await adjustDenominationValue(lt, Number(ll))
       const maxValue = MAX_VALUES[lt]
       const displayValue = maxValue ? `${value}/${maxValue}` : `${value}`
