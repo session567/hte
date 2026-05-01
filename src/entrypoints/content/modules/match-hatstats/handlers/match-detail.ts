@@ -68,8 +68,8 @@ const createHatStatsSidebar = (htMatch: Element, homeStats: HatStats, awayStats:
 
   const tbody = el('tbody')
   tbody.append(
-    makeRow(i18n.t('hatstats_midfield'), homeStats.midfield, awayStats.midfield),
     makeRow(i18n.t('hatstats_defence'), homeStats.defence, awayStats.defence),
+    makeRow(i18n.t('hatstats_midfield'), homeStats.midfield, awayStats.midfield),
     makeRow(i18n.t('hatstats_attack'), homeStats.attack, awayStats.attack),
     makeRow(i18n.t('hatstats_total'), homeStats.total, awayStats.total, true),
   )
