@@ -38,6 +38,12 @@
   "hatstats_away": {
     "message": "Away"
   },
+  "transfer_age_older_than": {
+    "message": "Older than"
+  },
+  "transfer_age_days": {
+    "message": "days"
+  },
   "player_card_rates_yellow_title": {
     "message": "Probability of a player receiving a yellow card, based on aggressiveness and honesty."
   },

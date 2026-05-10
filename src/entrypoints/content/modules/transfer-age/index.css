@@ -1,0 +1,52 @@
+#hte-transfer-age-settings {
+  display: flex;
+  gap: 12px;
+  float: right;
+  margin-top: -2px;
+
+  .hte-transfer-age-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .hte-transfer-age-swatch {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+
+    &.hte-transfer-age-swatch-orange {
+      background-color: var(--hte-color-orange-4);
+    }
+
+    &.hte-transfer-age-swatch-red {
+      background-color: var(--hte-color-red-6);
+    }
+  }
+
+  .hte-transfer-age-input {
+    width: 44px;
+    text-align: center;
+  }
+}
+
+.hte-transfer-age {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+
+  &.hte-transfer-age-green {
+    text-decoration-color: var(--hte-hattrick-light-green);
+  }
+
+  &.hte-transfer-age-orange {
+    text-decoration-color: var(--hte-color-orange-4);
+  }
+
+  &.hte-transfer-age-red {
+    text-decoration-color: var(--hte-color-red-6);
+  }
+}
+
+
