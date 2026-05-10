@@ -11,7 +11,7 @@ export type ModuleSetting = {
   default: boolean
 }
 
-export type ModuleGroup = 'general' | 'match' | 'player'
+export type ModuleGroup = 'general' | 'match' | 'player' | 'transfer'
 
 /**
  * Metadata for a module.

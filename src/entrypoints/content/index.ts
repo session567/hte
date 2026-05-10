@@ -17,6 +17,7 @@ import playerHtmsPoints from '@/entrypoints/content/modules/player-htms-points'
 import playerSalary from '@/entrypoints/content/modules/player-salary'
 import playerSkillBonus from '@/entrypoints/content/modules/player-skill-bonus'
 import playerTsDropRates from '@/entrypoints/content/modules/player-ts-drop-rates'
+import transferAge from '@/entrypoints/content/modules/transfer-age'
 import weekNumber from '@/entrypoints/content/modules/week-number'
 
 const modules: Module[] = [
@@ -28,6 +29,7 @@ const modules: Module[] = [
   playerSalary,
   playerCardRates,
   playerTsDropRates,
+  transferAge,
   hteVersion,
   matchHatstats,
 ]
