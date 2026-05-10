@@ -18,6 +18,9 @@ Features:
 - Display numeric values next to all team and player abilities
 - Display week numbers next to dates throughout Hattrick
 - Display HatStats ratings on match detail and match order pages
+- Show the likelihood of a player receiving a yellow or red card based on their personality
+- Show the likelihood of a team spirit drop when buying or selling a player based on their personality
+- Highlight players in transfer search results that are close to aging up
 
 ## Installation
 
