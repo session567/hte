@@ -6,7 +6,7 @@ import { getSetting } from '@/common/utils/settings'
 import type { Handler, Module } from '@/entrypoints/content/common/types/module'
 import { getCurrentPathname } from '@/entrypoints/content/common/utils/location'
 import { logger } from '@/entrypoints/content/common/utils/logger'
-import { getCurrentPage, isCurrentPage } from '@/entrypoints/content/common/utils/pages'
+import { isCurrentPage, tryGetCurrentPage } from '@/entrypoints/content/common/utils/pages'
 import { isLoggedIn } from '@/entrypoints/content/common/utils/team/utils'
 import denomination from '@/entrypoints/content/modules/denomination'
 import hteVersion from '@/entrypoints/content/modules/hte-version'
@@ -35,7 +35,11 @@ const modules: Module[] = [
 ]
 
 const getHandler = (module: Module): Handler | undefined => {
-  if (module.pages instanceof Map) return module.pages.get(getCurrentPage())
+  if (module.pages instanceof Map) {
+    const page = tryGetCurrentPage()
+    return page ? module.pages.get(page) : undefined
+  }
+
   if (isCurrentPage(...module.pages)) return module.run
 }
 
