@@ -34,7 +34,7 @@ const denomination: Module = {
         link.nextElementSibling.remove()
       }
 
-      // Remove existing denomination number if present near <ht-skill-link> to prevent duplicates
+      // Same check when link is wrapped in <ht-skill-link>
       if (link.parentElement?.tagName.toLowerCase() === 'ht-skill-link') {
         const nativeSpan = link.parentElement.nextElementSibling
 

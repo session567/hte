@@ -33,8 +33,8 @@ const matchesCurrentLocation = (page: Page): boolean => {
   if (queryParams) {
     const searchParams = getCurrentSearchParams()
     for (const { name, value } of queryParams) {
-      const isPresent = value === undefined ? !searchParams.has(name) : !searchParams.has(name, value)
-      if (isPresent) return false
+      const isPresent = value === undefined ? searchParams.has(name) : searchParams.has(name, value)
+      if (!isPresent) return false
     }
   }
 

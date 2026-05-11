@@ -62,8 +62,8 @@ const createBonusBars = (skillBar: HTMLDivElement, bonuses: SkillBonuses): HTMLD
   const bonusBars: HTMLDivElement[] = []
   let accumulatedBonus = 0
 
-  ;(Object.entries(bonuses) as [keyof SkillBonuses, number][]).forEach(([bonusType, bonusValue]) => {
-    if (bonusValue === 0) return
+  for (const [bonusType, bonusValue] of Object.entries(bonuses) as [keyof SkillBonuses, number][]) {
+    if (bonusValue === 0) continue
 
     accumulatedBonus += bonusValue
 
@@ -75,7 +75,7 @@ const createBonusBars = (skillBar: HTMLDivElement, bonuses: SkillBonuses): HTMLD
     bonusBar.appendChild(denominationBar.cloneNode(true))
 
     bonusBars.push(bonusBar)
-  })
+  }
 
   return bonusBars
 }
