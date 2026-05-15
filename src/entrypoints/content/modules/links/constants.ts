@@ -1,6 +1,6 @@
 import { Page, pages } from '@/entrypoints/content/common/utils/pages'
 import { getPageSeriesId } from '@/entrypoints/content/common/utils/series/utils'
-import { getOwnTeamData } from '@/entrypoints/content/common/utils/team/utils'
+import { getPageTeamId } from '@/entrypoints/content/common/utils/team/utils'
 
 export type Link = {
   name: string
@@ -58,7 +58,7 @@ export const SCOUTRICK: Link = {
 }
 
 export const linkMap = new Map<Page, LinkData>([
-  [pages.club, { links: [HATTID_TEAM], getReplacements: getOwnTeamData }],
+  [pages.club, { links: [HATTID_TEAM], getReplacements: () => ({ teamId: getPageTeamId() }) }],
   [pages.matchList.senior.own, { links: [DHTH] }],
   [pages.playerDetail.senior.own, { links: [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER] }],
   [pages.playerList.senior.own, { links: [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER] }],
