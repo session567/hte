@@ -7,7 +7,7 @@ import { querySelector, querySelectorAll, querySelectorIn } from '@/entrypoints/
 import { pages } from '@/entrypoints/content/common/utils/pages'
 import { parsePlayerAge } from '@/entrypoints/content/common/utils/player/utils'
 import metadata from '@/entrypoints/content/modules/transfer-age/metadata'
-import { thresholdsStorage } from '@/entrypoints/content/modules/transfer-age/utils'
+import { settingsStorage } from '@/entrypoints/content/modules/transfer-age/utils'
 
 const createThresholdControl = (
   color: 'orange' | 'red',
@@ -27,32 +27,70 @@ const createThresholdControl = (
   return { label, input }
 }
 
-const injectSettingsPanel = (red: number, orange: number): void => {
+const clearHighlights = (): void => {
+  querySelectorAll<HTMLElement>('.hte-transfer-age', false).forEach((cell) => {
+    cell.classList.remove(
+      'hte-transfer-age',
+      'hte-transfer-age-red',
+      'hte-transfer-age-orange',
+      'hte-transfer-age-green',
+    )
+  })
+}
+
+const injectSettingsPanel = (enabled: boolean, orange: number, red: number): void => {
   querySelector('#hte-transfer-age-settings', false)?.remove()
 
   const { label: orangeLabel, input: orangeInput } = createThresholdControl('orange', orange)
   const { label: redLabel, input: redInput } = createThresholdControl('red', red)
 
+  const enabledButton = el('span', { className: `hte-transfer-age-toggle${enabled ? ' hte-transfer-age-active' : ''}` })
+  enabledButton.append(el('i', { className: 'hte-icon-highlighter' }))
+
+  const thresholdsContainer = el('div', { className: 'hte-transfer-age-thresholds' })
+  thresholdsContainer.append(orangeLabel, redLabel)
+
   const panel = el('div', { id: 'hte-transfer-age-settings' })
-  panel.append(orangeLabel, redLabel)
+  panel.classList.toggle('hte-transfer-age-disabled', !enabled)
+  panel.append(enabledButton, thresholdsContainer)
+
+  let isEnabled = enabled
+
+  const readThresholds = (): { red: number; orange: number } | null => {
+    const orange = parseInt(orangeInput.value, 10)
+    const red = parseInt(redInput.value, 10)
+
+    return isNaN(orange) || isNaN(red) ? null : { orange, red }
+  }
 
   const onThresholdChange = () => {
-    const newOrange = parseInt(orangeInput.value, 10)
-    const newRed = parseInt(redInput.value, 10)
-    if (isNaN(newOrange) || isNaN(newRed)) return
+    const thresholds = readThresholds()
+    if (!thresholds) return
 
-    void thresholdsStorage.setValue({ red: newRed, orange: newOrange }).then(() => {
-      applyHighlights(newRed, newOrange)
-    })
+    void settingsStorage.setValue({ ...thresholds, enabled: isEnabled })
+    if (isEnabled) applyHighlights(thresholds.orange, thresholds.red)
+  }
+
+  const onEnabledChange = () => {
+    isEnabled = enabledButton.classList.toggle('hte-transfer-age-active')
+    const thresholds = readThresholds()
+
+    panel.classList.toggle('hte-transfer-age-disabled', !isEnabled)
+
+    if (thresholds) void settingsStorage.setValue({ ...thresholds, enabled: isEnabled })
+
+    if (!isEnabled) clearHighlights()
+    else if (thresholds) applyHighlights(thresholds.orange, thresholds.red)
   }
 
   orangeInput.addEventListener('change', onThresholdChange)
   redInput.addEventListener('change', onThresholdChange)
+  enabledButton.addEventListener('click', onEnabledChange)
 
   querySelector('#ctl00_ctl00_CPContent_CPMain_ucPager_divWrapper .PagerRight_Default')?.prepend(panel)
 }
 
-const applyHighlights = (red: number, orange: number): void => {
+const applyHighlights = (orange: number, red: number): void => {
   const players = querySelectorAll<HTMLElement>('.transferPlayerInformation', false)
 
   players.forEach((player) => {
@@ -75,9 +113,9 @@ const transferAge: Module = {
   metadata,
   pages: [pages.transferSearchResults],
   run: async () => {
-    const { red, orange } = await thresholdsStorage.getValue()
-    injectSettingsPanel(red, orange)
-    applyHighlights(red, orange)
+    const { enabled, red, orange } = await settingsStorage.getValue()
+    injectSettingsPanel(enabled, orange, red)
+    if (enabled) applyHighlights(orange, red)
   },
 }
 

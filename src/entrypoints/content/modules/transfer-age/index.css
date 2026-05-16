@@ -4,6 +4,17 @@
   float: right;
   margin-top: -2px;
 
+  .hte-transfer-age-toggle {
+    cursor: pointer;
+    color: var(--hte-color-gray-4);
+    display: flex;
+    align-items: center;
+
+    &:hover, &.hte-transfer-age-active {
+      color: var(--hte-color-gray-8);
+    }
+  }
+
   .hte-transfer-age-label {
     display: flex;
     align-items: center;
@@ -26,9 +37,19 @@
     }
   }
 
+  .hte-transfer-age-thresholds {
+    display: flex;
+    gap: 12px;
+  }
+
   .hte-transfer-age-input {
     width: 44px;
     text-align: center;
+  }
+
+  &.hte-transfer-age-disabled .hte-transfer-age-thresholds {
+    opacity: 0.4;
+    pointer-events: none;
   }
 }
 
