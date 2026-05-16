@@ -38,7 +38,7 @@ const clearHighlights = (): void => {
   })
 }
 
-const injectSettingsPanel = (enabled: boolean, red: number, orange: number): void => {
+const injectSettingsPanel = (enabled: boolean, orange: number, red: number): void => {
   querySelector('#hte-transfer-age-settings', false)?.remove()
 
   const { label: orangeLabel, input: orangeInput } = createThresholdControl('orange', orange)
@@ -47,35 +47,40 @@ const injectSettingsPanel = (enabled: boolean, red: number, orange: number): voi
   const enabledButton = el('span', { className: `hte-transfer-age-toggle${enabled ? ' hte-transfer-age-active' : ''}` })
   enabledButton.append(el('i', { className: 'hte-icon-highlighter' }))
 
-  const thresholds = el('div', { className: 'hte-transfer-age-thresholds' })
-  thresholds.append(orangeLabel, redLabel)
+  const thresholdsContainer = el('div', { className: 'hte-transfer-age-thresholds' })
+  thresholdsContainer.append(orangeLabel, redLabel)
 
   const panel = el('div', { id: 'hte-transfer-age-settings' })
-  if (!enabled) panel.classList.add('hte-transfer-age-disabled')
-  panel.append(enabledButton, thresholds)
+  panel.classList.toggle('hte-transfer-age-disabled', !enabled)
+  panel.append(enabledButton, thresholdsContainer)
+
+  let isEnabled = enabled
+
+  const readThresholds = (): { red: number; orange: number } | null => {
+    const orange = parseInt(orangeInput.value, 10)
+    const red = parseInt(redInput.value, 10)
+
+    return isNaN(orange) || isNaN(red) ? null : { orange, red }
+  }
 
   const onThresholdChange = () => {
-    const newOrange = parseInt(orangeInput.value, 10)
-    const newRed = parseInt(redInput.value, 10)
-    if (isNaN(newOrange) || isNaN(newRed)) return
+    const thresholds = readThresholds()
+    if (!thresholds) return
 
-    const isEnabled = enabledButton.classList.contains('hte-transfer-age-active')
-    void settingsStorage.setValue({ red: newRed, orange: newOrange, enabled: isEnabled }).then(() => {
-      if (isEnabled) applyHighlights(newRed, newOrange)
-    })
+    void settingsStorage.setValue({ ...thresholds, enabled: isEnabled })
+    if (isEnabled) applyHighlights(thresholds.orange, thresholds.red)
   }
 
   const onEnabledChange = () => {
-    const newEnabled = enabledButton.classList.toggle('hte-transfer-age-active')
-    const newOrange = parseInt(orangeInput.value, 10)
-    const newRed = parseInt(redInput.value, 10)
-    const areThresholdsValid = !isNaN(newRed) && !isNaN(newOrange)
+    isEnabled = enabledButton.classList.toggle('hte-transfer-age-active')
+    const thresholds = readThresholds()
 
-    panel.classList.toggle('hte-transfer-age-disabled', !newEnabled)
+    panel.classList.toggle('hte-transfer-age-disabled', !isEnabled)
 
-    if (areThresholdsValid) void settingsStorage.setValue({ red: newRed, orange: newOrange, enabled: newEnabled })
-    if (newEnabled && areThresholdsValid) applyHighlights(newRed, newOrange)
-    if (!newEnabled) clearHighlights()
+    if (thresholds) void settingsStorage.setValue({ ...thresholds, enabled: isEnabled })
+
+    if (!isEnabled) clearHighlights()
+    else if (thresholds) applyHighlights(thresholds.orange, thresholds.red)
   }
 
   orangeInput.addEventListener('change', onThresholdChange)
@@ -85,7 +90,7 @@ const injectSettingsPanel = (enabled: boolean, red: number, orange: number): voi
   querySelector('#ctl00_ctl00_CPContent_CPMain_ucPager_divWrapper .PagerRight_Default')?.prepend(panel)
 }
 
-const applyHighlights = (red: number, orange: number): void => {
+const applyHighlights = (orange: number, red: number): void => {
   const players = querySelectorAll<HTMLElement>('.transferPlayerInformation', false)
 
   players.forEach((player) => {
@@ -109,8 +114,8 @@ const transferAge: Module = {
   pages: [pages.transferSearchResults],
   run: async () => {
     const { enabled, red, orange } = await settingsStorage.getValue()
-    injectSettingsPanel(enabled, red, orange)
-    if (enabled) applyHighlights(red, orange)
+    injectSettingsPanel(enabled, orange, red)
+    if (enabled) applyHighlights(orange, red)
   },
 }
 
