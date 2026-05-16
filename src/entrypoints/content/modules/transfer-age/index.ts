@@ -7,7 +7,7 @@ import { querySelector, querySelectorAll, querySelectorIn } from '@/entrypoints/
 import { pages } from '@/entrypoints/content/common/utils/pages'
 import { parsePlayerAge } from '@/entrypoints/content/common/utils/player/utils'
 import metadata from '@/entrypoints/content/modules/transfer-age/metadata'
-import { thresholdsStorage } from '@/entrypoints/content/modules/transfer-age/utils'
+import { settingsStorage } from '@/entrypoints/content/modules/transfer-age/utils'
 
 const createThresholdControl = (
   color: 'orange' | 'red',
@@ -27,27 +27,60 @@ const createThresholdControl = (
   return { label, input }
 }
 
-const injectSettingsPanel = (red: number, orange: number): void => {
+const clearHighlights = (): void => {
+  querySelectorAll<HTMLElement>('.hte-transfer-age', false).forEach((cell) => {
+    cell.classList.remove(
+      'hte-transfer-age',
+      'hte-transfer-age-red',
+      'hte-transfer-age-orange',
+      'hte-transfer-age-green',
+    )
+  })
+}
+
+const injectSettingsPanel = (enabled: boolean, red: number, orange: number): void => {
   querySelector('#hte-transfer-age-settings', false)?.remove()
 
   const { label: orangeLabel, input: orangeInput } = createThresholdControl('orange', orange)
   const { label: redLabel, input: redInput } = createThresholdControl('red', red)
 
+  const enabledButton = el('span', { className: `hte-transfer-age-toggle${enabled ? ' hte-transfer-age-active' : ''}` })
+  enabledButton.append(el('i', { className: 'hte-icon-highlighter' }))
+
+  const thresholds = el('div', { className: 'hte-transfer-age-thresholds' })
+  thresholds.append(orangeLabel, redLabel)
+
   const panel = el('div', { id: 'hte-transfer-age-settings' })
-  panel.append(orangeLabel, redLabel)
+  if (!enabled) panel.classList.add('hte-transfer-age-disabled')
+  panel.append(enabledButton, thresholds)
 
   const onThresholdChange = () => {
     const newOrange = parseInt(orangeInput.value, 10)
     const newRed = parseInt(redInput.value, 10)
     if (isNaN(newOrange) || isNaN(newRed)) return
 
-    void thresholdsStorage.setValue({ red: newRed, orange: newOrange }).then(() => {
-      applyHighlights(newRed, newOrange)
+    const isEnabled = enabledButton.classList.contains('hte-transfer-age-active')
+    void settingsStorage.setValue({ red: newRed, orange: newOrange, enabled: isEnabled }).then(() => {
+      if (isEnabled) applyHighlights(newRed, newOrange)
     })
+  }
+
+  const onEnabledChange = () => {
+    const newEnabled = enabledButton.classList.toggle('hte-transfer-age-active')
+    const newOrange = parseInt(orangeInput.value, 10)
+    const newRed = parseInt(redInput.value, 10)
+    const areThresholdsValid = !isNaN(newRed) && !isNaN(newOrange)
+
+    panel.classList.toggle('hte-transfer-age-disabled', !newEnabled)
+
+    if (areThresholdsValid) void settingsStorage.setValue({ red: newRed, orange: newOrange, enabled: newEnabled })
+    if (newEnabled && areThresholdsValid) applyHighlights(newRed, newOrange)
+    if (!newEnabled) clearHighlights()
   }
 
   orangeInput.addEventListener('change', onThresholdChange)
   redInput.addEventListener('change', onThresholdChange)
+  enabledButton.addEventListener('click', onEnabledChange)
 
   querySelector('#ctl00_ctl00_CPContent_CPMain_ucPager_divWrapper .PagerRight_Default')?.prepend(panel)
 }
@@ -75,9 +108,9 @@ const transferAge: Module = {
   metadata,
   pages: [pages.transferSearchResults],
   run: async () => {
-    const { red, orange } = await thresholdsStorage.getValue()
-    injectSettingsPanel(red, orange)
-    applyHighlights(red, orange)
+    const { enabled, red, orange } = await settingsStorage.getValue()
+    injectSettingsPanel(enabled, red, orange)
+    if (enabled) applyHighlights(red, orange)
   },
 }
 
