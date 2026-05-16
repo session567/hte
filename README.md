@@ -8,18 +8,26 @@
 **HTE** is a browser extension that enhances your [Hattrick](https://www.hattrick.org) experience with deeper player and
 match insights, various visual tweaks throughout the site, and time-saving shortcuts for common tasks.
 
-Features:
+## Features
 
-- Extend player skill bars to include loyalty and homegrown bonuses
-- Display HTMS points for players
-- Save and reuse transfer search filters
-- Display the player's yearly salary next to weekly salary on the player detail page
+### General
 - Display relevant links to external tools in the sidebar
 - Display numeric values next to all team and player abilities
 - Display week numbers next to dates throughout Hattrick
+
+### Match
 - Display HatStats ratings on match detail and match order pages
+- Add a link to the opponent's matches on the match order page
+
+### Player
+- Extend player skill bars to include loyalty and homegrown bonuses
+- Display HTMS points for players
+- Display the player's yearly salary next to weekly salary on the player detail page
 - Show the likelihood of a player receiving a yellow or red card based on their personality
 - Show the likelihood of a team spirit drop when buying or selling a player based on their personality
+
+### Transfer
+- Save and reuse transfer search filters
 - Highlight players in transfer search results that are close to aging up
 
 ## Installation
