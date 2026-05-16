@@ -1,4 +1,4 @@
-import '@/entrypoints/content/modules/player-ts-drop-rates/index.css'
+import '@/entrypoints/content/common/styles/player.css'
 
 import { el } from '@/common/utils/dom'
 import type { Module } from '@/entrypoints/content/common/types/module'
@@ -10,12 +10,14 @@ import playerCardRates from '@/entrypoints/content/modules/player-card-rates'
 import metadata from '@/entrypoints/content/modules/player-ts-drop-rates/metadata'
 import { getTsDropRates } from '@/entrypoints/content/modules/player-ts-drop-rates/utils'
 
-const makeTsIcon = (rate: number, type: 'buy' | 'sell'): HTMLSpanElement =>
-  el('span', {
-    className: `hte-ts-drop-icon hte-ts-drop-icon-${type}`,
-    textContent: formatPercentage(rate),
-    title: i18n.t(`player_ts_drop_rates_${type}_title`),
-  })
+const makeTsStat = (rate: number, type: 'buy' | 'sell'): HTMLSpanElement => {
+  const wrapper = el('span', { className: 'hte-stat' })
+  wrapper.append(
+    el('i', { className: `hte-icon-ts-${type}`, title: i18n.t(`player_ts_drop_rates_${type}_title`) }),
+    el('span', { textContent: formatPercentage(rate) }),
+  )
+  return wrapper
+}
 
 const playerTsDropRates: Module = {
   metadata,
@@ -33,9 +35,7 @@ const playerTsDropRates: Module = {
 
     const { buy, sell } = rates
 
-    const wrapper = el('span', { className: 'hte-ts-drop-icons' })
-    wrapper.append(makeTsIcon(buy, 'buy'), makeTsIcon(sell, 'sell'))
-    byline.append(wrapper)
+    byline.append(makeTsStat(sell, 'sell'), makeTsStat(buy, 'buy'))
   },
 }
 

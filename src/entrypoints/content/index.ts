@@ -1,4 +1,4 @@
-import '@/common/styles/common.css'
+import '@/entrypoints/content/common/styles/common.css'
 
 import { defineContentScript } from 'wxt/utils/define-content-script'
 
@@ -11,6 +11,7 @@ import { isLoggedIn } from '@/entrypoints/content/common/utils/team/utils'
 import denomination from '@/entrypoints/content/modules/denomination'
 import hteVersion from '@/entrypoints/content/modules/hte-version'
 import links from '@/entrypoints/content/modules/links'
+import matchGoToMatches from '@/entrypoints/content/modules/match-go-to-matches'
 import matchHatstats from '@/entrypoints/content/modules/match-hatstats'
 import playerCardRates from '@/entrypoints/content/modules/player-card-rates'
 import playerHtmsPoints from '@/entrypoints/content/modules/player-htms-points'
@@ -32,6 +33,7 @@ const modules: Module[] = [
   transferAge,
   hteVersion,
   matchHatstats,
+  matchGoToMatches,
 ]
 
 const getHandler = (module: Module): Handler | undefined => {

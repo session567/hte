@@ -1,0 +1,42 @@
+/* Icons sourced from Lucide (https://lucide.dev) — ISC License
+Copyright (c) for portions of Lucide is held by Cole Bemis 2013-2022 as part of Feather (MIT).
+All other copyright (c) for Lucide is held by Lucide Contributors.
+See https://github.com/lucide-icons/lucide/blob/main/LICENSE */
+
+[class*="hte-icon-"]::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  background-color: currentcolor;
+}
+
+.hte-icon-ts-buy::before {
+  mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m10 17 5-5-5-5'/><path d='M15 12H3'/><path d='M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4'/></svg>") no-repeat center / contain;
+}
+
+.hte-icon-ts-sell::before {
+  mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m16 17 5-5-5-5'/><path d='M21 12H9'/><path d='M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4'/></svg>") no-repeat center / contain;
+}
+
+.hte-icon-football::before {
+  mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M11 7a16 16 20 0 1 10.98 4.362'/><path d='M12 12a13 13 0 0 1-8.66 5'/><path d='M16.83 13.634a16 16 0 0 1-9.267 7.328'/><path d='M20.66 17A13 13 0 0 0 12 12a13 13 0 0 1 0-10'/><path d='M8.17 15.366a16 16 0 0 1-1.713-11.69'/><circle cx='12' cy='12' r='10'/></svg>") no-repeat center / contain;
+}
+
+.hte-icon-card-yellow,
+.hte-icon-card-red {
+  &::before {
+    width: 10px;
+    height: 14px;
+    border-radius: 2px;
+  }
+}
+
+.hte-icon-card-yellow::before {
+  background-color: var(--hte-color-yellow-5);
+}
+
+.hte-icon-card-red::before {
+  background-color: var(--hte-color-red-8);
+}
