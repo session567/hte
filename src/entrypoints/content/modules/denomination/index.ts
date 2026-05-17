@@ -18,7 +18,7 @@ const denomination: Module = {
   pages: [pages.all],
   run: async () => {
     if (isCurrentPage(pages.matchDetail.senior)) await getHtMatch()
-    if (isCurrentPage(pages.office)) await waitForElement('ht-office ht-widget-team-summary')
+    else if (isCurrentPage(pages.office)) await waitForElement('ht-office ht-widget-team-summary')
 
     const links = querySelectorAll<HTMLAnchorElement>(`a[href*="${pages.appDenominations.pathname}"]`, false)
     for (const link of links) {
