@@ -2,9 +2,10 @@ import '@/entrypoints/content/modules/denomination/index.css'
 
 import { el } from '@/common/utils/dom'
 import type { Module } from '@/entrypoints/content/common/types/module'
-import { querySelectorAll } from '@/entrypoints/content/common/utils/dom'
+import { querySelectorAll, waitForElement } from '@/entrypoints/content/common/utils/dom'
 import { logger } from '@/entrypoints/content/common/utils/logger'
-import { pages } from '@/entrypoints/content/common/utils/pages'
+import { getHtMatch } from '@/entrypoints/content/common/utils/match/utils'
+import { isCurrentPage, pages } from '@/entrypoints/content/common/utils/pages'
 import { MAX_VALUES, PERSONALITY_TYPES } from '@/entrypoints/content/modules/denomination/constants'
 import metadata from '@/entrypoints/content/modules/denomination/metadata'
 import { adjustDenominationValue, isDenominationType } from '@/entrypoints/content/modules/denomination/utils'
@@ -16,8 +17,10 @@ const denomination: Module = {
   metadata,
   pages: [pages.all],
   run: async () => {
-    const links = querySelectorAll<HTMLAnchorElement>(`a.skill[href*="${pages.appDenominations.pathname}"]`, false)
+    if (isCurrentPage(pages.matchDetail.senior)) await getHtMatch()
+    if (isCurrentPage(pages.office)) await waitForElement('ht-office ht-widget-team-summary')
 
+    const links = querySelectorAll<HTMLAnchorElement>(`a[href*="${pages.appDenominations.pathname}"]`, false)
     for (const link of links) {
       const url = new URL(link.href)
       const lt = url.searchParams.get('lt')
