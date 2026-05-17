@@ -29,6 +29,7 @@ export const pages = {
     youth: teamPages('/Club/Matches/', { queryParams: [{ name: 'YouthTeamId' }] }),
   },
   matchOrder: new Page('/Club/Matches/MatchOrder/MatchOrder.aspx'),
+  office: new Page('/MyHattrick/Office/'),
   playerDetail: {
     senior: teamPages('/Club/Players/Player.aspx'),
     youth: teamPages('/Club/Players/YouthPlayer.aspx'),
