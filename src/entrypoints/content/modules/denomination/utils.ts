@@ -1,4 +1,4 @@
-import { getSetting } from '@/common/utils/settings'
+import { getBoolSetting } from '@/common/utils/settings'
 import { DENOMINATION_TYPES, MAX_VALUES } from '@/entrypoints/content/modules/denomination/constants'
 import { DenominationType } from '@/entrypoints/content/modules/denomination/types'
 
@@ -15,7 +15,7 @@ const getDenominationConfig = async (lt: DenominationType): Promise<Denomination
     case 'confidence':
       return { offset: -23, max: 9 }
     case 'aggressiveness':
-      return { reverse: await getSetting('denomination', 'reverseAggressiveness') }
+      return { reverse: await getBoolSetting('denomination', 'reverseAggressiveness') }
     default:
       return {}
   }

@@ -7,7 +7,7 @@ import metadata from '@/entrypoints/content/modules/match-go-to-matches/metadata
 const matchGoToMatches: Module = {
   metadata,
   pages: [pages.matchOrder],
-  run: async (): Promise<void> => {
+  run: async () => {
     const headerRight = await waitForElement('ht-matchorder .mo-topbar .header-right')
     if (!headerRight) return
 

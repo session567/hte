@@ -55,5 +55,8 @@
   },
   "player_ts_drop_rates_sell_title": {
     "message": "Probability of a team spirit drop when selling this player, based on their personality."
+  },
+  "player_upcoming_birthdays_title": {
+    "message": "Upcoming birthdays"
   }
 }
