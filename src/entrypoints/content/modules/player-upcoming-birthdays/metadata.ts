@@ -4,7 +4,7 @@ const metadata = {
   id: 'player-upcoming-birthdays',
   group: 'player',
   name: 'Upcoming Birthdays',
-  description: 'Show a sidebar box listing players close to their birthday.',
+  description: 'List players close to their next birthday in the player list page sidebar.',
   settings: {
     threshold: { label: 'Show players older than N days', default: 90, min: 0, max: 111 },
   },
