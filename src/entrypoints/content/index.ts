@@ -2,7 +2,7 @@ import '@/entrypoints/content/common/styles/common.css'
 
 import { defineContentScript } from 'wxt/utils/define-content-script'
 
-import { getSetting } from '@/common/utils/settings'
+import { getBoolSetting } from '@/common/utils/settings'
 import type { Handler, Module } from '@/entrypoints/content/common/types/module'
 import { getCurrentPathname } from '@/entrypoints/content/common/utils/location'
 import { logger } from '@/entrypoints/content/common/utils/logger'
@@ -18,6 +18,7 @@ import playerHtmsPoints from '@/entrypoints/content/modules/player-htms-points'
 import playerSalary from '@/entrypoints/content/modules/player-salary'
 import playerSkillBonus from '@/entrypoints/content/modules/player-skill-bonus'
 import playerTsDropRates from '@/entrypoints/content/modules/player-ts-drop-rates'
+import playerUpcomingBirthdays from '@/entrypoints/content/modules/player-upcoming-birthdays'
 import transferAge from '@/entrypoints/content/modules/transfer-age'
 import weekNumber from '@/entrypoints/content/modules/week-number'
 
@@ -30,6 +31,7 @@ const modules: Module[] = [
   playerSalary,
   playerCardRates,
   playerTsDropRates,
+  playerUpcomingBirthdays,
   transferAge,
   hteVersion,
   matchHatstats,
@@ -46,7 +48,7 @@ const getHandler = (module: Module): Handler | undefined => {
 }
 
 const runModule = async (module: Module): Promise<void> => {
-  const enabled = await getSetting(module.metadata.id, 'enabled')
+  const enabled = await getBoolSetting(module.metadata.id, 'enabled')
   if (!enabled) {
     logger.debug(`Skipping disabled module: ${module.metadata.name}`)
     return

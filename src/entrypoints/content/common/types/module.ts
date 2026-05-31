@@ -3,13 +3,9 @@ import { Page } from '@/entrypoints/content/common/utils/pages'
 /**
  * Module-specific setting.
  */
-export type ModuleSetting = {
-  // Label shown in the popup UI
-  label: string
-  // Default value for the setting
-  // Currently only boolean settings are supported
-  default: boolean
-}
+export type ModuleSetting =
+  | { label: string; default: boolean }
+  | { label: string; default: number; min?: number; max?: number }
 
 export type ModuleGroup = 'general' | 'match' | 'player' | 'transfer'
 

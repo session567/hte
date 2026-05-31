@@ -1,17 +1,83 @@
 import { el } from '@/common/utils/dom'
 import { allMetadata } from '@/common/utils/metadata'
-import { getSetting, setSetting } from '@/common/utils/settings'
-import type { ModuleMetadata } from '@/entrypoints/content/common/types/module'
+import { getBoolSetting, getIntSetting, setSetting } from '@/common/utils/settings'
+import type { ModuleMetadata, ModuleSetting } from '@/entrypoints/content/common/types/module'
 
 const modules = allMetadata.filter(({ excludeFromPopup }) => !excludeFromPopup)
+
+/**
+ * Number input with custom increment/decrement buttons replacing the native browser controls, which are hidden via CSS.
+ */
+const renderNumberInput = (
+  id: string,
+  dataset: Record<string, string>,
+  value: number,
+  min?: number,
+  max?: number,
+): HTMLElement => {
+  const input = el('input', { type: 'number', id, dataset, value: String(value) })
+  if (min !== undefined) input.min = String(min)
+  if (max !== undefined) input.max = String(max)
+
+  const clamp = (v: number) => Math.min(max ?? Infinity, Math.max(min ?? -Infinity, v))
+
+  const step = (delta: number) => {
+    input.value = String(clamp((input.valueAsNumber || 0) + delta))
+    input.dispatchEvent(new Event('change', { bubbles: true }))
+  }
+
+  const makeStepBtn = (direction: 'up' | 'down', delta: number) => {
+    const btn = el('button', { type: 'button', className: `number-input-${direction}` })
+    btn.append(el('span', { className: `hte-icon-chevron-${direction}` }))
+    btn.addEventListener('click', () => {
+      step(delta)
+    })
+    return btn
+  }
+
+  const controls = el('div', { className: 'number-input-controls' })
+  controls.append(makeStepBtn('up', 1), makeStepBtn('down', -1))
+
+  const wrapper = el('div', { className: 'number-input-wrapper' })
+  wrapper.append(input, controls)
+
+  return wrapper
+}
+
+const renderSettingRow = (
+  moduleId: string,
+  settingId: string,
+  setting: ModuleSetting,
+  value: boolean | number,
+): HTMLElement => {
+  const row = el('div', { className: 'setting' })
+  const inputId = `module-${moduleId}-${settingId}`
+  const dataset = { moduleId, settingId }
+
+  if (typeof setting.default === 'number') {
+    row.append(
+      renderNumberInput(inputId, dataset, value as number, setting.min, setting.max),
+      el('label', { htmlFor: inputId, textContent: setting.label }),
+    )
+  } else {
+    row.append(
+      el('input', { type: 'checkbox', id: inputId, checked: value as boolean, dataset }),
+      el('label', { htmlFor: inputId, textContent: setting.label }),
+    )
+  }
+
+  return row
+}
 
 const renderModule = async ({ id: moduleId, name, description, settings }: ModuleMetadata): Promise<HTMLElement> => {
   const toggleId = `module-${moduleId}-enabled`
   const extraSettings = Object.entries(settings ?? {})
 
   const [isEnabled, ...settingValues] = await Promise.all([
-    getSetting(moduleId, 'enabled'),
-    ...extraSettings.map(([settingId]) => getSetting(moduleId, settingId)),
+    getBoolSetting(moduleId, 'enabled'),
+    ...extraSettings.map(([settingId, setting]) =>
+      typeof setting.default === 'number' ? getIntSetting(moduleId, settingId) : getBoolSetting(moduleId, settingId),
+    ),
   ])
 
   const header = el('div', { className: 'module-header hte-mb-1' })
@@ -26,17 +92,9 @@ const renderModule = async ({ id: moduleId, name, description, settings }: Modul
   card.append(header, el('div', { className: 'description', textContent: description }))
 
   if (extraSettings.length > 0) {
-    const extraSettingsRows = extraSettings.map(([settingId, { label }], i) => {
-      const row = el('div', { className: 'setting' })
-      const checkboxId = `module-${moduleId}-${settingId}`
-      const dataset = { moduleId, settingId }
-      row.append(
-        el('input', { type: 'checkbox', id: checkboxId, checked: settingValues[i], dataset }),
-        el('label', { htmlFor: checkboxId, textContent: label }),
-      )
-
-      return row
-    })
+    const extraSettingsRows = extraSettings.map(([settingId, setting], i) =>
+      renderSettingRow(moduleId, settingId, setting, settingValues[i]),
+    )
 
     const extraSettingsSection = el('div', { className: 'settings hte-mt-2' })
     extraSettingsSection.append(...extraSettingsRows)
@@ -70,12 +128,21 @@ if (moduleList) {
 
   moduleList.addEventListener('change', (e) => {
     const target = e.target as HTMLInputElement
-    if (target.type !== 'checkbox') return
-
     const { moduleId, settingId } = target.dataset
     if (!moduleId || !settingId) return
 
-    setSetting(moduleId, settingId, target.checked).catch((err: unknown) => {
+    let value: boolean | number = target.type === 'checkbox' ? target.checked : target.valueAsNumber
+    if (typeof value === 'number' && isNaN(value)) return
+    if (typeof value === 'number') {
+      // HTML min/max attributes only constrain the spinner buttons; values typed directly into the field are not
+      // clamped by the browser. Without this, a user typing 999 into a field with max=111 would persist an out-of-range
+      // value.
+      const min = target.min ? Number(target.min) : -Infinity
+      const max = target.max ? Number(target.max) : Infinity
+      value = Math.min(max, Math.max(min, value))
+    }
+
+    setSetting(moduleId, settingId, value).catch((err: unknown) => {
       console.error('Failed to save setting', err)
     })
   })

@@ -1,12 +1,12 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import { getSetting } from '@/common/utils/settings'
+import { getBoolSetting } from '@/common/utils/settings'
 import { adjustDenominationValue, isDenominationType } from '@/entrypoints/content/modules/denomination/utils'
 
 vi.mock(import('@/common/utils/settings'), async (importOriginal) => {
   return {
     ...(await importOriginal()),
-    getSetting: vi.fn<typeof getSetting>().mockResolvedValue(true),
+    getBoolSetting: vi.fn<typeof getBoolSetting>().mockResolvedValue(true),
   }
 })
 
@@ -30,7 +30,7 @@ describe(adjustDenominationValue, () => {
   })
 
   it('returns raw aggressiveness value when reverseAggressiveness is false', async () => {
-    vi.mocked(getSetting).mockResolvedValueOnce(false)
+    vi.mocked(getBoolSetting).mockResolvedValueOnce(false)
 
     await expect(adjustDenominationValue('aggressiveness', 3)).resolves.toBe(3)
   })

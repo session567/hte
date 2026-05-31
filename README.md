@@ -25,6 +25,7 @@ match insights, various visual tweaks throughout the site, and time-saving short
 - Display the player's yearly salary next to weekly salary on the player detail page
 - Show the likelihood of a player receiving a yellow or red card based on their personality
 - Show the likelihood of a team spirit drop when buying or selling a player based on their personality
+- List players close to their next birthday
 
 ### Transfer
 - Save and reuse transfer search filters

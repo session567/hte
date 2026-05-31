@@ -2,8 +2,8 @@ import { allMetadata } from '@/common/utils/metadata'
 
 const settingKey = (moduleId: string, settingId: string) => `${moduleId}:${settingId}`
 
-const buildDefaultSettings = (): Record<string, boolean> => {
-  const defaults: Record<string, boolean> = {}
+const buildDefaultSettings = (): Record<string, boolean | number> => {
+  const defaults: Record<string, boolean | number> = {}
 
   for (const metadata of allMetadata) {
     defaults[settingKey(metadata.id, 'enabled')] = true
@@ -18,10 +18,13 @@ const buildDefaultSettings = (): Record<string, boolean> => {
 
 const defaultSettings = buildDefaultSettings()
 
-const settingsStorage = storage.defineItem<Record<string, boolean>>('local:settings', { fallback: {}, version: 1 })
+const settingsStorage = storage.defineItem<Record<string, boolean | number>>('local:settings', {
+  fallback: {},
+  version: 1,
+})
 
 const getSettings = (() => {
-  let promise: Promise<Record<string, boolean>> | null = null
+  let promise: Promise<Record<string, boolean | number>> | null = null
 
   settingsStorage.watch(() => {
     promise = null
@@ -39,18 +42,24 @@ const getSettings = (() => {
   }
 })()
 
-export const getSetting = async (moduleId: string, setting: string): Promise<boolean> => {
+const getSetting = async <T extends boolean | number>(moduleId: string, setting: string): Promise<T> => {
   const key = settingKey(moduleId, setting)
   const settings = await getSettings()
 
   if (!(key in settings)) throw new Error(`Setting ${key} does not exist`)
 
-  return settings[key]
+  return settings[key] as T
 }
+
+export const getBoolSetting = (moduleId: string, setting: string): Promise<boolean> =>
+  getSetting<boolean>(moduleId, setting)
+
+export const getIntSetting = (moduleId: string, setting: string): Promise<number> =>
+  getSetting<number>(moduleId, setting)
 
 let writeQueue = Promise.resolve()
 
-export const setSetting = (moduleId: string, setting: string, value: boolean): Promise<void> => {
+export const setSetting = (moduleId: string, setting: string, value: boolean | number): Promise<void> => {
   const key = settingKey(moduleId, setting)
 
   if (!(key in defaultSettings)) throw new Error(`Setting ${key} does not exist`)
