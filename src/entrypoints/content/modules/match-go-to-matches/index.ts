@@ -1,3 +1,5 @@
+import '@/entrypoints/content/modules/match-go-to-matches/index.css'
+
 import { el } from '@/common/utils/dom'
 import type { Module } from '@/entrypoints/content/common/types/module'
 import { querySelectorIn, waitForElement } from '@/entrypoints/content/common/utils/dom'
