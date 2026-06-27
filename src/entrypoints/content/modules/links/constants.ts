@@ -64,6 +64,6 @@ export const linkMap = new Map<Page, LinkData>([
   [pages.playerList.senior.own, { links: [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER] }],
   [pages.series, { links: [HATTID_LEAGUE, HT_SCORE], getReplacements: () => ({ seriesId: getPageSeriesId() }) }],
   [pages.stadium, { links: [ENTERPRISE_CONSTRUCTION_ONLINE] }],
-  [pages.playerDetail.youth.own, { links: [HATTRICK_YOUTHCLUB, SCOUTRICK] }],
-  [pages.playerList.youth.own, { links: [HATTRICK_YOUTHCLUB, SCOUTRICK] }],
+  [pages.playerDetail.youth.own, { links: [SCOUTRICK, HATTRICK_YOUTHCLUB] }],
+  [pages.playerList.youth.own, { links: [SCOUTRICK, HATTRICK_YOUTHCLUB] }],
 ])
