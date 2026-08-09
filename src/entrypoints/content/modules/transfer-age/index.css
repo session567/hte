@@ -57,10 +57,6 @@
   text-decoration: underline;
   text-decoration-thickness: 2px;
 
-  &.hte-transfer-age-green {
-    text-decoration-color: var(--hte-hattrick-light-green);
-  }
-
   &.hte-transfer-age-orange {
     text-decoration-color: var(--hte-color-orange-4);
   }

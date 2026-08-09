@@ -29,12 +29,7 @@ const createThresholdControl = (
 
 const clearHighlights = (): void => {
   querySelectorAll<HTMLElement>('.hte-transfer-age', false).forEach((cell) => {
-    cell.classList.remove(
-      'hte-transfer-age',
-      'hte-transfer-age-red',
-      'hte-transfer-age-orange',
-      'hte-transfer-age-green',
-    )
+    cell.classList.remove('hte-transfer-age', 'hte-transfer-age-red', 'hte-transfer-age-orange')
   })
 }
 
@@ -101,11 +96,12 @@ const applyHighlights = (orange: number, red: number): void => {
     if (!age) return
 
     const { days } = age
-    const className =
-      days >= red ? 'hte-transfer-age-red' : days >= orange ? 'hte-transfer-age-orange' : 'hte-transfer-age-green'
+    const className = days >= red ? 'hte-transfer-age-red' : days >= orange ? 'hte-transfer-age-orange' : null
 
-    ageCell.classList.remove('hte-transfer-age-red', 'hte-transfer-age-orange', 'hte-transfer-age-green')
-    ageCell.classList.add('hte-transfer-age', className)
+    ageCell.classList.remove('hte-transfer-age', 'hte-transfer-age-red', 'hte-transfer-age-orange')
+    if (className) {
+      ageCell.classList.add('hte-transfer-age', className)
+    }
   })
 }
 
