@@ -42,6 +42,11 @@ export const HATTRICK_PORTAL_TRACKER: Link = {
   url: 'https://hattrickportal.online/Tracker',
 }
 
+export const HATTRICK_PORTAL_TRACKER_PLAYER: Link = {
+  name: 'Hattrick Portal - Tracker',
+  url: 'https://hattrickportal.online/Tracker/Player.aspx?playerID={playerId}',
+}
+
 export const HATTRICK_YOUTHCLUB: Link = {
   name: 'Hattrick Youthclub',
   url: 'https://www.hattrick-youthclub.org',
@@ -60,7 +65,18 @@ export const SCOUTRICK: Link = {
 export const linkMap = new Map<Page, LinkData>([
   [pages.club, { links: [HATTID_TEAM], getReplacements: () => ({ teamId: getPageTeamId() }) }],
   [pages.matchList.senior.own, { links: [DHTH] }],
-  [pages.playerDetail.senior.own, { links: [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER] }],
+  [
+    pages.playerDetail.senior.own,
+    {
+      links: [HATTRICK_PORTAL_TRACKER_PLAYER, HATTRICK_CYCLE_PLANNER],
+      getReplacements: () => {
+        const params = new URLSearchParams(window.location.search)
+        // The param casing is different if you click on a player from the player list, and when you click left-right
+        // arrows to move between players on the product detail page
+        return { playerId: params.get('playerId') ?? params.get('PlayerId') }
+      },
+    },
+  ],
   [pages.playerList.senior.own, { links: [HATTRICK_PORTAL_TRACKER, HATTRICK_CYCLE_PLANNER] }],
   [pages.series, { links: [HATTID_LEAGUE, HT_SCORE], getReplacements: () => ({ seriesId: getPageSeriesId() }) }],
   [pages.stadium, { links: [ENTERPRISE_CONSTRUCTION_ONLINE] }],
